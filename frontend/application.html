@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+</head>
+<body>
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to
+    improve your experience.</p>
+<![endif]-->
+<!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Application Dashboard</a>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="./">Application List</a></li>
+                    <li><a href="#about">Find Application</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="application.html">Create Application</a></li>
+                            <li><a href="#">Import CRM Record</a></li>
+                            <li class="divider"></li>
+                            <li class="nav-header">Export</li>
+                            <li><a href="#">XLS</a></li>
+                            <li><a href="#">To Real Estate</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form pull-right">
+                    <input class="span2" type="text" placeholder="Email">
+                    <input class="span2" type="password" placeholder="Password">
+                    <button type="submit" class="btn">Sign in</button>
+                </form>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+<div class="container">
+<div class="row">
+<div class="span12">
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#client" data-toggle="tab"><i class="icon-ok"></i> Step One: Store Details</a></li>
+    <li><a href="#funding" data-toggle="tab"><i class="icon-ok"></i> Step Two: Financing</a></li>
+    <li class="disabled"><a href="#" data-toggle="tab"><i class="icon-exclamation-sign"></i>Step Three: Sign and Submit
+        Deposit</a></li>
+    <li class="disabled"><a href="#" data-toggle="tab"><i class="icon-exclamation-sign"></i>Step Four: Submit Documents</a>
+    </li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane active" id="client">
+    <h3>Step One: Store Details</h3>
+
+    <p>
+        During your store development process our professionals will be in constant contact with you to ensure the
+        success of your project. Please enter accurate information to ensure a smooth and successful process.
+    </p>
+
+    <form class="form-inline">
+        <fieldset>
+            <legend>Store Information</legend>
+
+            <label class="" for="inputConcept">Store Concept</label>
+            <select id="inputConcept">
+                <option>Dollar Store Services</option>
+                <option>The Mail Box Stores</option>
+                <option>Party Store Developers</option>
+                <option>Fitness Center Developers</option>
+                <option>Clothing Stores</option>
+                <option>Teen Store Developers</option>
+            </select>
+
+            <label class="" for="inputSize">Of Size</label>
+
+            <div class="input-prepend input-append">
+                <input id="inputSize" class="span1" type="text">
+                <span class="add-on">Sqft</span>
+            </div>
+            <label class="" for="inputSize">in</label>
+            <input id="inputStoreCity" type="text" placeholder="City where store will open">
+        </fieldset>
+    </form>
+    <form class="form-inline">
+        <fieldset>
+            <legend>Sales and Advertising Information</legend>
+
+            <label class="" for="inputSalesRep">Development Director</label>
+            <select id="inputConcept">
+                <option>Dollar Store Services</option>
+                <option>The Mail Box Stores</option>
+                <option>Party Store Developers</option>
+                <option>Fitness Center Developers</option>
+                <option>Clothing Stores</option>
+                <option>Teen Store Developers</option>
+            </select>
+
+             <label class="" for="inputConcept">Advertising Source</label>
+            <select id="inputConcept">
+                <option>Dollar Store Services</option>
+                <option>The Mail Box Stores</option>
+                <option>Party Store Developers</option>
+                <option>Fitness Center Developers</option>
+                <option>Clothing Stores</option>
+                <option>Teen Store Developers</option>
+            </select>
+        </fieldset>
+    </form>
+    <form class="form-horizontal">
+
+        <fieldset class="span6 pull-left">
+            <legend>Primary Applicant</legend>
+            <div class="control-group">
+                <label class="control-label" for="inputFirst">First Name</label>
+
+                <div class="controls">
+                    <input type="text" id="inputFirst" placeholder="First Name">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputLast">Last Name</label>
+
+                <div class="controls">
+                    <input type="text" id="inputLast" placeholder="Last Name">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputEmail">Email Address</label>
+
+                <div class="controls">
+                    <input type="text" id="inputEmail" type="email" data-validation-email-message="Please Enter a Valid E-Mail Address" placeholder="Email Address">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputDateofBirth">Date of Birth</label>
+
+                <div class="controls">
+                    <input type="text" id="inputDateofBirth" placeholder="Date of Birth">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputTimetoCall">Best Time to Call</label>
+
+                <div class="controls">
+                    <input type="text" id="inputTimetoCall" placeholder="Best Time to Call">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputPhone">Home Phone</label>
+
+                <div class="controls">
+                    <input type="text" id="inputPhone" placeholder="(###)-###-####">
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn"><i class="icon-hdd"></i> Save</button>
+                    <button type="submit" class="btn btn-primary">Continue</button>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="span4 pull-left">
+            <legend>Partner</legend>
+            <div class="control-group">
+                <label class="control-label" for="inputFirst">First Name</label>
+
+                <div class="controls">
+                    <input type="text" id="inputFirst" placeholder="First Name">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputLast">Last Name</label>
+
+                <div class="controls">
+                    <input type="text" id="inputLast" placeholder="Last Name">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputEmail">Email Address</label>
+
+                <div class="controls">
+                    <input type="text" id="inputEmail" placeholder="Email Address">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputDateofBirth">Date of Birth</label>
+
+                <div class="controls">
+                    <input type="text" id="inputDateofBirth" placeholder="Date of Birth">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputTimetoCall">Best Time to Call</label>
+
+                <div class="controls">
+                    <input type="text" id="inputTimetoCall" placeholder="Best Time to Call">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputPhone">Home Phone</label>
+
+                <div class="controls">
+                    <input type="text" id="inputPhone" placeholder="(###)-###-####">
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div class="tab-pane" id="funding">
+    <h3>Step Two: Financing</h3>
+
+    <p>
+        To help us find you the best funding path, please complete this quick financial questionare. The table of assets
+        and liabilities is used by landlords who may request your net worth so please provide as accurate information as
+        possible and include items even if you do not intend to use them to fund your store. For items you do intend to
+        use for your store funding please mark the approropriate check box.
+    </p>
+
+    <form class="form-horizontal">
+        <fieldset class="span6 pull-left">
+            <legend>Credit and Income Information</legend>
+            <label>Credit Score</label>
+            <input type="text" placeholder="Credit Score">
+            <label>Place of Employment</label>
+            <input type="text" placeholder="Place of Employment">
+            <label>Years at Job</label>
+            <input type="text" placeholder="Years at Job">
+            <label>Annual Salary</label>
+            <input type="text" placeholder="Annual Salary">
+        </fieldset>
+        <fieldset class="span4 pull-left">
+            <legend>Partner Credit and Income Information</legend>
+            <label>Credit Score</label>
+            <input type="text" placeholder="Credit Score">
+            <label>Place of Employment</label>
+            <input type="text" placeholder="Place of Employment">
+            <label>Years at Job</label>
+            <input type="text" placeholder="Years at Job">
+            <label>Annual Salary</label>
+            <input type="text" placeholder="Annual Salary">
+
+            <div class="control-group">
+        </fieldset>
+        <fieldset class="pull-left">
+            <legend>Finances Being Used to Fund Store</legend>
+            <span class="help-block">Please use as accurate figures as possible, some funding sources will require verification documents which we will
+                request after receiving your application.</span>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        Asset
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                    <th>
+                        Asset
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                    <th>
+                        Asset
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        Cash
+                    </td>
+                    <td>
+                        <div class="input-prepend input-append">
+                            <span class="add-on">$</span>
+                            <input class="span1" id="appendedPrependedInput" type="text">
+                            <span class="add-on">.00</span>
+                        </div>
+                    </td>
+                    <td>
+                        Lines of Credit
+                    </td>
+                    <td>
+                        <div class="input-prepend input-append">
+                            <span class="add-on">$</span>
+                            <input class="span1" id="appendedPrependedInput" type="text">
+                            <span class="add-on">.00</span>
+                        </div>
+                    </td>
+                    <td>
+                        Home Equity(HLOC)
+                    </td>
+                    <td>
+                        <div class="input-prepend input-append">
+                            <span class="add-on">$</span>
+                            <input class="span1" id="appendedPrependedInput" type="text">
+                            <span class="add-on">.00</span>
+                        </div>
+                    </td>
+                </tr>
+                                <tr>
+                    <td>
+                        401K
+                    </td>
+                    <td>
+                        <div class="input-prepend input-append">
+                            <span class="add-on">$</span>
+                            <input class="span1" id="appendedPrependedInput" type="text">
+                            <span class="add-on">.00</span>
+                        </div>
+                    </td>
+                    <td>
+                        Pension
+                    </td>
+                    <td>
+                        <div class="input-prepend input-append">
+                            <span class="add-on">$</span>
+                            <input class="span1" id="appendedPrependedInput" type="text">
+                            <span class="add-on">.00</span>
+                        </div>
+                    </td>
+                    <td>
+                        IRA
+                    </td>
+                    <td>
+                        <div class="input-prepend input-append">
+                            <span class="add-on">$</span>
+                            <input class="span1" id="appendedPrependedInput" type="text">
+                            <span class="add-on">.00</span>
+                        </div>
+                    </td>
+                </tr>
+                                <tr>
+                    <td>
+                        Stocks/Bonds
+                    </td>
+                    <td>
+                        <div class="input-prepend input-append">
+                            <span class="add-on">$</span>
+                            <input class="span1" id="appendedPrependedInput" type="text">
+                            <span class="add-on">.00</span>
+                        </div>
+                    </td>
+                    <td>
+                        CD
+                    </td>
+                    <td>
+                        <div class="input-prepend input-append">
+                            <span class="add-on">$</span>
+                            <input class="span1" id="appendedPrependedInput" type="text">
+                            <span class="add-on">.00</span>
+                        </div>
+                    </td>
+                    <td>
+                        Life Insurance
+                    </td>
+                    <td>
+                        <div class="input-prepend input-append">
+                            <span class="add-on">$</span>
+                            <input class="span1" id="appendedPrependedInput" type="text">
+                            <span class="add-on">.00</span>
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+            <div class="controls">
+                <label class="checkbox">
+                    <input type="checkbox"> I certify that these funds are available and planned for use with this store
+                    opening project.
+                </label>
+            </div>
+
+            <div class="controls">
+                <button type="submit" class="btn"><i class="icon-hdd"></i> Save</button>
+                <button type="submit" class="btn btn-primary"><i class="icon-envelope icon-white"></i>Send to Client
+                </button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div class="tab-pane" id="deposit">
+</div>
+<div class="tab-pane" id="documents">
+
+</div>
+</div>
+</div>
+</div>
+<hr>
+<footer>
+    <p>
+        &copy; Discount Retail Store Services 2013
+    </p>
+</footer>
+</div>
+<!-- /container -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="js/vendor/jqBootstrapValidation.js"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/application.js"></script>
+<script>
+    var _gaq = [
+        ['_setAccount', 'UA-XXXXX-X'],
+        ['_trackPageview']
+    ];
+    (function (d, t) {
+        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g, s)
+    }(document, 'script'));
+</script>
+</body>
+</html>

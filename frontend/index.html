@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+</head>
+<body>
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+
+
+ <script type="text/x-handlebars" data-template-name="application">
+ <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Application Dashboard</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="#">Application List</a></li>
+                    <li><a href="#about">Find Application</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="application.html">Create Application</a></li>
+                            <li><a href="#">Import Act Record</a></li>
+                            <li><a href="#">Import Sugar Record</a></li>
+                            <li class="divider"></li>
+                            <li class="nav-header">Export</li>
+                            <li><a href="#">XLS</a></li>
+                            <li><a href="#">To Real Estate</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form pull-right" action="/api-auth/login" method="post">
+                    <input class="span2" type="text" placeholder="Email" name="username">
+                    <input class="span2" type="password" name="password" placeholder="Password">
+                    <button type="submit" class="btn">Sign in</button>
+                </form>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+<div class="container">
+  <div class="row">
+  <div class="span12">
+  {{ outlet }}
+  </div>
+  </div>
+      <hr>
+
+    <footer>
+        <p>&copy; Discount Retail Store Services 2013</p>
+    </footer>
+
+</div> <!-- /container -->
+  </script>
+
+<script type="text/x-handlebars" data-template-name="projects">
+{{outlet}}
+    <div class="row">
+    <div class="span12">
+        <div class="pagination">
+  <ul>
+    <li><a href="#">Prev</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">Next</a></li>
+  </ul>
+</div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Last Name</th>
+                <th>Sales Rep</th>
+                <th>App Date</th>
+                <th>App Number</th>
+                <th>Signature</th>
+                <th>Deposit Status</th>
+                <th>Required Documents</th>
+                <th>Progress</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{partial "projectLine"}}
+            </tbody>
+        </table>
+        </div>
+        </div>
+        
+    
+</script>
+<script type="text/x-handlebars" data-template-name="projects/index">
+
+</script>
+<script type="text/x-handlebars" data-template-name="_projectLine">
+
+            {{#each project in controller}}
+            <tr>
+            <td>{{#linkTo "project" project}}{{project.last_name}}}{{/linkTo}}</td>
+            <td>{{project.sales_rep}}</td>
+            <td>{{project.app_date}}}</td>
+            <td>{{project.app_number}}</td>
+            <td>{{project.signature}}</td>
+            <td>{{project.payment_status}}</td>
+            <td>{{project.required_documents}}</td>
+            <td><div class="progress progress-striped active"}>
+                    <div class="bar" {{bindAttr style="project.progressBar"}}></div></div>
+                    </td>
+            </tr>
+            {{/each}}
+  </script>
+<script type="text/x-handlebars" data-template-name="project">
+        <div class="row">
+        <div class='span6'>
+        <h1>{{this.full_name}}</h1>
+        <p><strong>Application Number:</strong>{{this.id}}</p>
+        <p><strong>SalesRep:</strong> {{this.sales_rep}}</p>
+        <p><strong>Funding Advisor:</strong> {{this.funding_advisor}}</p>
+        <p><strong>Concept:</strong> {{this.concept}}</p>
+        <p><strong>SQFT:</strong> {{this.store_size}}</p>
+        </div>       
+        {{partial "deposit"}}
+</div>
+    <div class="row">
+        <div class ="span6">
+        <h3>Contact Information</h2>
+
+  
+
+            <address>
+  <strong>{{this.full_name}}</strong><br>
+
+  {{this.street_address}}<br>
+  {{this.city}}, {{this.state}} {{this.zip_code}}<br>
+  <a href="mailto:#">{{this.email}}</a><br>
+  <abbr title="Phone">P:</abbr> {{this.phone_number}}
+</address>
+
+        </div>
+        <div class ="span6">
+        <h3>Employment Information</h3>
+        <p><strong>Social Security Number:</strong> {{social_security_number}}</p>
+        <p><strong>Place of Employment:</strong> {{place_of_employment}}</p>
+        <p><strong>Years at Job:</strong> {{years_at_job}}</p>
+        <p><strong>Annual Salary:</strong> {{salary}}</p>
+        </div>
+        </div>
+        <h3>Finance Information</h3>
+        <h4>Credit Score: 560</h4>
+         <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        Asset
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                    <th>
+                        Asset
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                    <th>
+                        Asset
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td>Cash</td>
+                <td></td>
+                <td>Lines of Credit</td>
+                <td></td>
+                <td>Home Equity (HLOC)</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>401K</td>
+                <td></td>
+                <td>Pension</td>
+                <td></td>
+                <td>IRA</td>
+                <td></td>
+                </tr>
+                <tr>
+                <td>Stocks/Bonds</td>
+                <td></td>
+                <td>CD</td>
+                <td></td>
+                <td>Life Insurance</td>
+                <td></td>
+                </tr>
+                </tbody>
+            </table>
+        {{partial "docs"}}
+        {{partial "notes"}}
+  </script>
+
+
+
+
+
+<script type="text/x-handlebars" data-template-name="_docs">
+        <div class="row">
+        <div class="span12">
+            <h3>Documents</h3>
+            {{partial "doc_selection"}}
+<p><small>On request of documents, notification is sent to client, sales represntative, and finance representative.</small></p>
+  <ul class="thumbnails">
+
+  {{#each doc in docs}}
+  {{#if doc.exists}}
+  <li class="span2">
+    <div class="thumbnail">
+      <img src="img/application_pdf.png" alt="">
+        <h4>{{doc.title}}</h4>
+        <p>Requested on {{doc.requested_on}}</p>
+        <p><a {{bindAttr href="doc.url"}} class="btn btn-primary" ><i class="icon-print icon-white"></i> Print</a>
+        </p>
+    </div>
+  </li>
+  {{else}}
+  <li class="span2">
+    <div class="thumbnail">
+      <img src="img/unknown.png" alt="">
+        <h4>{{doc.title}}</h4>
+        <p>Requested on 02/23/2013</p>
+        <p><a href="#" {{action "uploadDoc" this.doc}} data-toggle="tooltip" class="btn"><i class="icon-plus"></i>Add</a>
+        <a href="#" class="btn btn-danger" {{action "deleteDoc" this}}><i class="icon-remove icon-white"></i>Delete</a>
+        </p>
+    </div>
+  </li>
+{{/if}}
+{{else}}
+    <li>There are No Attached Documents</li>
+  {{/each}}
+
+</ul>
+        </div>
+    </div>
+</script>
+<script type="text/x-handlebars" data-template-name="_notes">
+    <div class="row">
+    <div class="span12">
+    <h3>Notes</h3>
+{{#each note in notes}}
+<span class="label label-info">{{note.author}} {{note.post_date}}</span>
+ <div class="well well-small">
+ <p>{{note.body}}</p>
+</div>
+{{else}}
+    <div class="alert alert-info">
+  There are no currently attached notes.
+</div>
+  {{/each}}
+<form>
+<textarea rows="3" class="span12 noteForm"></textarea>
+<div class="btn-group">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Add Note <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" {{action "addPublicNote" this}}>Public</a></li>
+                  <li><a href="#" {{action "addPrivateNote"}}>Private</a></li>
+                </ul>
+              </div>
+</form>
+    </div>
+    </div>
+</script>
+<script type="text/x-handlebars" data-template-name="_doc_selection">
+    <div class="btn-group">
+  <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+    Request Documents
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    {{#each App.listController}}
+       <li><a href="#"{{action "createDoc" this}}>{{this}}</a></li>
+    {{/each}}
+  </ul>
+</div>
+</script>
+<script type="text/x-handlebars" data-template-name="_deposit">
+    <div class="span6">
+        <div class="well">
+        <h4>Deposit</h4>
+        <p class="text-success">{{payment_status}}</p>
+        <a href="#"><p><i class="icon-tag"></i> Credit Card Transaction ID:0515151</p></a>
+        </div>
+    </div>
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/vendor/handlebars.js"></script>
+<script src="js/vendor/ember.js"></script>
+<script src="js/vendor/ember-data.js"></script>
+<script src="js/vendor/serializer.js"></script>
+<script src="js/vendor/adapter.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"package",
+				"Package Control: Disable Package"
+			],
+			[
+				"Snippet: jquer",
+				"Snippet: HTML - Include jQuery"
+			],
+			[
+				"Snippet: ",
+				"Snippet: $(document).ready"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			],
+			[
+				"packag",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 528.0
+	},
+	"console":
+	{
+		"height": 153.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Z/docMan/clients/serializers.py",
+		"/Z/docMan/clients/views.py",
+		"/Z/docMan/clients/urls.py",
+		"/Z/docMan/clients/admin.py",
+		"/Z/docMan/docMan/settings.py",
+		"/Z/docMan/clients/models.py",
+		"/Z/docMan/frontend/js/main.js",
+		"/Z/docMan/docMan/urls.py",
+		"/Z/docMan/frontend/css/main.css",
+		"/Z/docMan/frontend/application.html",
+		"/Z/docMan/frontend/trackingcode.html",
+		"/Z/docMan/frontend/trackingcode.js",
+		"/Z/docMan/frontend/index.html",
+		"/Z/docMan/index.php",
+		"/Z/docMan/print-app.php",
+		"/Z/docMan/frontend/detail.html",
+		"/Z/docMan/frontend/detail-unpaid.html",
+		"/C/Users/Steve.Castle.DRSSMAIL/AppData/Roaming/Sublime Text 2/Packages/HTML Snippets/jquery.sublime-snippet",
+		"/C/ProgramData/Microsoft/Windows/Start Menu/Programs/form.html",
+		"/J/entityreference_count-7.x-1.x-dev/entityreference_count.module",
+		"/C/Users/Steve.Castle.DRSSMAIL/Desktop/fractal.py",
+		"/C/Users/Steve.Castle.DRSSMAIL/Desktop/camerasolve.py",
+		"/C/Users/Steve.Castle.DRSSMAIL/Desktop/test/users.php",
+		"/J/GitHub/django_gallery/templates/polls/detail.html",
+		"/J/GitHub/django_gallery/polls/views.py",
+		"/J/GitHub/django_gallery/templates/polls/results.html",
+		"/J/GitHub/django_gallery/mysite/urls.py",
+		"/J/GitHub/django_gallery/polls/urls.py",
+		"/J/GitHub/django_gallery/polls/models.py",
+		"/J/GitHub/django_gallery/templates/polls/index.html",
+		"/C/Users/Steve.Castle.DRSSMAIL/AppData/Roaming/Sublime Text 2/Packages/SublimeCodeIntel/Base File.sublime-settings",
+		"/C/Users/Steve.Castle.DRSSMAIL/AppData/Roaming/Sublime Text 2/Packages/User/SublimeLinter.sublime-settings",
+		"/J/GitHub/django_gallery/polls/tests.py",
+		"/Z/three/examples/css3d_panorama.html",
+		"/Z/three/examples/software_sandbox.html",
+		"/C/Users/Steve.Castle.DRSSMAIL/Desktop/thankyou.php",
+		"/Z/three/examples/css3d_sandbox.html",
+		"/Z/three/examples/canvas_materials_reflection.html",
+		"/Z/three/examples/css3d_molecules.html",
+		"/Z/three/examples/webgl_loader_obj.html",
+		"/Z/three/examples/webgl_lensflares.html",
+		"/Z/Tiger Haunt/page-two.html",
+		"/Z/Tiger Haunt/js/Three.js",
+		"/Z/Tiger Haunt/index.html",
+		"/Z/Tiger Haunt/8bit.html",
+		"/Z/Tiger Haunt/js/main.js",
+		"/C/Users/Steve.Castle.DRSSMAIL/AppData/Roaming/Sublime Text 2/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/C/Users/Steve.Castle.DRSSMAIL/AppData/Roaming/Sublime Text 2/Packages/Git/Git.sublime-settings",
+		"/Z/Tiger Haunt/page-twp.html",
+		"/Z/dss-bootstrap/financing.html",
+		"/Z/dss-bootstrap/robots.txt",
+		"/C/Users/Steve.Castle.DRSSMAIL/AppData/Roaming/Sublime Text 2/Packages/Emmet/Emmet.sublime-settings",
+		"/C/Users/Steve.Castle.DRSSMAIL/AppData/Roaming/Sublime Text 2/Packages/User/Emmet.sublime-settings",
+		"/Z/dss-bootstrap/index.html",
+		"/C/Users/Steve.Castle.DRSSMAIL/AppData/Roaming/Sublime Text 2/Packages/SideBarEnhancements/messages/11.13.2012.1305.0.txt",
+		"/Z/dss-bootstrap/css/bootstrap-responsive.css",
+		"/Z/svgexperiment/style.css",
+		"/C/Users/Steve.Castle.DRSSMAIL/AppData/Roaming/Sublime Text 2/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Users/Steve.Castle.DRSSMAIL/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Z/svgexperiment/index.html",
+		"/Z/sitelocator/index.html",
+		"/Z/application_list/database.php"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"null",
+			"true",
+			"authenti",
+			"e",
+			"quickstart",
+			"bool",
+			"401k",
+			"Using to fund store..",
+			"Used for financing",
+			"tabl",
+			"form",
+			"span2",
+			"span2		",
+			"span1",
+			"i",
+			"git",
+			"style",
+			"padding-bottom",
+			"load()"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"blank",
+			"True",
+			"Using to fund store.",
+			"",
+			"Using to fund store."
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"robot",
+				"robots.txt"
+			],
+			[
+				"financ",
+				"financing.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 309.0,
+	"status_bar_visible": true
+}

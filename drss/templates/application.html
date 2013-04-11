@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+ {% block heroUnit %}
+<div class="hero-unit">
+                <h1>Store Application</h1>
+                <p>Thank you for choosing Discount Retail Store Services. Please complete the following store application as accurately as you can
+                	our finance department will use the information to identify possible funding paths for your store.</p>
+            </div>
+{% endblock %}
+{% block content %}
+   {% crispy form %}
+{% endblock %}
