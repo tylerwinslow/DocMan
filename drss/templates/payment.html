@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+ {% block heroUnit %}
+
+{% endblock %}
+{% block content %}
+<h1>Your fully refundable deposit amount is ${{amount}}</h1>
+	<p>Click Pay Now to pay using E-Check or Credit/Debit card via our secure ACH Direct provider.</p>
+   <form method='Redirect' class ="form" action= 'https://swp.paymentsgateway.net/co/default.aspx'>
+   <input type='hidden' name='pg_api_login_id' value='{{secret_key}}'/>
+   <input type='hidden' name='pg_billto_postal_name_first' value='{{last_name}}'/>
+<input type='hidden' name='pg_billto_postal_name_last' value='{{first_name}}'/>
+<input type='hidden' name='pg_billto_online_email' value='{{email}}'/>
+<input type='hidden' name='pg_billto_telecom_phone_number' value='{{home_phone}}'/>
+<input type='hidden' name='pg_billto_postal_postalcode' value='{{zip_code}}'/>
+<input type='hidden' name='pg_billto_postal_stateprov' value='{{state}}'/>
+<input type='hidden' name='pg_billto_postal_city' value='{{zip_code}}'/>
+<input type='hidden' name='pg_billto_postal_street_line1' value='{{address}}'/>
+<input type='hidden' name='pg_total_amount' value='{{amount}}' />
+   <input type='submit' class ="btn btn-primary" value='Pay Now'>
+   </form>
+{% endblock %}
+
+
+
+
+
+

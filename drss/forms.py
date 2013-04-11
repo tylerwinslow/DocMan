@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, HTML, Fieldset, Hidden, Field
-from crispy_forms.bootstrap import FormActions, AppendedPrependedText
+from crispy_forms.bootstrap import FormActions, AppendedPrependedText, AppendedText
 from drss.models import Project
 
 
@@ -17,7 +17,7 @@ class NewApplication(ModelForm):
             Fieldset(
                 'Store Details',
                 'concept',
-                'store_size',
+                AppendedText('store_size', 'SQFT'),
                 'sales_rep',
                 'advertising_source',
                 Field('opening_location', placeholder="City,ST"),

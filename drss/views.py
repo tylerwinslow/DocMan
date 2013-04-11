@@ -34,26 +34,45 @@ def application(request):
 
 
 def application_detail(request, app_id):
-
-    if request.method == 'POST':  # If the form has been submitted...
-        form = NewApplication(request.POST)  # A form bound to the POST data
-        if form.is_valid():  # All validation rules pass
-            form.save()
-            return HttpResponseRedirect('/thankyou/')  # Redirect after POST
+    if request.user.is_authenticated():
+    # Do something for authenticated users.
+        if request.method == 'POST':  # If the form has been submitted...
+            app = Project.objects.get(pk=app_id)
+            form = NewApplication(request.POST, instance=app)  # A form bound to the POST data
+            if form.is_valid():  # All validation rules pass
+                form.save()
+                return HttpResponseRedirect('/thankyou/')  # Redirect after POST
+        else:
+            app = Project.objects.get(pk=app_id)
+            form = NewApplication(instance=app)  # Load Form for Verification
+        return render(request, 'application.html', {
+            'form': form,
+        })
     else:
-        app = Project.objects.get(pk=app_id)
-        form = NewApplication(instance=app)  # Load Form for Verification
-    return render(request, 'application.html', {
-        'form': form,
-    })
+        return render(request, 'not-authenticated.html')
+
+
+def deposit(request, app_id):
+    project = Project.objects.get(pk=app_id)
+    secret_key = project.concept.achdirect_api_key
+    amount = project.deposit_amount
+    last_name = project.last_name
+    first_name = project.first_name
+    address = project.address
+    city = project.city
+    state = project.state
+    zip_code = project.zip_code
+    home_phone = project.home_phone
+    email = project.email
+    context = {"secret_key": secret_key, "amount": amount,
+               "last_name": last_name, "first_name": first_name, "address": address, "city": city, "state": state, "zip_code": zip_code,
+               "home_phone": home_phone, "email": email,
+               }
+    return render(request, 'payment.html', context)
 
 
 def thankyou(request):
     return render(request, 'thankyou.html')
-
-
-def numbers(request, num, size):
-    return render(request, 'numbers.html', {'number': num,'size': size})
 
 
 class ProjectList(generics.ListCreateAPIView):

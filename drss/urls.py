@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from drss.views import ProjectList, CommentList, DocumentList, PaymentList, ProjectDetail, CommentDetail, DocumentDetail, PaymentDetail, application, application_detail, thankyou
+from drss.views import ProjectList, CommentList, DocumentList, PaymentList, ProjectDetail, CommentDetail, DocumentDetail, PaymentDetail, application, application_detail, thankyou, deposit
 
 urlpatterns = patterns('drss.views',
                        url(r'^$', 'api_root'),
@@ -15,6 +15,7 @@ urlpatterns = patterns('drss.views',
                        url(r'^payments/(?P<pk>\d+)/$', PaymentDetail.as_view(), name='payment-detail'),
                        url(r'^application/$', application, name='application'),
                        url(r'^application/(?P<app_id>\d+)/$', application_detail, name='application_detail'),
+                       url(r'^application/(?P<app_id>\d+)/deposit/$', deposit, name='deposit_pay'),
                        url(r'^thankyou/$', thankyou, name='thankyou'),
                        )
 

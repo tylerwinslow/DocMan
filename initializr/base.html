@@ -42,6 +42,12 @@
                         <ul class="nav">
                             <li class="active"><a href="#">Home</a></li>
                             <li><a href="#about">Get Help</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Applications <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                </ul>
+                            </li>
                         </ul>
                         <ul class="nav pull-right">
                         {% block userlinks %}
@@ -55,7 +61,7 @@
                             </li>
                             
                         {% else %}
-                            <li><a href="/api-auth/login/?next={{request.get_full_path}}">Log in</a></li>
+                            <li><a href="/api-auth/login/?next=/application">Log in</a></li>
                         {% endif %}
                     {% endblock %}
 </ul>
@@ -78,7 +84,7 @@
             <hr>
 
             <footer>
-                <p>&copy; Discount Retail Store Services 2013</p>
+                <p>&copy; Company 2012</p>
             </footer>
 
         </div> <!-- /container -->
