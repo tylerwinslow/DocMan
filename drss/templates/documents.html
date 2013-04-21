@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block message %}
+<div class="alert alert-success">
+  <strong>Requested Documents</strong> The following documents have been requested by your funding advisor.
+</div>
+{% endblock %}
+
+{% block content %}
+<ul class="thumbnails">
+{% for document in documents %}
+{% if not document.document_file%} 
+<li class="span2">
+    <div class="thumbnail">
+      <img src="/static/img/unknown.png" alt="">
+        <h4>{{document.title}}</h4>
+        <p>Requested on {{document.request_date}}</p>
+        <form method="post" enctype="multipart/form-data" action="/documents/{{document.id}}/">
+            {% csrf_token %}
+            <input type="file" name="docfile" id="fileField" class="hidden" data-id={{document.id}} />
+            <div class="input-append">
+  <input class="span1" class="fileLocation" type="text">
+  <button class="btn uploadButton" type="button" data-id={{document.id}}>Add File</button>
+</div>
+            <input type="submit" class="btn btn-primary" name="submit" value="Upload" />
+        </form>
+    </div>
+  </li>
+  {%endif%}
+{%endfor%}
+</ul>
+{% endblock %}
+
+
+
+

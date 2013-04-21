@@ -1,5 +1,6 @@
 from django.contrib import admin
-from drss.models import Project, Concept, SalesPerson, FinanceAdvisor, Payment, Comment, Department, PackageOption, Document, AdvertisingSource
+from django.conf import settings
+from drss.models import Project, Concept, SalesPerson, FinanceAdvisor, Payment, Comment, Department, PackageOption, Document, DocumentType, AdvertisingSource
 from django.contrib.auth.models import User
 
 
@@ -20,11 +21,6 @@ class UserInline(admin.StackedInline):
 
 class CommentInline(admin.StackedInline):
     model = Comment
-    extra = 1
-
-
-class DocumentInline(admin.StackedInline):
-    model = Document
     extra = 1
 
 
@@ -55,11 +51,24 @@ class ProjectAdmin(admin.ModelAdmin):
                       ('financing_stocksbonds', 'financing_cd', 'financing_lifeinsurance'))
         }),
     )
-    inlines = [PaymentInline, DocumentInline, CommentInline]
+    inlines = [PaymentInline, CommentInline]
     list_display = ('last_name', 'create_date', 'sales_rep', 'funding_advisor', 'email', 'credit_score', 'is_paid', 'is_up_to_date')
     list_filter = ['sales_rep', 'funding_advisor']
     search_fields = ['last_name']
     date_hierarchy = 'create_date'
+
+
+class DocumentAdmin(admin.ModelAdmin):
+    list_display = ('project', 'title', 'request_date', 'file_link')
+    search_fields = ['project']
+
+    def file_link(self, obj):
+        if obj.document_file.name:
+            path = obj.document_file.url
+            return "<a href ='" + settings.BASE_URL + path + "'>Open File</a>"
+        else:
+            return "Not Yet Received"
+    file_link.allow_tags = True
 
 
 class PaymentAdmin(admin.ModelAdmin):
@@ -71,6 +80,8 @@ class ConceptAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Project, ProjectAdmin)
+admin.site.register(Document, DocumentAdmin)
+admin.site.register(DocumentType)
 admin.site.register(Department)
 admin.site.register(Concept, ConceptAdmin)
 admin.site.register(SalesPerson)

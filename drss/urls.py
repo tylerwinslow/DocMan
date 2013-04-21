@@ -1,22 +1,23 @@
 from django.conf.urls import patterns, url, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from drss.views import ProjectList, CommentList, DocumentList, PaymentList, ProjectDetail, CommentDetail, DocumentDetail, PaymentDetail, application, application_detail, thankyou, deposit
+from drss import views
 
 urlpatterns = patterns('drss.views',
                        url(r'^$', 'api_root'),
-                       url(r'^projects/$', ProjectList.as_view(), name='project-list'),
-                       url(r'^projects/$', ProjectDetail.as_view(), name='project-detail'),
-                       url(r'^comments/$', CommentList.as_view(), name='comment-list'),
-                       url(r'^documents/$', DocumentList.as_view(), name='document-list'),
-                       url(r'^payments/$', PaymentList.as_view(), name='payment-list'),
-                       url(r'^projects/(?P<pk>\d+)/$', ProjectDetail.as_view(), name='project-detail'),
-                       url(r'^comments/(?P<pk>\d+)/$', CommentDetail.as_view(), name='comment-detail'),
-                       url(r'^documents/(?P<pk>\d+)/$', DocumentDetail.as_view(), name='document-detail'),
-                       url(r'^payments/(?P<pk>\d+)/$', PaymentDetail.as_view(), name='payment-detail'),
-                       url(r'^application/$', application, name='application'),
-                       url(r'^application/(?P<app_id>\d+)/$', application_detail, name='application_detail'),
-                       url(r'^application/(?P<app_id>\d+)/deposit/$', deposit, name='deposit_pay'),
-                       url(r'^thankyou/$', thankyou, name='thankyou'),
+                       url(r'^projects/$', views.project_list, name='project-list'),
+                       url(r'^comments/$', views.CommentList.as_view(), name='comment-list'),
+                       url(r'^documents/$', views.DocumentList.as_view(), name='document-list'),
+                       url(r'^payments/$', views.PaymentList.as_view(), name='payment-list'),
+                       url(r'^projects/(?P<pk>\d+)/$', views.project_detail, name='project_detail'),
+                       url(r'^documents/(?P<pk>\d+)/$', views.document_detail, name='document-detail'),
+                       url(r'^projects/(?P<pk>\d+)/deposit/$', views.deposit_detail, name='deposit_detail'),
+                       url(r'^application/$', views.application, name='application'),
+                       url(r'^application/(?P<app_id>\d+)/$', views.application_detail, name='application_detail'),
+                       url(r'^application/(?P<app_id>\d+)/deposit/$', views.deposit, name='deposit_pay'),
+                       url(r'^application/(?P<app_id>\d+)/documents/$', views.submit_docs, name='submit_docs'),
+                       url(r'^thankyou/$', views.thankyou, name='thankyou'),
+                       url(r'^support/$', views.support, name='thankyou'),
+                       url(r'^payment_complete/$', views.payment_complete, name='payment_complete'),
                        )
 
 # Format suffixes

@@ -1,8 +1,8 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Form, FileField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, HTML, Fieldset, Hidden, Field
 from crispy_forms.bootstrap import FormActions, AppendedPrependedText, AppendedText
-from drss.models import Project
+from drss.models import Project, Payment, Comment, Document
 
 
 class NewApplication(ModelForm):
@@ -41,7 +41,7 @@ class NewApplication(ModelForm):
             ),
             Fieldset(
                 'Partner Information',
-                HTML("<p>Complete the following section if you are appyling with a spouse or business partner. To request a partner, check below.</p>"),
+                HTML("<div class='alert alert-info'>Complete the following section if you are appyling with a spouse or business partner. To request a partner, check below.</div>"),
                 'needs_partner',
                 'first_name_partner',
                 'last_name_partner',
@@ -71,6 +71,7 @@ class NewApplication(ModelForm):
             ),
             Fieldset(
                 'Funds Available',
+                HTML("<div class='alert alert-info'>Enter assets you have available and may wish to consider for use in funding your store.</div>"),
                 AppendedPrependedText('financing_cash', '$', '.00'),
                 AppendedPrependedText('financing_loc', '$', '.00'),
                 AppendedPrependedText('financing_hloc', '$', '.00'),
@@ -97,3 +98,29 @@ class NewApplication(ModelForm):
 
     class Meta:
         model = Project
+
+
+class NewDeposit(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(NewDeposit, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_class = 'form-horizontal'
+        self.helper.form_method = 'post'
+        self.helper.form_action = '#'
+        self.helper.layout = Layout(
+            Fieldset('Receive Deposit', 'payment_amount', 'payment_type', 'trace_number', 'last_four_num', 'project', 'hold'),
+            FormActions(
+                Submit('submit', 'Submit', css_class='button white')
+            )
+        )
+
+    class Meta:
+        model = Payment
+
+
+class FileUpload(Form):
+    docfile = FileField(
+        label='Select a file',
+        help_text='max. 42 megabytes'
+    )

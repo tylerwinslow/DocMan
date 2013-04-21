@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+ 
+{% block content %}
+<div class="row">
+<ul class="nav nav-pills">
+              <li class="dropdown">
+                <a class="dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" href="#">Sales Person<b class="caret"></b></a>
+                <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+                     {% for salesperson in salespersons %}
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/projects/?sales={{salesperson.user}}">{{salesperson.full_name}}</a></li>
+                   {% endfor %}
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" id="drop5" role="button" data-toggle="dropdown" href="#">Funding Advisor<b class="caret"></b></a>
+                <ul id="menu2" class="dropdown-menu" role="menu" aria-labelledby="drop5">
+                     {% for fundingadvisor in fundingadvisors %}
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{fundingadvisor.full_name}}</a></li>
+                   {% endfor %}
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" id="drop5" role="button" data-toggle="dropdown" href="#">Concept<b class="caret"></b></a>
+                <ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop5">
+                     {% for concept in concepts %}
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{concept.title}}</a></li>
+                   {% endfor %}
+                </ul>
+              </li>
+            </ul>
+            <h3>{{salesfilter}}</h3>
+    {% if projects %}
+    <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Concept</th>
+                <th>Sales Rep</th>
+                <th>App Date</th>
+                <th>App Number</th>
+                <th>Signature</th>
+                <th>Deposit Status</th>
+                <th>Required Documents</th>
+                <th>Progress</th>
+                <th>Admin Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+            <tr>
+            <td><a href="/projects/{{ project.id }}/"> {{project.full_name}}</a></td>
+            <td>{{project.concept}}</td>
+            <td>{{project.sales_rep}}</td>
+            <td>{{project.create_date}}</td>
+            <td>{{project.id}}</td>
+            <td>{{project.signature}}</td>
+            <td><a href="/application/{{project.id}}/deposit"><img src="https://finance.drssone.com/static/admin/img/icon-{% if project.is_paid%}yes.gif{%else%}no.gif{%endif%}"/></a></td>
+            <td><a href="/application/{{project.id}}/documents">{{project.is_up_to_date}}</a></td>
+            <td><div class="progress progress-striped progress-{{project.completion.status}}">
+                    <div class="bar" style="width: {{project.completion.percent}}%"></div></div>
+                    </td>
+                    <td><a class="btn" href="/admin/drss/project/{{project.id}}">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No projects are available.</p>
+{% endif %}
+</div>
+
+{% endblock %}

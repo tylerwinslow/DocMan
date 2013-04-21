@@ -34,6 +34,10 @@ class Department(models.Model):
 class Employee(models.Model):
     user = models.OneToOneField(User)
 
+    def full_name(self):
+        name = self.user.last_name + ", " + self.user.first_name
+        return name
+
     def __unicode__(self):
         name = self.user.last_name + ", " + self.user.first_name
         return name
@@ -76,12 +80,12 @@ class Project(models.Model):
     create_date = models.DateTimeField('Date Created', auto_now_add=True)
     concept = models.ForeignKey(Concept, verbose_name="Store Concept",  help_text="Your preferred retail concept.")
     sales_rep = models.ForeignKey(SalesPerson,  related_name='assigned_sales_rep', verbose_name="Development Director")
-    customers_user = models.ForeignKey(User,  related_name='customers_user',verbose_name="Customers User", null=True, blank=True)
+    customers_user = models.ForeignKey(User,  related_name='customers_user', verbose_name="Customers User", null=True, blank=True)
     funding_advisor = models.ForeignKey(FinanceAdvisor, related_name='assigned_funding_advisor', null=True, blank=True, verbose_name="Funding Advisor")
     needs_partner = models.BooleanField("Request a Partner")
     store_size = models.IntegerField("Store Square Footage", null=True)
     package_price = models.DecimalField("Package Price", max_digits=10, decimal_places=2)
-    advertising_source = models.ForeignKey(AdvertisingSource,  verbose_name="Advertising Source", help_text="Where did you hear about us?")
+    advertising_source = models.ForeignKey(AdvertisingSource,  verbose_name="Where did you hear about us?")
     opening_location = models.CharField("Store Location", max_length=64)
     package_price = models.DecimalField("Package Price", max_digits=10, decimal_places=2, blank=True)
     deposit_amount = models.DecimalField("Store Deposit Amount", max_digits=10, decimal_places=2, blank=True, default=1500)
@@ -146,11 +150,30 @@ class Project(models.Model):
         documents = self.document_set.all()
         document_list = ""
         for document in documents:
-            document_list = document_list + document.title + ", "
+            if not bool(document.document_file):
+                document_list = document_list + document.title + ", "
         return document_list
     is_up_to_date.admin_order_field = 'is_up_to_date'
     is_up_to_date.boolean = False
     is_up_to_date.short_description = 'Documents Expected'
+
+    def completion(self):
+        percent = 25
+        status = 'danger'
+        if self.is_paid():
+            percent = percent + 25
+            status = 'warning'
+            if len(self.is_up_to_date()) == 0:
+                percent = percent + 50
+                status = 'success'
+                return {'percent': percent, 'status': status}
+        document_progress = 50 - (2*len(self.is_up_to_date()))
+        percent = percent + document_progress
+        return {'percent': percent, 'status': status}
+
+    def full_name(self):
+        full_name = self.first_name + " " + self.last_name
+        return full_name
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         is_new = self.id is None
@@ -168,12 +191,13 @@ class Project(models.Model):
                 Document.objects.create(project=self, title='IRA')
             if self.financing_stocksbonds > 0:
                 Document.objects.create(project=self, title='Stocks and Bonds')
-            user = User.objects.create_user(self.email, self.email, 'random')
-            user.last_name = self.last_name
-            user.first_name = self.first_name
-            user.save()
-            self.customers_user = user
-            self.save()
+            if not User.objects.filter(username=self.email).count():
+                user = User.objects.create_user(self.email, self.email, 'random')
+                user.last_name = self.last_name
+                user.first_name = self.first_name
+                user.save()
+                self.customers_user = user
+                self.save()
 
     def __unicode__(self):
         full_name = self.last_name + ", " + self.first_name
@@ -204,11 +228,19 @@ class Comment(models.Model):
         return self.body
 
 
+class DocumentType(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+
+    def __unicode__(self):
+        return self.title
+
+
 class Document(models.Model):
     title = models.CharField(max_length=100)
     project = models.ForeignKey(Project)
     request_date = models.DateTimeField('date requested', auto_now_add=True)
-    submit_date = models.DateTimeField('submit date', null=True, blank=True)
+    submit_date = models.DateTimeField('submit date', null=True, blank=True, auto_now=True)
     submission_ip = models.IPAddressField(null=True, blank=True)
     document_file = models.FileField(upload_to="documents", null=True, blank=True)
 
@@ -226,9 +258,9 @@ class Document(models.Model):
         super(Document, self).save(*args, **kwargs)
         if is_new:
             subject = self.title
-            message = self.title
-            to_address = [self.project.email]
-            send_mail(subject, message, 'finance@drssmail.com', to_address, fail_silently=False)
+            #message = self.title
+            #to_address = [self.project.email]
+            #send_mail(subject, message, 'finance@drssmail.com', to_address, fail_silently=False)
 
     def __unicode__(self):
         return self.title

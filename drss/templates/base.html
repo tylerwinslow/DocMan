@@ -18,9 +18,12 @@
             }
         </style>
         <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-responsive.min.css">
-        <link rel="stylesheet" href="/static/bootstrap/css/main.css">
+        <link rel="stylesheet" href="/static/css/main.css">
 
         <script src="/static/bootstrap/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script>
+        user="{{ user }}"
+        </script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -40,8 +43,8 @@
                     <a class="brand" href="#">DRSS Store Application</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#about">Get Help</a></li>
+                            <li class="active"><a href="/projects">Home</a></li>
+                            <li><a href="/support">Get Help</a></li>
                         </ul>
                         <ul class="nav pull-right">
                         {% block userlinks %}
@@ -50,12 +53,13 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user }} <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{% url auth_logout %}">Log Out</a></li>
+                                    <li><a href="/logout?next={{request.get_full_path}}">Log Out</a></li>
                                 </ul>
                             </li>
                             
                         {% else %}
                             <li><a href="/api-auth/login/?next={{request.get_full_path}}">Log in</a></li>
+                            <li><a href="/login/google-oauth2?next={{request.get_full_path}}">Connect via Google</a></li>
                         {% endif %}
                     {% endblock %}
 </ul>
@@ -68,6 +72,7 @@
 
             <!-- Main hero unit for a primary marketing message or call to action -->
             {% block heroUnit %}{% endblock %}
+            {% block message %}{% endblock %}
             <!-- Example row of columns -->
             <div class="row">
                 <div class= "span12">
@@ -85,7 +90,7 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-
+        <script src="/static/bootstrap/js/vendor/handlebars.js"></script>
         <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 
         <script src="/static/js/main.js"></script>

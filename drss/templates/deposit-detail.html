@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block message %}
+<div class="alert alert-info">
+  Use this form to receive paper payments into Easy Trak.
+  </p>
+</div>
+{% endblock %}
+{% block content %}
+   {% crispy form %}
+{% endblock %}

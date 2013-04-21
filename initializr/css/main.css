@@ -4,7 +4,10 @@
    Author's custom styles
    ========================================================================== */
 
-
+#notes{
+	max-height:500px;
+	overflow:auto;
+}
 
 
 

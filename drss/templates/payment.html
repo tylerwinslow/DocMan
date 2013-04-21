@@ -6,7 +6,7 @@
 {% block content %}
 <h1>Your fully refundable deposit amount is ${{amount}}</h1>
 	<p>Click Pay Now to pay using E-Check or Credit/Debit card via our secure ACH Direct provider.</p>
-   <form method='Redirect' class ="form" action= 'https://swp.paymentsgateway.net/co/default.aspx'>
+   <form method='Post' class ="form" action= 'https://swp.paymentsgateway.net/co/default.aspx'>
    <input type='hidden' name='pg_api_login_id' value='{{secret_key}}'/>
    <input type='hidden' name='pg_billto_postal_name_first' value='{{last_name}}'/>
 <input type='hidden' name='pg_billto_postal_name_last' value='{{first_name}}'/>
@@ -17,6 +17,8 @@
 <input type='hidden' name='pg_billto_postal_city' value='{{zip_code}}'/>
 <input type='hidden' name='pg_billto_postal_street_line1' value='{{address}}'/>
 <input type='hidden' name='pg_total_amount' value='{{amount}}' />
+<input type='hidden' name='pg_merchant_data_1' value='{{customer_id}}' />
+<input type='hidden' name='pg_return_url' value='https://finance.drssone.com/payment_complete/' />
    <input type='submit' class ="btn btn-primary" value='Pay Now'>
    </form>
 {% endblock %}
