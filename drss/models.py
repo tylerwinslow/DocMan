@@ -15,6 +15,14 @@ class Concept(models.Model):
         return self.title
 
 
+class Status(models.Model):
+    title = models.CharField(max_length=100)
+    weight = models.IntegerField()
+
+    def __unicode__(self):
+        return self.title
+
+
 class PackageOption(models.Model):
     title = models.CharField(max_length=100)
     amount = models.IntegerField()
@@ -67,6 +75,9 @@ class AdvertisingSource(models.Model):
     def __unicode__(self):
         return self.campaign
 
+    class Meta:
+        ordering = ('campaign',)
+
 
 class Project(models.Model):
     MORNING = 'Morning'
@@ -79,6 +90,8 @@ class Project(models.Model):
     )
     create_date = models.DateTimeField('Date Created', auto_now_add=True)
     concept = models.ForeignKey(Concept, verbose_name="Store Concept",  help_text="Your preferred retail concept.")
+    status = models.ForeignKey(Status, verbose_name="Status", null=True, blank=True)
+    refund_date = models.DateField('Refund Date', null=True, blank=True)
     sales_rep = models.ForeignKey(SalesPerson,  related_name='assigned_sales_rep', verbose_name="Development Director")
     customers_user = models.ForeignKey(User,  related_name='customers_user', verbose_name="Customers User", null=True, blank=True)
     funding_advisor = models.ForeignKey(FinanceAdvisor, related_name='assigned_funding_advisor', null=True, blank=True, verbose_name="Funding Advisor")
@@ -132,43 +145,64 @@ class Project(models.Model):
     place_of_employment_partner = models.CharField("Partner's Place of Employment", max_length=128, null=True, blank=True)
     years_at_job_partner = models.IntegerField("Partner's Years at Job", null=True, blank=True)
     annual_salary_partner = models.IntegerField("Partner's Salary", null=True, blank=True)
-    signature = models.CharField("Signature", max_length=100, default="", null=True)
+    signature = models.CharField("Signature", max_length=100, default="", null=True, blank=True)
 
     def is_paid(self):
         payments = self.payment_set.all()
-        total_payments = 0
-        for payment in payments:
-            total_payments = total_payments + payment.payment_amount
-        if total_payments >= self.deposit_amount:
-            return True
-        return False
+        if payments:
+            if payments[0].bounce:
+                return 3
+            else:
+                return 1
+        else:
+            return 2
     is_paid.admin_order_field = 'is_paid'
-    is_paid.boolean = True
+    is_paid.boolean = False
     is_paid.short_description = 'Has Deposit Been Paid?'
 
-    def is_up_to_date(self):
+    def doc_list(self):
         documents = self.document_set.all()
         document_list = ""
         for document in documents:
             if not bool(document.document_file):
                 document_list = document_list + document.title + ", "
-        return document_list
-    is_up_to_date.admin_order_field = 'is_up_to_date'
-    is_up_to_date.boolean = False
-    is_up_to_date.short_description = 'Documents Expected'
+        if len(document_list) == 0:
+            return False
+        else:
+            return document_list
+
+    def payment_info(self):
+        payments = self.payment_set.all()
+        if payments:
+            payment = payments[0]
+            payment_date = payment.payment_date.strftime('%m/%d/%y')
+            return payment_date
+        else:
+            return "No Payment."
+    payment_info.admin_field = 'payment_info'
+    payment_info.boolean = False
+    payment_info.short_description = 'Payment Info'
 
     def completion(self):
         percent = 25
         status = 'danger'
-        if self.is_paid():
+        if self.is_paid() == 1:
             percent = percent + 25
             status = 'warning'
-            if len(self.is_up_to_date()) == 0:
+            if not self.doc_list():
                 percent = percent + 50
                 status = 'success'
                 return {'percent': percent, 'status': status}
-        document_progress = 50 - (2*len(self.is_up_to_date()))
+        if self.doc_list():
+            doc_factor = len(self.doc_list())
+        else:
+            doc_factor = 0
+        document_progress = 50 - doc_factor
         percent = percent + document_progress
+        docs = self.document_set.all()
+        for doc in docs:
+            if doc.internal is True and bool(doc.document_file) is False:
+                status = 'danger'
         return {'percent': percent, 'status': status}
 
     def full_name(self):
@@ -179,6 +213,8 @@ class Project(models.Model):
         is_new = self.id is None
         super(Project, self).save(*args, **kwargs)
         if is_new:
+            Document.objects.create(project=self, title='Act Notes', internal=True)
+            Document.objects.create(project=self, title='SRTO', internal=True)
             if self. financing_cash > 0:
                 Document.objects.create(project=self, title='Cash')
             if self.financing_hloc > 0:
@@ -192,12 +228,17 @@ class Project(models.Model):
             if self.financing_stocksbonds > 0:
                 Document.objects.create(project=self, title='Stocks and Bonds')
             if not User.objects.filter(username=self.email).count():
-                user = User.objects.create_user(self.email, self.email, 'random')
+                user = User.objects.create_user(self.email, self.email, 'erF213')
                 user.last_name = self.last_name
                 user.first_name = self.first_name
                 user.save()
                 self.customers_user = user
                 self.save()
+            id = str(self.id)
+            subject = "A new DRSS Store Application has Been Created for You"
+            message = "To Complete your Application and pay your deposit. Please visit https://finance.drssone.com/application/"+id+"/ You may login with username:"+self.email+" and password: erX613"
+            to_address = [self.email]
+            send_mail(subject, message, 'deposits@drssmail.com', to_address, fail_silently=False)
 
     def __unicode__(self):
         full_name = self.last_name + ", " + self.first_name
@@ -205,9 +246,20 @@ class Project(models.Model):
 
 
 class Payment(models.Model):
+    CC = 'Credit Card'
+    CHK = 'Check'
+    CCHK = 'Cashiers Check'
+    CASH = 'Cash'
+    PAYMENT_TYPE_CHOICES = (
+        (CC, 'Credit Card'),
+        (CHK, 'Check'),
+        (CCHK, 'Cashiers Check'),
+        (CASH, 'Cash')
+    )
     payment_amount = models.DecimalField(max_digits=10,  decimal_places=2)
     payment_date = models.DateTimeField('Deposit Date', auto_now_add=True)
-    payment_type = models.CharField(max_length=100)
+    payment_type = models.CharField(max_length=100, choices=PAYMENT_TYPE_CHOICES)
+    bounce = models.BooleanField('Has Bounced', default=False)
     trace_number = models.CharField(max_length=100)
     last_four_num = models.CharField(max_length=100)
     project = models.ForeignKey(Project)
@@ -235,10 +287,14 @@ class DocumentType(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        ordering = ('title',)
+
 
 class Document(models.Model):
     title = models.CharField(max_length=100)
     project = models.ForeignKey(Project)
+    internal = models.BooleanField(blank=True, default=False)
     request_date = models.DateTimeField('date requested', auto_now_add=True)
     submit_date = models.DateTimeField('submit date', null=True, blank=True, auto_now=True)
     submission_ip = models.IPAddressField(null=True, blank=True)
@@ -248,19 +304,13 @@ class Document(models.Model):
         return os.path.basename(self.document_file.name)
 
     def isCompleted(self):
-        if self.document_file is None:
+        if bool(self.document_file) is False:
             return False
         else:
             return True
 
-    def save(self, force_insert=False, force_update=False, *args, **kwargs):
-        is_new = self.id is None
-        super(Document, self).save(*args, **kwargs)
-        if is_new:
-            subject = self.title
-            #message = self.title
-            #to_address = [self.project.email]
-            #send_mail(subject, message, 'finance@drssmail.com', to_address, fail_silently=False)
-
     def __unicode__(self):
         return self.title
+
+    class Meta:
+        ordering = ('request_date',)

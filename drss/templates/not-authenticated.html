@@ -5,6 +5,7 @@
                 <h1>Please Log In</h1>
                 <p>You must log in to view this application.</p>
                 <a href="/api-auth/login/?next={{request.get_full_path}}" class="btn btn-primary">Log in</a>
+                <a href="/login/google-oauth2/?next={{request.get_full_path}}" class="btn">Connect with Google</a>
             </div>
 {% endblock %}
 {% block content %}

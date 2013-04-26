@@ -1,5 +1,38 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% block menubar %}
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">DRSS Store Application</a>
+                   
+                        <ul class="nav pull-right">
+                        
+                        {% if user.is_authenticated %}
+                        
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user }} <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/logout?next={{request.get_full_path}}">Log Out</a></li>
+                                </ul>
+                            </li>
+                            
+                        {% else %}
+                            <li><a href="/api-auth/login/?next={{request.get_full_path}}">Log in</a></li>
+                            <li><a href="/login/google-oauth2?next={{request.get_full_path}}">Connect via Google</a></li>
+                        {% endif %}
+                   
+</ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+ {% endblock %}
  {% block heroUnit %}
 <div class="hero-unit">
                 <h1>Store Application</h1>
@@ -8,10 +41,11 @@
 {% endblock %}
 {% block message %}
 <div class="alert alert-info">
-  Please complete the following store application as accurately as you can
+  <p>Please complete the following store application as accurately as you can
   our finance department will use the information to identify possible funding paths for your store.</p>
 </div>
 {% endblock %}
 {% block content %}
+ {{ form.non_field_errors }}
    {% crispy form %}
 {% endblock %}

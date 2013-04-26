@@ -14,7 +14,7 @@
             <div class="span6">
         <div class="well">
         <h4>Deposit</h4>
-        {% if project.is_paid %}
+        {% if project.is_paid == 1 %}
         <p class="text-success">Payment Received</p>
         {%for payment in payments%}
         <a href="https://www.paymentsgateway.net/vt3/login.aspx?ReturnUrl=/vt3/Default.aspx"><p><i class="icon-tag"></i> {{payment.payment_type}} Transaction ID:{{payment.trace_number}}</p></a>
@@ -48,7 +48,9 @@
         <p><strong>Annual Salary:</strong> {{project.annual_salary}}</p>
         </div>
         </div>
+        
         <div class="row">
+            <div class="span12">
         <h3>Finance Information</h3>
         <h4>Credit Score: {{project.credit_score}}</h4>
          <table class="table table-striped">
@@ -102,7 +104,10 @@
                 </tbody>
             </table>
         </div>
+        </div>
+
         <div class='row'>
+            <div class="span12">
             <h3>Documents</h3>
             <div class="btn-group">
   <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
@@ -128,8 +133,10 @@
       <img src="/static/img/application_pdf.png" alt="">
         <h4>{{document.title}}</h4>
         <p>Received on {{document.submit_date}}</p>
+<form>
         <p><a href="{{ MEDIA_URL }}{{ document.document_file}}" target="_blank" class="btn btn-primary"><i class="icon-print icon-white"></i> Print</a>
         </p>
+</form>
     </div>
   </li>
 {%else%}
@@ -140,11 +147,8 @@
         <p>Requested on {{document.request_date}}</p>
         <form method="post" enctype="multipart/form-data" action="/documents/{{document.id}}/">
             {% csrf_token %}
-            <input type="file" name="docfile" id="fileField" class="hidden" data-id={{document.id}} />
-            <div class="input-append">
-  <input class="span1" class="fileLocation" type="text">
+            <input type="file" name="docfile" class="hidden fileField" data-id={{document.id}} />
   <button class="btn uploadButton" type="button" data-id={{document.id}}>Add File</button>
-</div>
             <input type="submit" class="btn btn-primary" name="submit" value="Upload" />
         </form>
     </div>
@@ -153,6 +157,7 @@
     {%endfor%}
 
 </ul>
+</div>
         </div>
 
         <div class='row'>

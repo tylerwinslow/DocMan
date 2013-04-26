@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+ {% block heroUnit %}
+<div class="hero-unit">
+                <h1>Store Application</h1>
+                <p>After completing the application it will be added to your dashboard, and an email will automatically be sent to your customer with instructions to sign and pay their deposit.</p>
+            </div>
+{% endblock %}
+{% block message %}
+<div class="alert alert-info">
+  Please complete the following store application as accurately as you can.</p>
+</div>
+{% endblock %}
+{% block content %}
+ {{ form.non_field_errors }}
+   {% crispy form %}
+{% endblock %}

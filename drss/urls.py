@@ -5,6 +5,7 @@ from drss import views
 urlpatterns = patterns('drss.views',
                        url(r'^$', 'api_root'),
                        url(r'^projects/$', views.project_list, name='project-list'),
+                       url(r'^projects/create$', views.project_create, name='project_create'),
                        url(r'^comments/$', views.CommentList.as_view(), name='comment-list'),
                        url(r'^documents/$', views.DocumentList.as_view(), name='document-list'),
                        url(r'^payments/$', views.PaymentList.as_view(), name='payment-list'),

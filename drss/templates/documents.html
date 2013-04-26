@@ -1,5 +1,38 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% block menubar %}
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">DRSS Store Application</a>
+                   
+                        <ul class="nav pull-right">
+                        
+                        {% if user.is_authenticated %}
+                        
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user }} <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/logout?next={{request.get_full_path}}">Log Out</a></li>
+                                </ul>
+                            </li>
+                            
+                        {% else %}
+                            <li><a href="/api-auth/login/?next={{request.get_full_path}}">Log in</a></li>
+                            <li><a href="/login/google-oauth2?next={{request.get_full_path}}">Connect via Google</a></li>
+                        {% endif %}
+                   
+</ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+ {% endblock %}
 {% block message %}
 <div class="alert alert-success">
   <strong>Requested Documents</strong> The following documents have been requested by your funding advisor.
@@ -17,11 +50,9 @@
         <p>Requested on {{document.request_date}}</p>
         <form method="post" enctype="multipart/form-data" action="/documents/{{document.id}}/">
             {% csrf_token %}
-            <input type="file" name="docfile" id="fileField" class="hidden" data-id={{document.id}} />
-            <div class="input-append">
-  <input class="span1" class="fileLocation" type="text">
+            <input type="file" name="docfile" class="hidden fileField" data-id={{document.id}} />
   <button class="btn uploadButton" type="button" data-id={{document.id}}>Add File</button>
-</div>
+
             <input type="submit" class="btn btn-primary" name="submit" value="Upload" />
         </form>
     </div>

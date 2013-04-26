@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
  
 {% block content %}
-<div class="row">
-<ul class="nav nav-pills">
+<!-- <ul class="nav nav-pills">
               <li class="dropdown">
                 <a class="dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" href="#">Sales Person<b class="caret"></b></a>
                 <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
@@ -27,15 +26,17 @@
                    {% endfor %}
                 </ul>
               </li>
-            </ul>
+            </ul> -->
             <h3>{{salesfilter}}</h3>
     {% if projects %}
     <table class="table table-striped">
             <thead>
             <tr>
                 <th>Full Name</th>
+                <th>Project Status</th>
                 <th>Concept</th>
                 <th>Sales Rep</th>
+                <th>Funding Advisor</th>
                 <th>App Date</th>
                 <th>App Number</th>
                 <th>Signature</th>
@@ -49,13 +50,17 @@
                 {% for project in projects %}
             <tr>
             <td><a href="/projects/{{ project.id }}/"> {{project.full_name}}</a></td>
+            <td>{{project.status}}</td>
             <td>{{project.concept}}</td>
             <td>{{project.sales_rep}}</td>
+            <td>{{project.funding_advisor}}</td>
             <td>{{project.create_date}}</td>
             <td>{{project.id}}</td>
-            <td>{{project.signature}}</td>
-            <td><a href="/application/{{project.id}}/deposit"><img src="https://finance.drssone.com/static/admin/img/icon-{% if project.is_paid%}yes.gif{%else%}no.gif{%endif%}"/></a></td>
-            <td><a href="/application/{{project.id}}/documents">{{project.is_up_to_date}}</a></td>
+            <td>{%if project.signature%}{{project.signature}}{%else%}<a href="/application/{{project.id}}">Send to Customer</a>{%endif%}</td>
+            <td><a href="/application/{{project.id}}/deposit"><img src="https://finance.drssone.com/static/img/{% if project.is_paid == 1%}checkmark_32.png{%elif project.is_paid == 2%}error_32.png{%else%}warning_32.png{%endif%}"/></a></td>
+            <td>{% if project.doc_list %}<a href="#" class="pop-over" data-toggle="popover" title="" data-content="<a target='_blank' href='/application/{{project.id}}/documents'>{{project.doc_list}}</a>" data-original-title="Documents Needed">
+                    <i class="icon-info-sign"></i>
+                </a>{% endif%}</td>
             <td><div class="progress progress-striped progress-{{project.completion.status}}">
                     <div class="bar" style="width: {{project.completion.percent}}%"></div></div>
                     </td>
@@ -67,6 +72,5 @@
 {% else %}
     <p>No projects are available.</p>
 {% endif %}
-</div>
 
 {% endblock %}

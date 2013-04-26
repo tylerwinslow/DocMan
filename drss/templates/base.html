@@ -23,6 +23,7 @@
         <script src="/static/bootstrap/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
         <script>
         user="{{ user }}"
+        project="{{ project.id }}"
         </script>
     </head>
     <body>
@@ -31,7 +32,7 @@
         <![endif]-->
 
         <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
-
+{% block menubar %}
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
@@ -45,9 +46,10 @@
                         <ul class="nav">
                             <li class="active"><a href="/projects">Home</a></li>
                             <li><a href="/support">Get Help</a></li>
+                            <li><a href="/projects/create">Create Application</a></li>
                         </ul>
                         <ul class="nav pull-right">
-                        {% block userlinks %}
+                        
                         {% if user.is_authenticated %}
                         
                             <li class="dropdown">
@@ -61,13 +63,13 @@
                             <li><a href="/api-auth/login/?next={{request.get_full_path}}">Log in</a></li>
                             <li><a href="/login/google-oauth2?next={{request.get_full_path}}">Connect via Google</a></li>
                         {% endif %}
-                    {% endblock %}
+                   
 </ul>
                     </div><!--/.nav-collapse -->
                 </div>
             </div>
         </div>
-
+ {% endblock %}
         <div class="container">
 
             <!-- Main hero unit for a primary marketing message or call to action -->

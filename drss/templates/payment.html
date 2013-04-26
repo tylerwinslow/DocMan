@@ -1,12 +1,48 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% block menubar %}
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">DRSS Store Application</a>
+                   
+                        <ul class="nav pull-right">
+                        
+                        {% if user.is_authenticated %}
+                        
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user }} <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/logout?next={{request.get_full_path}}">Log Out</a></li>
+                                </ul>
+                            </li>
+                            
+                        {% else %}
+                            <li><a href="/api-auth/login/?next={{request.get_full_path}}">Log in</a></li>
+                            <li><a href="/login/google-oauth2?next={{request.get_full_path}}">Connect via Google</a></li>
+                        {% endif %}
+                   
+</ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+ {% endblock %}
  {% block heroUnit %}
 
 {% endblock %}
 {% block content %}
 <h1>Your fully refundable deposit amount is ${{amount}}</h1>
+<div class="span2"><img src="/static/img/guarantee-seal.png"/></div>
+<div class="span8">
 	<p>Click Pay Now to pay using E-Check or Credit/Debit card via our secure ACH Direct provider.</p>
-   <form method='Post' class ="form" action= 'https://swp.paymentsgateway.net/co/default.aspx'>
+<div class="alert alert-information">If your deposit amount is different from the amount shown above please contact your National Development Director so that they may apply the correct deposit amount to your account.</div>
+   <form method='Redirrect' class ="form" action= 'https://swp.paymentsgateway.net/co/default.aspx'>
    <input type='hidden' name='pg_api_login_id' value='{{secret_key}}'/>
    <input type='hidden' name='pg_billto_postal_name_first' value='{{last_name}}'/>
 <input type='hidden' name='pg_billto_postal_name_last' value='{{first_name}}'/>
@@ -18,9 +54,12 @@
 <input type='hidden' name='pg_billto_postal_street_line1' value='{{address}}'/>
 <input type='hidden' name='pg_total_amount' value='{{amount}}' />
 <input type='hidden' name='pg_merchant_data_1' value='{{customer_id}}' />
-<input type='hidden' name='pg_return_url' value='https://finance.drssone.com/payment_complete/' />
+<!-- <input type='hidden' name='pg_return_url' value='https://finance.drssone.com/payment_complete/' /> -->
    <input type='submit' class ="btn btn-primary" value='Pay Now'>
-   </form>
+   </form></div>
+
+	
+
 {% endblock %}
 
 
