@@ -1,12 +1,29 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from rest_framework import generics
-from django.conf import settings
-from drss.models import Project, Comment, Document, Payment, SalesPerson, FinanceAdvisor, Concept, DocumentType
+from django_easyfilters import FilterSet
+from drss.models import Project, Comment, Document, Payment, DocumentType
 from drss.forms import NewApplication, NewDeposit, FileUpload, SalesApplication
-from drss.serializers import CommentSerializer, DocumentSerializer, PaymentSerializer
+from drss.serializers import CommentSerializer, DocumentSerializer, PaymentSerializer, ProjectSerializer
+
+
+class ProjectFilterSet(FilterSet):
+    fields = [
+        'create_date',
+        'concept',
+        'status',
+        'sales_rep',
+        'funding_advisor'
+
+    ]
+
+
+class PaymentFilterSet(FilterSet):
+    fields = [
+        'payment_date',
+    ]
 
 
 def api_root(request):
@@ -100,8 +117,6 @@ def payment_complete(request):
 
 def project_list(request):
     if request.user.is_authenticated() and request.user.is_staff:
-#        sales_filter = request.GET.get('sales', "")
-#        funding_filter = request.GET.get('funding', "")
         group = request.user.groups.values_list('name', flat=True)
         the_filter = request.user.username
         if group:
@@ -111,13 +126,23 @@ def project_list(request):
             elif group[0] == "Funding Advisor":
                 funding_filter = request.user.username
                 projects = Project.objects.filter(funding_advisor__user__username__startswith=funding_filter).order_by('-create_date')
+            else:
+                projects = Project.objects.all().order_by('-create_date')
         else:
             projects = Project.objects.all().order_by('-create_date')
-        salespersons = SalesPerson.objects.all()
-        fundingadvisors = FinanceAdvisor.objects.all()
-        concepts = Concept.objects.all()
-        context = {'projects': projects, 'salespersons': salespersons, 'fundingadvisors': fundingadvisors, 'concepts': concepts, 'salesfilter': the_filter}
+        projectsfilter = ProjectFilterSet(projects, request.GET)
+        context = {'projects': projectsfilter.qs, 'projectsfilter': projectsfilter, 'salesfilter': the_filter}
         return render(request, 'project_list.html', context)
+    else:
+        return render(request, 'not-authenticated.html')
+
+
+def sales_deposit_log(request):
+    if request.user.is_authenticated() and request.user.is_staff:
+        payments = Payment.objects.all().order_by('-payment_date')
+        paymentsfilter = PaymentFilterSet(payments, request.GET)
+        context = {'payments': paymentsfilter.qs, 'paymentsfilter': paymentsfilter}
+        return render(request, 'sales_deposit_log.html', context)
     else:
         return render(request, 'not-authenticated.html')
 
@@ -209,3 +234,9 @@ class PaymentDetail(generics.RetrieveUpdateDestroyAPIView):
 
     model = Payment
     serializer_class = PaymentSerializer
+
+
+class ProjectApi(generics.RetrieveUpdateDestroyAPIView):
+
+    model = Project
+    serializer_class = ProjectSerializer

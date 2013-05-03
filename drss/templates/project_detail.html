@@ -1,36 +1,19 @@
 {% extends 'base.html' %}
- 
+ {%load humanize%}
 {% block content %}
 <div class="row">
         <div class='span6'>
-        <h1>{{project.first_name}} {{project.last_name}}</h1>
+        <h1>{{project.first_name}} {{project.last_name}}</h1></a>
+        
         <p><strong>Application Number:</strong>{{project.id}}</p>
         <p><strong>SalesRep:</strong> {{project.sales_rep}}</p>
         <p><strong>Funding Advisor:</strong> {{project.funding_advisor}}</p>
         <p><strong>Concept:</strong> {{project.concept}}</p>
-        <p><strong>SQFT:</strong> {{project.store_size}}</p>
+        <p><strong>SQFT:</strong> <a href="#" id="store_size" class = "editable">{{project.store_size}}</a></p>
         </div>       
-
-            <div class="span6">
-        <div class="well">
-        <h4>Deposit</h4>
-        {% if project.is_paid == 1 %}
-        <p class="text-success">Payment Received</p>
-        {%for payment in payments%}
-        <a href="https://www.paymentsgateway.net/vt3/login.aspx?ReturnUrl=/vt3/Default.aspx"><p><i class="icon-tag"></i> {{payment.payment_type}} Transaction ID:{{payment.trace_number}}</p></a>
-        {%endfor%}
-        {% else %}
-        <p class="text-warning">Awaiting Payment</p>
-        <a href="deposit" class="btn"> Add a Payment</a>
-        {% endif %}
-        </div>
-    </div>
-</div>
-    <div class="row">
-        <div class="progress progress-striped active progress-{{project.completion.status}}">
-                    <div class="bar" style="width: {{project.completion.percent}}%"></div></div>
+        
         <div class ="span6">
-        <h3>Contact Information</h2>
+        <h3>Contact Information</h3>
             <address>
   <strong>{{project.first_name}} {{project.last_name}}</strong><br>
   {{project.address}}<br>
@@ -38,128 +21,39 @@
   <a href="mailto:#">{{project.email}}</a><br>
   <abbr title="Phone">P:</abbr> {{project.home_phone}}
 </address>
-
-        </div>
-        <div class ="span6">
-        <h3>Employment Information</h3>
-        <p><strong>Social Security Number:</strong> {{project.social_security}}</p>
-        <p><strong>Place of Employment:</strong> {{project.place_of_employment}}</p>
-        <p><strong>Years at Job:</strong> {{project.years_at_job}}</p>
-        <p><strong>Annual Salary:</strong> {{project.annual_salary}}</p>
-        </div>
-        </div>
-        
-        <div class="row">
-            <div class="span12">
-        <h3>Finance Information</h3>
-        <h4>Credit Score: {{project.credit_score}}</h4>
-         <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>
-                        Asset
-                    </th>
-                    <th>
-                        Value
-                    </th>
-                    <th>
-                        Asset
-                    </th>
-                    <th>
-                        Value
-                    </th>
-                    <th>
-                        Asset
-                    </th>
-                    <th>
-                        Value
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                <td>Cash</td>
-                <td>{{project.financing_cash}}</td>
-                <td>Lines of Credit</td>
-                <td>{{project.financing_loc}}</td>
-                <td>Home Equity (HLOC)</td>
-                <td>{{project.financing_hloc}}</td>
-                </tr>
-                <tr>
-                <td>401K</td>
-                <td>{{project.financing_401k}}</td>
-                <td>Pension</td>
-                <td>{{project.financing_pension}}</td>
-                <td>IRA</td>
-                <td>{{project.financing_ira}}</td>
-                </tr>
-                <tr>
-                <td>Stocks/Bonds</td>
-                <td>{{project.financing_stocksbonds}}</td>
-                <td>CD</td>
-                <td>{{project.financing_cd}}</td>
-                <td>Life Insurance</td>
-                <td>{{project.financing_lifeinsurance}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        </div>
-
-        <div class='row'>
-            <div class="span12">
-            <h3>Documents</h3>
-            <div class="btn-group">
-  <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
-    Request Documents
-    <span class="caret"></span>
-  </a>
-
-  <ul class="dropdown-menu" id="documentSelect">
-    {% for documenttype in documenttypes %}
-       <li><a href="#">{{ documenttype.title }}</a></li>
-       {% endfor %}
-  </ul>
+ <p><strong>Social Security Number:</strong> {{project.social_security}}</p>
+ <p><strong>Date of Birth:</strong> {{project.date_of_birth}}</p>
+        </div>           
 </div>
-<p><small>On request of documents, notification is sent to client, sales represntative, and finance representative.</small></p>    
-<div class="alert alert-error hidden" id="documentError">Something has gone wrong.</div>
-
-  <ul class="thumbnails" id="documents">
-
-  {% for document in documents %}
-    {% if document.document_file %}
- <li class="span2">
-    <div class="thumbnail">
-      <img src="/static/img/application_pdf.png" alt="">
-        <h4>{{document.title}}</h4>
-        <p>Received on {{document.submit_date}}</p>
-<form>
-        <p><a href="{{ MEDIA_URL }}{{ document.document_file}}" target="_blank" class="btn btn-primary"><i class="icon-print icon-white"></i> Print</a>
-        </p>
-</form>
-    </div>
-  </li>
-{%else%}
- <li class="span2">
-    <div class="thumbnail">
-      <img src="/static/img/unknown.png" alt="">
-        <h4>{{document.title}}</h4>
-        <p>Requested on {{document.request_date}}</p>
-        <form method="post" enctype="multipart/form-data" action="/documents/{{document.id}}/">
-            {% csrf_token %}
-            <input type="file" name="docfile" class="hidden fileField" data-id={{document.id}} />
-  <button class="btn uploadButton" type="button" data-id={{document.id}}>Add File</button>
-            <input type="submit" class="btn btn-primary" name="submit" value="Upload" />
-        </form>
-    </div>
-  </li>
-    {% endif %}
-    {%endfor%}
-
+<ul class="nav nav-tabs" id="myTab">
+  <li class="active"><a href="#finance" data-toggle="tab">Finance</a></li>
+  <li><a href="#site_location" data-toggle="tab">Site Location</a></li>
+  <li><a href="#lease-negotiation" data-toggle="tab">Lease Negotiation</a></li>
+  <li><a href="#build-out" data-toggle="tab">Build Out</a></li>
+  <li><a href="#profile" data-toggle="tab">Client Profile</a></li>
+  <li><a href="#contact-history" data-toggle="tab">Contact</a></li>
 </ul>
-</div>
-        </div>
+ 
+<div class="tab-content">
+  <div class="tab-pane active" id="finance">
+    {% include "mixins/finance.html" %}  
+  </div>
+  <div class="tab-pane" id="site_location">
+{% include "mixins/site_location.html" %} 
+  </div>
+  <div class="tab-pane" id="lease-negotiation">
+{% include "mixins/lease_negotiation.html" %}
+  </div>
+  <div class="tab-pane" id="build-out">
 
+  </div>
+  <div class="tab-pane" id="profile">
+
+  </div>
+  <div class="tab-pane" id="contact-history">
+{% include "mixins/contact.html" %}
+  </div>
+</div>
         <div class='row'>
             <h3>Notes</h3>
 <form id="addNoteForm">

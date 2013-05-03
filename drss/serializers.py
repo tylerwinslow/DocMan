@@ -15,8 +15,8 @@ class ProjectSerializer(serializers.ModelSerializer):
                   'home_phone', 'cell_phone', 'fax_number', 'credit_score', 'place_of_employment', 'years_at_job', 'annual_salary',
                   'opening_location', 'deposit_amount', 'package_price', 'advertising_source',
                   'financing_cash', 'financing_loc', 'financing_hloc', 'financing_401k', 'financing_pension', 'financing_ira', 'financing_stocksbonds',
-                  'financing_cd', 'financing_lifeinsurance',
-                  'comment_set', 'document_set', 'payment_set')
+                  'financing_cd', 'financing_lifeinsurance', 'financing_credit', 'financing_financing_auto_loan', 'financing_mortgage_primary', 'financing_mortgage_other',
+                  'financing_installment', 'financing_debts_other','comment_set', 'document_set', 'payment_set')
 
 
 class CommentSerializer(serializers.ModelSerializer):

@@ -5,17 +5,10 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'docMan.views.home', name='home'),
-    # url(r'^docMan/', include('docMan.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    url(r'', include('drss.urls')),
-    url(r'', include('social_auth.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', name="auth_logout"),
-)
+                       url(r'', include('drss.urls')),
+                       url(r'', include('drss_reporter.urls')),
+                       url(r'', include('social_auth.urls')),
+                       url(r'^admin/', include(admin.site.urls)),
+                       url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+                       url(r'^logout/$', 'django.contrib.auth.views.logout', name="auth_logout"),
+                       )

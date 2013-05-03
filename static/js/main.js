@@ -103,7 +103,31 @@ $('.uploadButton').on('click',function(e){
 $(".fileField[data-id='" + docId + "']").click();
 });
 
+$('.editable').editable({
+    type: 'text',
+    pk: window.project,
+    url: '/api/projects/' + window.project +"/",
+    title: 'Enter New Value',
+params: function(params) {
+    //originally params contain pk, name and value
+    name = params.name;
+    params[name] = params.value;
+    params._method = "PATCH";
+    return params;
+}
+});
+
+$('#edit-button').click(function(e) {
+    e.stopPropagation();
+    $('.editable').editable('toggleDisabled');
+});
+
 $(".pop-over").popover({animation: true,html:true,placement:"bottom"});
+
+$(".collapse").collapse({toggle:true});
+$( ".sortable" ).sortable();
+$( ".sortable" ).disableSelection();
+
 });
 
 

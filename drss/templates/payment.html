@@ -44,14 +44,14 @@
 <div class="alert alert-information">If your deposit amount is different from the amount shown above please contact your National Development Director so that they may apply the correct deposit amount to your account.</div>
    <form method='Redirrect' class ="form" action= 'https://swp.paymentsgateway.net/co/default.aspx'>
    <input type='hidden' name='pg_api_login_id' value='{{secret_key}}'/>
-   <input type='hidden' name='pg_billto_postal_name_first' value='{{last_name}}'/>
-<input type='hidden' name='pg_billto_postal_name_last' value='{{first_name}}'/>
+<!--    <input type='hidden' name='pg_billto_postal_name_first' value='{{first_name}}'/>
+<input type='hidden' name='pg_billto_postal_name_last' value='{{last_name}}'/> -->
 <input type='hidden' name='pg_billto_online_email' value='{{email}}'/>
-<input type='hidden' name='pg_billto_telecom_phone_number' value='{{home_phone}}'/>
+<!-- <input type='hidden' name='pg_billto_telecom_phone_number' value='{{home_phone}}'/>
 <input type='hidden' name='pg_billto_postal_postalcode' value='{{zip_code}}'/>
 <input type='hidden' name='pg_billto_postal_stateprov' value='{{state}}'/>
 <input type='hidden' name='pg_billto_postal_city' value='{{zip_code}}'/>
-<input type='hidden' name='pg_billto_postal_street_line1' value='{{address}}'/>
+<input type='hidden' name='pg_billto_postal_street_line1' value='{{address}}'/> -->
 <input type='hidden' name='pg_total_amount' value='{{amount}}' />
 <input type='hidden' name='pg_merchant_data_1' value='{{customer_id}}' />
 <!-- <input type='hidden' name='pg_return_url' value='https://finance.drssone.com/payment_complete/' /> -->

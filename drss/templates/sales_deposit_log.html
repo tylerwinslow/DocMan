@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
- {% load pagination_tags %}
 {% block content %}
 <!-- <ul class="nav nav-pills">
               <li class="dropdown">
@@ -27,61 +26,49 @@
                 </ul>
               </li>
             </ul> -->
-            {% autopaginate projects %}
-   <div class="accordion" id="accordion2">
+            <div class="accordion" id="accordion2">
   <div class="accordion-group">
     <div class="accordion-heading">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-        Project Filters
+        Deposit Filters
       </a>
     </div>
     <div id="collapseOne" class="accordion-body collapse in">
       <div class="accordion-inner">
-        {{ projectsfilter }}
+        {{ paymentsfilter }}
+        
       </div>
     </div>
   </div>
-</div>
-            {% paginate %}
-    {% if projects %}
+    {% if payments %}
     <table class="table table-striped">
             <thead>
             <tr>
-                <th>Full Name</th>
-                <th>Project Status</th>
-                <th>Over 50K Liquid Assets</th>
-                <th>Concept</th>
-                <th>Sales Rep</th>
-                <th>Funding Advisor</th>
-                <th>App Date</th>
-                <th>App Number</th>
-                <th>Signature</th>
-                <th>Deposit Status</th>
-                <th>Required Documents</th>
-                <th>Progress</th>
-                <th>Admin Edit</th>
+              <th>Date Deposit Received</th>
+              <th>Full Name</th>
+              <th>Concept</th>
+              <th>High Net Worth</th>
+              <th>SalesPerson</th>
+              <th>Deposit</th>
+              <th>Payment Info</th>
+              <th>State</th>
+              <th>Store Size</th>
+              <th>Lead Source</th>
             </tr>
             </thead>
             <tbody>
-                {% for project in projects %}
+                {% for payment in payments %}
             <tr>
-            <td><a href="/projects/{{ project.id }}/"> {{project.full_name}}</a></td>
-            <td>{{project.status}}</td>
-            <td>{{project.high_net_worth}}</td>
-            <td>{{project.concept}}</td>
-            <td>{{project.sales_rep}}</td>
-            <td>{{project.funding_advisor}}</td>
-            <td>{{project.create_date}}</td>
-            <td>{{project.id}}</td>
-            <td>{%if project.signature%}{{project.signature}}{%else%}<a href="/application/{{project.id}}">Send to Customer</a>{%endif%}</td>
-            <td><a href="/application/{{project.id}}/deposit"><img src="https://finance.drssone.com/static/img/{% if project.is_paid == 1%}checkmark_32.png{%elif project.is_paid == 2%}error_32.png{%else%}warning_32.png{%endif%}"/></a></td>
-            <td>{% if project.doc_list %}<a href="#" class="pop-over" data-toggle="popover" title="" data-content="<a target='_blank' href='/application/{{project.id}}/documents'>{{project.doc_list}}</a>" data-original-title="Documents Needed">
-                    <i class="icon-info-sign"></i>
-                </a>{% endif%}</td>
-            <td><div class="progress progress-striped progress-{{project.completion.status}}">
-                    <div class="bar" style="width: {{project.completion.percent}}%"></div></div>
-                    </td>
-                    <td><a class="btn" href="/admin/drss/project/{{project.id}}">Edit</a></td>
+            <td>{{payment.payment_date}}</td>
+            <td><a href="/projects/{{ payment.sdl.id }}/"> {{payment.sdl.name}}</a></td>
+            <td>{{payment.sdl.concept}}</td>
+            <td>{{payment.sdl.high_net_worth}}</td>
+            <td>{{payment.sdl.sales_rep}}</td>
+            <td>{{payment.payment_amount}}</td>
+            <td>{{payment.payment_type}} #{{payment.last_four_num}}</td>
+            <td>{{payment.sdl.state}}</td>
+            <td>{{payment.sdl.store_size}}</td>
+            <td>{{payment.sdl.lead_source}}</td>
             </tr>
             {% endfor %}
         </tbody>

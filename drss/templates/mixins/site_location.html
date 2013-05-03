@@ -1,0 +1,137 @@
+{%load humanize%}
+<div class="row">
+    <div class= "span12">
+        <div class="alert">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Warning!</strong> This Page Is Not Live, All Information Beyond Finance Is a Test.
+      </div>
+      <h3>Date Released to Real Estate: {{payments.0.payment_date}}</h3>
+      <div class="progress progress-striped active progress-{{project.completion.status}}">
+        <div class="bar" style="width: 15%"></div></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <h3>Site List</h3>
+        <table class="table">                
+            <thead>
+            <tr>
+                <th>
+                    Shopping Center Name
+                </th>
+                <th>
+                    City
+                </th>
+                <th>
+                    State
+                </th>
+                <th>
+                    Approval Status
+                </th>
+                <th>
+                    Most Recent Action
+                </th>
+                <th>
+                    Action Date
+                </th>
+            </tr>
+        </thead>
+        <tbody class= "sortable">
+            <tr>
+                <td><a href="#">Northridge Promenade</a></td>
+                <td>Northridge</td>
+                <td>California</td>
+                <td>Rejected by Client</td>
+                <td>Sent LOI to Landlord</td>
+                <td>5/2/2013</td>
+            </tr>
+            <tr>
+                <td><a href="#">Van Nuys Center</a></td>
+                <td>Van Nuys</td>
+                <td>California</td>
+                <td>Questions from RE Director</td>
+                <td>Sent LOI to Landlord</td>
+                <td>5/2/2013</td>
+            </tr>
+            <tr>
+                <td><a href="#">Lemon Creek Village</a></td>
+                <td>Walnut</td>
+                <td>California</td>
+                <td>Approved by RE Director</td>
+                <td>Sales Rep Called Land Lord</td>
+                <td>5/5/2013</td>
+            </tr>
+            <tr>
+                <td><a href="#">Corbin Parthenia Center</a></td>
+                <td>Northridge</td>
+                <td>California</td>
+                <td>Approved By Re Director</td>
+                <td>Sent LOI to Landlord</td>
+                <td>5/6/2013</td>
+            </tr>
+        </tbody>
+    </table>
+    <iframe width="100%" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps?ie=UTF8&amp;t=h&amp;ll=36.107924,-115.094147&amp;spn=0.266278,0.439453&amp;z=11&amp;output=embed"></iframe>
+    </div>
+</div>
+
+<div class='row'>
+    <div class="span12">
+        <h3>Documents</h3>
+        <div class="btn-group">
+          <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+            Request Documents
+            <span class="caret"></span>
+        </a>
+
+        <ul class="dropdown-menu" id="documentSelect">
+            {% for documenttype in documenttypes %}
+            <li><a href="#">{{ documenttype.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <p><small>On request of documents, notification is sent to client, sales represntative, and finance representative.</small></p>    
+    <div class="alert alert-error hidden" id="documentError">Something has gone wrong.</div>
+
+    <ul class="thumbnails" id="documents">
+
+      {% for document in documents %}
+      {% if document.document_file %}
+      <li class="span2">
+        <div class="thumbnail">
+          <img src="/static/img/application_pdf.png" alt="">
+          <h4>{{document.title}}</h4>
+          <p>Received on {{document.submit_date}}</p>
+          <form>
+            <p><a href="{{ MEDIA_URL }}{{ document.document_file}}" target="_blank" class="btn btn-primary"><i class="icon-print icon-white"></i> Print</a>
+            </p>
+        </form>
+    </div>
+</li>
+{%else%}
+<li class="span2">
+    <div class="thumbnail">
+      <img src="/static/img/unknown.png" alt="">
+      <h4>{{document.title}}</h4>
+      <p>Requested on {{document.request_date}}</p>
+      <form method="post" enctype="multipart/form-data" action="/documents/{{document.id}}/">
+        {% csrf_token %}
+        <input type="file" name="docfile" class="hidden fileField" data-id={{document.id}} />
+        <button class="btn uploadButton" type="button" data-id={{document.id}}>Add File</button>
+        <input type="submit" class="btn btn-primary" name="submit" value="Upload" />
+    </form>
+</div>
+</li>
+{% endif %}
+{%endfor%}
+
+</ul>
+
+</div>
+</div>     
+<div class="row">
+    <div class="span12">
+
+    </div>
+</div>

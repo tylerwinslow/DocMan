@@ -1,0 +1,190 @@
+{%load humanize%}
+<div class="row">
+    <div class= "span12">
+    <h3>Deposit Date: {{payments.0.payment_date}}</h3>
+        <div class="progress progress-striped active progress-{{project.completion.status}}">
+                    <div class="bar" style="width: {{project.completion.percent}}%"></div></div>
+                </div>
+<div class="span6">
+        <div class="well">
+        <h3>Deposit</h3>
+        {% if project.is_paid == 1 %}
+        <p class="text-success">Payment Received in the Amount of ${{project.deposit_amount}}</p>
+        {%for payment in payments%}
+        <a href="https://www.paymentsgateway.net/vt3/login.aspx?ReturnUrl=/vt3/Default.aspx"><p><i class="icon-tag"></i> {{payment.payment_type}} Transaction ID:{{payment.trace_number}}</p></a>
+        {%endfor%}
+        {% else %}
+        <p class="text-warning">Awaiting Payment of <a href="#" id="deposit_amount" class = "editable">{{project.deposit_amount}}</a></p>
+        <a href="deposit" class="btn">Add a Payment</a>
+        {% endif %}
+        </div>
+    </div>
+        <div class ="span6">
+        <h3>Employment Information</h3>
+        <h4>Credit Score: <a href="#" id="credit_score" class = "editable">{{project.credit_score}}</a></h4>
+        <p><strong>Place of Employment:</strong> {{project.place_of_employment}}</p>
+        <p><strong>Years at Job:</strong> {{project.years_at_job}}</p>
+        <p><strong>Annual Salary:</strong> {{project.annual_salary}}</p>
+
+        </div>
+        </div>
+   <div class='row'>
+            <div class="span12">
+            <h3>Documents</h3>
+            <div class="btn-group">
+  <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+    Request Documents
+    <span class="caret"></span>
+  </a>
+
+  <ul class="dropdown-menu" id="documentSelect">
+    {% for documenttype in documenttypes %}
+       <li><a href="#">{{ documenttype.title }}</a></li>
+       {% endfor %}
+  </ul>
+</div>
+<p><small>On request of documents, notification is sent to client, sales represntative, and finance representative.</small></p>    
+<div class="alert alert-error hidden" id="documentError">Something has gone wrong.</div>
+
+  <ul class="thumbnails" id="documents">
+
+  {% for document in documents %}
+    {% if document.document_file %}
+ <li class="span2">
+    <div class="thumbnail">
+      <img src="/static/img/application_pdf.png" alt="">
+        <h4>{{document.title}}</h4>
+        <p>Received on {{document.submit_date}}</p>
+<form>
+        <p><a href="{{ MEDIA_URL }}{{ document.document_file}}" target="_blank" class="btn btn-primary"><i class="icon-print icon-white"></i> Print</a>
+        </p>
+</form>
+    </div>
+  </li>
+{%else%}
+ <li class="span2">
+    <div class="thumbnail">
+      <img src="/static/img/unknown.png" alt="">
+        <h4>{{document.title}}</h4>
+        <p>Requested on {{document.request_date}}</p>
+        <form method="post" enctype="multipart/form-data" action="/documents/{{document.id}}/">
+            {% csrf_token %}
+            <input type="file" name="docfile" class="hidden fileField" data-id={{document.id}} />
+  <button class="btn uploadButton" type="button" data-id={{document.id}}>Add File</button>
+            <input type="submit" class="btn btn-primary" name="submit" value="Upload" />
+        </form>
+    </div>
+  </li>
+    {% endif %}
+    {%endfor%}
+
+</ul>
+</div>
+
+</div>     
+        <div class="row">
+            <div class="span12">
+        <h3>Balance Sheet</h3>
+        <h4>Total Assets: ${{project.balance_sheet_summary.total_assets|intcomma}}</h4>
+         <div class = "well">
+         <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        Asset
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                    <th>
+                        Asset
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                    <th>
+                        Asset
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td>Cash</td>
+                <td><a href="#" id="financing_cash" class = "editable">{{project.financing_cash|intcomma}}</a></td>
+                <td>Lines of Credit</td>
+                <td><a href="#" id="financing_loc" class = "editable">{{project.financing_loc|intcomma}}</a></td>
+                <td>Home Equity (HLOC)</td>
+                <td><a href="#" id="financing_hloc" class = "editable">{{project.financing_hloc|intcomma}}</a></td>
+                </tr>
+                <tr>
+                <td>401K</td>
+                <td><a href="#" id="financing_401k" class = "editable">{{project.financing_401k|intcomma}}</a></td>
+                <td>Pension</td>
+                <td><a href="#" id="financing_pension" class = "editable">{{project.financing_pension|intcomma}}</a></td>
+                <td>IRA</td>
+                <td><a href="#" id="financing_ira" class = "editable">{{project.financing_ira|intcomma}}</a></td>
+                </tr>
+                <tr>
+                <td>Stocks/Bonds</td>
+                <td><a href="#" id="financing_stocksbonds" class = "editable">{{project.financing_stocksbonds|intcomma}}</a></td>
+                <td>CD</td>
+                <td><a href="#" id="financing_cd" class = "editable">{{project.financing_cd|intcomma}}</a></td>
+                <td>Life Insurance</td>
+                <td><a href="#" id="financing_lifeinsurance" class = "editable">{{project.financing_lifeinsurance|intcomma}}</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+             
+             <h4>Total Liabilities: ${{project.balance_sheet_summary.total_liabilities|intcomma}}</h4>
+             <div class = "well">
+             <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        Liability
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                    <th>
+                        Liability
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                    <th>
+                        Liability
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td>Credit Card Balance</td>
+                <td><a href="#" id="financing_credit" class = "editable">{{project.financing_credit|intcomma}}</a></td>
+                <td>Auto Loan Balance</td>
+                <td><a href="#" id="financing_financing_auto_loan" class = "editable">{{project.financing_financing_auto_loan|intcomma}}</a></td>
+                <td>RE Mortgage(Primary) Balance</td>
+                <td><a href="#" id="financing_mortgage_primary" class = "editable">{{project.financing_mortgage_primary|intcomma}}</a></td>
+                </tr>
+                <tr>
+                <td>RE Mortgage(Other) Balance</td>
+                <td><a href="#" id="financing_mortgage_other" class = "editable">{{project.financing_mortgage_other|intcomma}}</a></td>
+                <td>Installment Loans</td>
+                <td><a href="#" id="financing_installment" class = "editable">{{project.financing_installment|intcomma}}</a></td>
+                <td>Other Debts</td>
+                <td><a href="#" id="financing_debts_other" class = "editable">{{project.financing_debts_other|intcomma}}</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+            
+            <h4>Net Worth: ${{project.balance_sheet_summary.net_worth|intcomma}}</h4>
+        </div>
+        </div>
