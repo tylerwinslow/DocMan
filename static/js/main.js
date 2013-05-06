@@ -99,8 +99,9 @@ $.ajax({
     });
 
 $('.uploadButton').on('click',function(e){
+    event.stopPropagation();
     docId = $(this).data('id');
-$(".fileField[data-id='" + docId + "']").click();
+$("#finance .fileField[data-id='" + docId + "']").click();
 });
 
 $('.editable').editable({

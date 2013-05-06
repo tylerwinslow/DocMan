@@ -25,6 +25,11 @@ class CommentInline(admin.StackedInline):
     extra = 1
 
 
+class DocumentInline(admin.StackedInline):
+    model = models.Document
+    extra = 0
+
+
 class ProjectAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
@@ -56,7 +61,7 @@ class ProjectAdmin(admin.ModelAdmin):
             'fields': (('financing_credit', 'financing_financing_auto_loan', 'financing_mortgage_primary'), ('financing_mortgage_other', 'financing_installment', 'financing_debts_other'),)
         }),
     )
-    inlines = [PaymentInline, CommentInline]
+    inlines = [PaymentInline, CommentInline, DocumentInline]
     list_display = ('last_name', 'first_name', 'concept', 'create_date', 'status', 'sales_rep', 'funding_advisor', 'deposit_amount', 'payment_info', 'state', 'store_size', 'advertising_source', 'refund_date')
     list_filter = ['sales_rep', 'funding_advisor']
     search_fields = ['last_name']

@@ -157,6 +157,8 @@ class Project(models.Model):
     signature = models.CharField("Signature", max_length=100, default="", null=True, blank=True)
 
     def is_paid(self):
+        if self.deposit_amount == 0:
+            return 1
         payments = self.payment_set.all()
         if payments:
             if payments[0].bounce:
@@ -322,6 +324,8 @@ class DocumentType(models.Model):
 
 class Document(models.Model):
     title = models.CharField(max_length=100)
+    description = models.TextField()
+    department = models.ForeignKey(Department, blank=True, default=5)
     project = models.ForeignKey(Project)
     internal = models.BooleanField(blank=True, default=False)
     request_date = models.DateTimeField('date requested', auto_now_add=True)

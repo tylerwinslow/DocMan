@@ -175,7 +175,12 @@ def project_create(request):
 
 
 def deposit_detail(request, pk):
-    if request.user.is_authenticated():
+    group = request.user.groups.values_list('name', flat=True)
+    if group:
+        group = group[0]
+    else:
+        group = False
+    if request.user.is_authenticated() and group == "Accounting":
         if request.method == 'POST':  # If the form has been submitted...
             form = NewDeposit(request.POST)  # A form bound to the POST data
             if form.is_valid():  # All validation rules pass

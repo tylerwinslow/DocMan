@@ -117,7 +117,7 @@
       <p>Requested on {{document.request_date}}</p>
       <form method="post" enctype="multipart/form-data" action="/documents/{{document.id}}/">
         {% csrf_token %}
-        <input type="file" name="docfile" class="hidden fileField" data-id={{document.id}} />
+        <input type="file" name="docfile" class="hidden fileField" data-id='{{document.id}}' />
         <button class="btn uploadButton" type="button" data-id={{document.id}}>Add File</button>
         <input type="submit" class="btn btn-primary" name="submit" value="Upload" />
     </form>
@@ -135,3 +135,4 @@
 
     </div>
 </div>
+
