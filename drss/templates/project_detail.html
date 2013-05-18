@@ -4,7 +4,7 @@
 <div class="row">
         <div class='span6'>
         <h1>{{project.first_name}} {{project.last_name}}</h1></a>
-        
+        <p><strong>Status:</strong> <a href="#" id="status" data-type="select" class="editable">{{project.status}}</a></p>
         <p><strong>Application Number:</strong>{{project.id}}</p>
         <p><strong>SalesRep:</strong> {{project.sales_rep}}</p>
         <p><strong>Funding Advisor:</strong> {{project.funding_advisor}}</p>
@@ -48,7 +48,7 @@
 
   </div>
   <div class="tab-pane" id="profile">
-
+{% include "mixins/profile.html" %}
   </div>
   <div class="tab-pane" id="contact-history">
 {% include "mixins/contact.html" %}

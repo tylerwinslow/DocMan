@@ -1,0 +1,7 @@
+{{ object.last_name }}
+{{ object.first_name }}
+{{ object.email }}
+{{ object.home_phone }}
+{{ object.city }}
+{{ object.state }}
+{{ object.zip_code }}

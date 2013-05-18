@@ -104,6 +104,24 @@ $('.uploadButton').on('click',function(e){
 $("#finance .fileField[data-id='" + docId + "']").click();
 });
 
+$('#status').editable({   
+        source: [
+              {value: 1, text: 'New'},
+              {value: 2, text: 'Refunded'},
+              {value: 3, text: 'Assigned'}
+           ],
+    pk: window.project,
+    url: '/api/projects/' + window.project +"/",
+    title: 'Enter New Value',
+params: function(params) {
+    //originally params contain pk, name and value
+    name = params.name;
+    params[name] = params.value;
+    params._method = "PATCH";
+    return params;
+}
+    });
+
 $('.editable').editable({
     type: 'text',
     pk: window.project,
@@ -128,10 +146,17 @@ $(".pop-over").popover({animation: true,html:true,placement:"bottom"});
 $(".collapse").collapse({toggle:true});
 $( ".sortable" ).sortable();
 $( ".sortable" ).disableSelection();
+$('.dateinput').datepicker({
+    format:"yyyy-mm-dd",
+    viewMode: 2
+});
 
 });
 
-
+$(function () {
+   var activeTab = $('[href=' + location.hash + ']');
+   activeTab && activeTab.tab('show');
+});
 
 
 

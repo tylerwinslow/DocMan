@@ -4,9 +4,26 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from rest_framework import generics
 from django_easyfilters import FilterSet
-from drss.models import Project, Comment, Document, Payment, DocumentType
+from drss.models import Project, Comment, Document, Payment, DocumentType, FinanceAdvisor, Status
 from drss.forms import NewApplication, NewDeposit, FileUpload, SalesApplication
-from drss.serializers import CommentSerializer, DocumentSerializer, PaymentSerializer, ProjectSerializer
+from drss.serializers import CommentSerializer, DocumentSerializer, PaymentSerializer, ProjectSerializer, FinanceAdvisorSerializer, StatusSerializer
+
+
+def check_group(user,groupcheck):
+    groups = user.groups.values_list('name', flat=True)
+    for group in groups:
+        if group == groupcheck:
+            return True
+    return False
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 
 class ProjectFilterSet(FilterSet):
@@ -34,8 +51,10 @@ def application(request):
     if request.method == 'POST':  # If the form has been submitted...
         form = NewApplication(request.POST)  # A form bound to the POST data
         if form.is_valid():  # All validation rules pass
-            form.save()
-            return HttpResponseRedirect('/thankyou')  # Redirect after POST
+            new_app = form.save(commit=False)
+            new_app.submission_ip = get_client_ip(request)
+            new_app.save()
+            return HttpResponseRedirect(reverse('drss.views.deposit', args=(new_app.id,)))  # Redirect after POST
     else:
         form = NewApplication()  # An unbound form
 
@@ -51,7 +70,10 @@ def application_detail(request, app_id):
         if request.method == 'POST':  # If the form has been submitted...
             form = NewApplication(request.POST, instance=app)  # A form bound to the POST data
             if form.is_valid():  # All validation rules pass
-                form.save()
+                
+                new_app = form.save(commit=False)
+                new_app.submission_ip = get_client_ip(request)
+                new_app.save
                 return HttpResponseRedirect(reverse('drss.views.deposit', args=(app_id,)))  # Redirect after POST
         else:
             form = NewApplication(instance=app)  # Load Form for Verification
@@ -130,6 +152,7 @@ def project_list(request):
                 projects = Project.objects.all().order_by('-create_date')
         else:
             projects = Project.objects.all().order_by('-create_date')
+        projects = projects.exclude(status__pk=2)
         projectsfilter = ProjectFilterSet(projects, request.GET)
         context = {'projects': projectsfilter.qs, 'projectsfilter': projectsfilter, 'salesfilter': the_filter}
         return render(request, 'project_list.html', context)
@@ -192,7 +215,7 @@ def deposit_detail(request, pk):
             'form': form,
         })
     else:
-        return render(request, 'not-authenticated.html')
+        return render(request, 'not_accounting.html')
 
 
 def document_detail(request, pk):
@@ -211,6 +234,14 @@ def document_detail(request, pk):
     return HttpResponseRedirect(referrer)
 
 
+#Real Estate Views
+def loi_detail(request, pk):
+    return render(request, 'loi_detail.html')
+
+
+#Search Views
+
+#API Views
 class CommentList(generics.ListCreateAPIView):
 
     model = Comment
@@ -233,6 +264,18 @@ class PaymentList(generics.ListCreateAPIView):
 
     model = Payment
     serializer_class = PaymentSerializer
+
+
+class FinanceAdvisorList(generics.ListAPIView):
+
+    model = FinanceAdvisor
+    serializer_class = FinanceAdvisorSerializer
+
+
+class StatusList(generics.ListAPIView):
+
+    model = Status
+    serializer_class = StatusSerializer
 
 
 class PaymentDetail(generics.RetrieveUpdateDestroyAPIView):

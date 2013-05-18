@@ -91,7 +91,7 @@ class NewApplication(ModelForm):
             Hidden('deposit_amount', '1500'),
             Hidden('package_price', '0'),
             Hidden('status', '1'),
-            Hidden('submitter_ip', '127.0.0.1'),
+            Hidden('submission_ip', '127.0.0.1'),
             HTML("<div class='alert alert-info'>After signing your application, you will be asked to submit your fully refundable deposit, remember your application is not complete until your deposit amount is received. Ask your National Development Director if you have any questions.</div>"),
             FormActions(
                 Submit('submit', 'Submit', css_class='button white')
@@ -208,7 +208,7 @@ class SalesApplication(ModelForm):
             ),
             Hidden('deposit_amount', '1500'),
             Hidden('package_price', '0'),
-            Hidden('submitter_ip', '127.0.0.1'),
+            Hidden('submission_ip', '127.0.0.1'),
             Hidden('status', '1'),
             HTML("<div class='alert alert-info'>After signing your application, you will be asked to submit your fully refundable deposit, remember your application is not complete until your deposit amount is received. Ask your National Development Director if you have any questions.</div>"),
             FormActions(

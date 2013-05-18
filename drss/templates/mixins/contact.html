@@ -1,0 +1,107 @@
+<button class="btn btn-block btn-primary" type="button">Send New Email</button>
+<button class="btn btn-block" type="button">Log Phone Call</button>
+<table class="table">
+	<caption><h3>Upcoming</h3></caption>
+<thead>
+	<tr>
+	<th>Contact Date</th>
+	<th>Type</th>
+	<th>Title</th>
+
+	<th>Assigned To</th>
+	<th>Result</th>
+</tr>
+</thead>
+<tbody>
+	{% for contact in contact_events %}
+    <tr>
+    	<td>{{contact.title}}</td>
+    	<td>{{contact.type}}</td>
+    	<td>{{contact.date}}</td>
+    	<td>{{contact.summary}}</td>
+    </tr>
+	{%endfor%}
+	<tr>
+		<td>May 6, 2013</td>
+    	<td><img alt="Phone Call" src="/static/img/phone.png"/></td>
+    	<td>6 Day Follow Up Call</td>
+    	<td>Adam Freedman</td>
+    	<td><span class="label label-important">Not Completed</span></td>
+    </tr>
+    	<tr>
+		<td>May 15, 2013</td>
+    	<td><img alt="Phone Call" src="/static/img/phone.png"/></td>
+    	<td>Day One Phone Call</td>
+    	<td>Adam Freedman</td>
+    	<td><span class="label label-important">Not Completed</span></td>
+    </tr>
+	<tr>
+		<td>May 25, 2013</td>
+    	<td><img alt="E-Mail" src="/static/img/email.png"/></td>
+    	<td>Automatic 6 Day Email</td>
+    	<td>Adam Freedman</td>
+    	<td><span class="label label-important">Not Completed</span></td>
+    </tr>
+	<tr>
+		<td>May 26, 2013</td>
+    	<td><img alt="Letter" src="/static/img/letter.png"/></td>
+    	<td>A Letter</td>
+    	<td>Adam Freedman</td>
+    	<td><span class="label label-important">Not Completed</span></td>
+    </tr>
+
+</tbody>
+</table>
+<hr>
+<table class="table">
+	<caption><h3>Completed</h3></caption>
+<thead>
+	<tr>
+	<th>Contact Date</th>
+	<th>Type</th>
+	<th>Title</th>
+
+	<th>Assigned To</th>
+	<th>Result</th>
+</tr>
+</thead>
+<tbody>
+	{% for contact in contact_events %}
+    <tr>
+    	<td>{{contact.title}}</td>
+    	<td>{{contact.type}}</td>
+    	<td>{{contact.date}}</td>
+    	<td>{{contact.summary}}</td>
+    </tr>
+	{%endfor%}
+	<tr>
+		<td>May 6, 2013</td>
+    	<td><img alt="Phone Call" src="/static/img/phone.png"/></td>
+    	<td>6 Day Follow Up Call</td>
+    	<td>Adam Freedman</td>
+    	<td><span class="label label-success">Answered</span></td>
+    </tr>
+    	<tr>
+		<td>May 1, 2013</td>
+    	<td><img alt="Phone Call" src="/static/img/phone.png"/></td>
+    	<td>Day One Phone Call</td>
+    	<td>Adam Freedman</td>
+    	<td><span class="label label-warning">Left Message</span></td>
+    </tr>
+	<tr>
+		<td>April 25, 2013</td>
+    	<td><img alt="E-Mail" src="/static/img/email.png"/></td>
+    	<td>Automatic 6 Day Email</td>
+    	<td>Adam Freedman</td>
+    	<td><span class="label label-warning">No Reply</span></td>
+    </tr>
+	<tr>
+		<td>April 6, 2013</td>
+    	<td><img alt="Letter" src="/static/img/letter.png"/></td>
+    	<td>A Letter</td>
+    	<td>Adam Freedman</td>
+    	<td><span class="label label-warning">Left Message</span></td>
+    </tr>
+
+</tbody>
+</table>

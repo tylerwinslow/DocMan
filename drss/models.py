@@ -155,6 +155,7 @@ class Project(models.Model):
     years_at_job_partner = models.IntegerField("Partner's Years at Job", null=True, blank=True)
     annual_salary_partner = models.IntegerField("Partner's Salary", null=True, blank=True)
     signature = models.CharField("Signature", max_length=100, default="", null=True, blank=True)
+    submission_ip = models.IPAddressField(null=True, blank=True, default='0.0.0.0')
 
     def is_paid(self):
         if self.deposit_amount == 0:
@@ -324,7 +325,7 @@ class DocumentType(models.Model):
 
 class Document(models.Model):
     title = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     department = models.ForeignKey(Department, blank=True, default=5)
     project = models.ForeignKey(Project)
     internal = models.BooleanField(blank=True, default=False)

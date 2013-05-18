@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-center">DRSS Counter One</h1>
+<button class="btn btn-large btn-block btn-primary" type="button">Print PDF and Send to Landlord</button>
+<button class="btn btn-large btn-block" type="button">Print PDF</button>
+
+
+<h4>February 6, 2013</h4>
+<address>
+  <strong>Broker Name</strong><br>
+  The Brokerage<br>
+   <abbr title="Office">O:</abbr> (123) 456-7890<br>
+    <abbr title="Fax">F:</abbr> (123) 456-7890
+</address>
+
+RE: {{center.name}}, {{center.address}}, {{center.city}}, {{center.state}}
+
+Dear {{broker.name}}:
+
+<p>Our {{project.name}}, as "Tenant”, has authorize us to present to {{project.broker}}, on behalf of the “Landlord” the following
+proposal. As a proposal, it is not intended to bind or create any obligation upon Landlord or Tenant. This proposal
+is intended to outline the material business points upon which agreement could preface the preparation, review and
+execution of a mutually acceptable lease.</p>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Month</th>
+			<th>Base PSF/Monthly</th>
+			<th>Base PSF/Annual</th>
+			<th>Base Monthly Rent</th>
+			<th>Base Annual Rate</th>
+		</tr>
+	</thead>
+	<tr>
+		<td>1-36</td>
+		<td>$0.90</td>
+		<td>$10.80</td>
+		<td>$1,260.00</td>
+		<td>$15,120.00</td>
+	</tr>
+	<tbody>
+		
+	</tbody>
+</table>
+<table class="table">
+	<tr>
+		<th>Additional Rent:</th>
+		<td>Tenant anticipates that this lease will be a triple net lease and subject to tenants
+			proportionate share of Common Area Maintenance, and that the GLA of the center
+			(including the footage for all anchor tenants) shall be included in the calculation of this
+			proportionate share of Taxes and Insurance. Landlord currently estimates these charges
+			(inclusive of real estate taxes, insurance and common area maintenance fees) at:
+
+
+			Landlord shall reconcile costs annually based on a calendar year and adjust the next
+			year’s charges accordingly. In no event shall the costs associated with the common area
+			exceed five (5%) percent of the prior year’s reconciliation; nor shall the administrative or managements fees combined exceed ten (10%) percent of the common area maintenance fees of the prior year’s reconciliation.
+		</td>
+		<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+
+	<tr>
+		<th>Option to Renew:</th>
+		<td>Tenant shall have the right to extend for two (2) periods of three (3) years under the
+			same terms and conditions as outlined in the initial term.
+		</td>
+			<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Use/Exclusivity:</th>
+		<td>The premises shall be used for the operation of a Dollar store, and shall carry products
+			typically found in a Dollar or Dollar-Plus-type retail store, including food, candy, and
+			snacks. The Tenant shall be the only Dollar or Dollar Plus-type store in the shopping
+			center. The Tenant shall have the option to sell goods at all price points with the
+			majority of products priced at $1.00. The Landlord warrants that the premises are
+			properly zoned to accommodate this use.
+		</td>
+				<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Lease Term Commencement:</th>
+		<td class = "editable"  data-type="textarea" data-mode="inline">Commencement of lease term shall be sixty (30) thirty days following Landlord's tender
+			of the premises in “vanilla shell” condition for tenants fixture allowance period.
+		</td>			
+		<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+
+	<tr>
+		<th>Rent Commencement:</th>
+		<td>Commencement of the Monthly Rent and additional rent shall be one-hundred twenty
+			(120) days following Lease Term Commencement.
+		</td>
+				<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+	</tr>
+	<tr>
+		<th>Condition of Premises:</th>
+		<td>Landlord shall deliver to Tenant a “vanilla” shell painted with the Tenant’s specified color
+			as specifically defined in the improvement description attached hereto in Exhibit “A”,
+			including replacing floor tile, Installing drop ceiling with lighting as outlined in Addendum
+			“A” attached and building wall to separate office/storage area. Further, Landlord
+			warrants that upon delivery to tenant the Lease space shall be in conformance with all
+			city, county and state codes, relating to and required for the Tenant’s intended Use.
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Tenant Allowance:</th>
+		<td>As an inducement to consummate a lease agreement, The Landlord shall, on the day of
+			Store opening, pay to the Tenant a one-time allowance of $2,000.00 to offset
+			Various costs the Tenant has incurred in conjunction with the opening of this store.
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Security Deposit"</th>
+		<td>Tenant will pay a security deposit in the amount of one month’s rent.
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Signage:</th>
+		<td>Tenant shall be permitted to install a box-type outdoor sign with a Plexiglas cover,
+			including its corporate logo, neon storefront signage, and maximum pylon signage
+			conforming to all applicable codes and criteria. Landlord to remove existing signage and
+			provide sign criteria when final LOI is submitted.
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Advertising:</th>
+		<td>During the first 45 days following the grand opening of the location, tenant shall have
+			the right to install a 4 x 8 banner and/or an ‘A’ frame type sign at the main entrance(s)
+			to celebrate and support the new store opening. Additionally, tenant may place an
+			employee(s) in the entrance area(s) to highlight the grand opening, and for a maximum
+			of 48 hours have the option of displaying items in the common area i.e. sidewalk, and/or
+			a portion of the parking lot for grand opening activities.
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>HVAC:</th>
+		<td>Landlord will warrant HVAC for the first (12) months, and then lessee’s responsibility
+			shall not exceed $300 per repair.
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Relocation:</th>
+		<td>Tenant does not agree to any relocation within the shopping center.
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Anchor Co-tenancy:</th>
+		<td>In the event that Publix or any subsequent anchor tenant vacates their location in this
+			center, or ceases to conduct retail business in this location, at any time during the
+			original or option terms of this lease, Tenant shall have the option to terminate this lease
+			without penalty by providing 60 days notice to Landlord. Landlord to provide to Tenant
+			the end dates of leases for the anchor tenant(s).
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Non-Disturbance:</th>
+		<td>Landlord acknowledges and agrees it is current with all financial obligations associated
+			with the shopping center including, but not limited to mortgage payments, taxes and
+			NNN items. Further, Landlord guarantees that it has not received a default notice from
+			any lender with any financial interest in the property and has no material knowledge of
+			any impending default. In addition, landlord warrants that the anchor tenant within
+			center has shown no signs of distress and that Landlord has no prior knowledge of
+			impending default.
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Drawings of Premises:</th>
+		<td>Landlord shall provide Tenant with most current architectural plans(s) and “as-built”
+			drawing(s) of space.
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Gross Income Projection:</th>
+		<td>Should tenant not achieve gross sales of $232,000.00 in the second 12 month period of
+			the initial term of the lease, then the tenant shall have the right to terminate this lease
+			with out penalty with a 90 day notice to the landlord.
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+	<tr>
+		<th>Commission:</th>
+		<td>Curry Real Estate Services is to be the Exclusive Tenant Representative of record in this
+			Transaction and shall be paid agreed commission on a separate agreement.
+		</td>
+						<td>
+			<a href="#"><i class="icon-pencil"></i></a>
+			<a href="#"><i class="icon-remove"></i></a>
+		</td>
+	</tr>
+</table>
+<p> <strong>The Leases shall be fully executed within two (2) days after the tenant signs the Lease. Tenant has the
+right to revoke the lease and it will become null and void if not fully executed, by the date above.</strong></p>
+<hr>
+<h3>Addition to Letters of Intent:</h3>
+<p> <strong>The lease shall stipulate that Dollar Store Services (or appropriate development company) shall be the
+development company for the tenant's retail store. (This requirement is intended to give the landlord
+assurance that the store that will ultimately be opened by the tenant will be of the standard and presentation
+that they anticipate, and that by being trained and supported after opening, the new store owner will be best
+positioned to be successful.)</strong></p>
+<p>This letter is intended to be non-binding. It is an interim expression of some of the major business terms. This proposal
+is an effort to outline some of the terms that may be included in a possible lease agreement. There will be no binding
+agreement or obligation between the Landlord, proposed Tenant or Broker until both Landlord and Tenant have executed
+and delivered a definitive, binding, written lease agreement. There shall be no burden or obligation upon Tenant or
+Broker to proceed derived from this letter of terms. As no obligation is created here from, Tenant is examining its options
+and alternatives. The proposal is subject to revision or withdrawal at anytime for any reason in Tenant’s sole judgment.</p>
+<p><strong>Please respond to this proposal on or before April 18, 2013 (“Deadline”)</strong></p>
+
+<hr>
+<h3 class="text-center">Exhibit A-DSS</h3>
+<h4 class="text-center">Owner Shall Provide the Following Improvements</h4>
+<ol>
+	<li>Electrical Service Panel - 200 amp, 120/208 3-phase, 4 wire service; HVAC warranted for the first twelve (12)
+months, then Tenant’s responsibility will not exceed $300 per repair.</li>
+<li>Restroom(s) – Landlord to provide required number of restrooms with adequate capacity per local codes and
+ordinances relating to tenant’s intended use. Restroom(s) are to be compliant with federally mandated ADA laws.
+Fixtures and accessories required but are not limited to toilets, a hot water heater, exhaust fans, light fixtures and
+code compliant outlets.</li>
+</ol>
+<a class="btn" href="#">Add Item</a>
+{% endblock %}

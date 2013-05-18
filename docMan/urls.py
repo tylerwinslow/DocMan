@@ -5,6 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+	                   url(r'^search/', include('haystack.urls')),
                        url(r'', include('drss.urls')),
                        url(r'', include('drss_reporter.urls')),
                        url(r'', include('social_auth.urls')),
