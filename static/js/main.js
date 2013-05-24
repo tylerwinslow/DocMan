@@ -98,17 +98,53 @@ $.ajax({
         working= false;
     });
 
+//DELETE A DOCUMENT
+$('.remove').on('click',function(e){
+    docid = $(this).data('id');
+    $.ajax({
+  type: "DELETE",
+  url: "/documents/"+ docid,
+  data: docid,
+  success: function(msg){
+  },
+  error: function(XMLHttpRequest, textStatus, errorThrown) {
+  }
+});
+
+});
+
+
 $('.uploadButton').on('click',function(e){
     event.stopPropagation();
     docId = $(this).data('id');
 $("#finance .fileField[data-id='" + docId + "']").click();
 });
 
-$('#status').editable({   
+$('#status').editable({
         source: [
               {value: 1, text: 'New'},
               {value: 2, text: 'Refunded'},
               {value: 3, text: 'Assigned'}
+           ],
+    pk: window.project,
+    url: '/api/projects/' + window.project +"/",
+    title: 'Enter New Value',
+params: function(params) {
+    //originally params contain pk, name and value
+    name = params.name;
+    params[name] = params.value;
+    params._method = "PATCH";
+    return params;
+}
+    });
+
+$('#funding_advisor').editable({
+        source: [
+              {value: 4, text: 'jessica.penalosa'},
+              {value: 5, text: 'Audwin.Whitmore'},
+              {value: 3, text: 'Judith Schoenfeldt'},
+              {value: 2, text: 'Leonid.Vekslin'},
+              {value: 29, text: 'Dave.Maxey'}
            ],
     pk: window.project,
     url: '/api/projects/' + window.project +"/",
@@ -149,6 +185,10 @@ $( ".sortable" ).disableSelection();
 $('.dateinput').datepicker({
     format:"yyyy-mm-dd",
     viewMode: 2
+});
+$('.datetimeinput').datepicker({
+    format:"yyyy-mm-dd",
+    viewMode: 0
 });
 
 });

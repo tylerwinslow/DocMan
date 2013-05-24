@@ -1,4 +1,5 @@
 from django.forms import ModelForm, Form, FileField
+from django.contrib.localflavor.us.forms import USSocialSecurityNumberField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, HTML, Fieldset, Hidden, Field
 from crispy_forms.bootstrap import FormActions, AppendedPrependedText, AppendedText

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+ {%load phone_number%}
 {% block content %}
         {% if query %}
             <h3>Search Results</h3>
@@ -20,7 +20,7 @@
                             <a href="/projects/{{ result.object.id }}">{{ result.object.full_name }}</a>
                         </td>
                         <td>{{ result.object.status }}</td>
-                        <td>{{ result.object.home_phone }}</td>
+                        <td>{{ result.object.home_phone|phone_number }}</td>
                         <td>{{ result.object.email }}</td>
                         <td>{{ result.object.contact }}</td>
                     </tr>

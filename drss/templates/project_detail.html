@@ -1,5 +1,26 @@
 {% extends 'base.html' %}
+ {%load phone_number%}
  {%load humanize%}
+              {% block search %}
+             <div class="navbar">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li>
+        <li class=""><a href="tasks">Schedule Task</a></li>
+        <li class=""><a href="emails">Send Email</a></li>
+      </li>
+      <li> 
+        <form class="form-search navbar-form pull-right" method="get" action="/search">
+<div class="input-append">
+  <input class="span6 search-query" id="appendedInputButton" name ="q" type="text" placeholder="Search Name, Email, Phone Number, or City">
+  <button class="btn" type="submit">Search</button>
+</div>
+</form>
+</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
 {% block content %}
 <div class="row">
         <div class='span6'>
@@ -7,7 +28,7 @@
         <p><strong>Status:</strong> <a href="#" id="status" data-type="select" class="editable">{{project.status}}</a></p>
         <p><strong>Application Number:</strong>{{project.id}}</p>
         <p><strong>SalesRep:</strong> {{project.sales_rep}}</p>
-        <p><strong>Funding Advisor:</strong> {{project.funding_advisor}}</p>
+        <p><strong>Funding Advisor:</strong> <a href="#" id="funding_advisor" data-type="select" class="editable" data-original-title="Assign Advisor">{{project.funding_advisor}}</a></p>
         <p><strong>Concept:</strong> {{project.concept}}</p>
         <p><strong>SQFT:</strong> <a href="#" id="store_size" class = "editable">{{project.store_size}}</a></p>
         </div>       
@@ -19,7 +40,7 @@
   {{project.address}}<br>
   {{project.city}}, {{project.state}} {{project.zip_code}}<br>
   <a href="mailto:#">{{project.email}}</a><br>
-  <abbr title="Phone">P:</abbr> {{project.home_phone}}
+  <abbr title="Phone">P:</abbr> {{project.home_phone|phone_number}}
 </address>
  <p><strong>Social Security Number:</strong> {{project.social_security}}</p>
  <p><strong>Date of Birth:</strong> {{project.date_of_birth}}</p>

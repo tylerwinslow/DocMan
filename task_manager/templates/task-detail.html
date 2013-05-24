@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block breadcrumbs %}
+ <ul class="breadcrumb">
+  <li><a href="/projects">Projects</a> <span class="divider">/</span></li>
+  <li><a href="/projects/{{project.id}}/#contact-history">{{project.full_name}}</a> <span class="divider">/</span></li>
+  <li class="active">{{task.title}}</li>
+</ul>
+{% endblock %}
+
+
+{% block content %}
+   <h1>{{task.title}}</h1>
+        {%if task.result.title%}
+        <td><span class="label label-{{contact.result.quality}}">{{task.result.title}}</span></td>
+        {% else %}
+         <td><span class="label label-important">Not Completed</span></td>
+         {%endif%}
+   {% include "mixins/task.html" %}
+
+{% endblock %}

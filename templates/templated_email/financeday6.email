@@ -1,0 +1,18 @@
+{% block subject %}Reminder to Call {{project.first_name}} {{project.last_name}} for Day 6 in Finance {% endblock %}
+{% block plain %}
+
+Phone Number:
+{{project.home_phone}}
+
+Funding Advisor:
+{{project.funding_advisor}}
+
+Leave Note:
+http://finance.drssone.com/projects/{{project.id}}
+
+Call Summary:
+  Hello Mr. or Mrs. (Client Name),
+  I was thinking about you this morning and I just wanted to see how things are going.
+  Please let me know if you have any questions or concerns.
+  Regards,
+{% endblock %}

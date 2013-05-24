@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{%block content%}
+<h1>Funding Advisors</h1>
+
+<ul class="thumbnails">
+	{% for funding_advisor in funding_advisors%}
+  <li class="span2">
+    <div class="thumbnail">
+    	<a href="/funding-advisors/{{funding_advisor.id}}" class="thumbnail"><img src="http://placehold.it/200x200" alt="{{sales_person.user.last_name}}"></a>
+      <h4>{{funding_advisor.user.first_name}}</br>{{funding_advisor.user.last_name}}</h4>
+    </div>
+  </li>
+{%endfor%}
+</ul>
+
+
+
+{%endblock%}

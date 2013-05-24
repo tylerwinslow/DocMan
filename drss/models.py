@@ -1,5 +1,6 @@
 import os.path
 from django.db import models
+from templated_email import send_templated_mail
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.contrib.localflavor.us.us_states import STATE_CHOICES
@@ -92,6 +93,8 @@ class Project(models.Model):
         (EVENING, 'Evening'),
     )
     create_date = models.DateTimeField('Date Created', auto_now_add=True)
+    assignment_date = models.DateTimeField('Assignment Date', null=True, blank=True)
+    fi_turnover_date = models.DateTimeField('Finance Turn Over Date', null=True, blank=True)
     concept = models.ForeignKey(Concept, verbose_name="Store Concept",  help_text="Your preferred retail concept.")
     status = models.ForeignKey(Status, verbose_name="Status", null=True, blank=True)
     refund_date = models.DateField('Refund Date', null=True, blank=True)
@@ -262,11 +265,14 @@ class Project(models.Model):
                 user.save()
                 self.customers_user = user
                 self.save()
-            id = str(self.id)
-            subject = "A new DRSS Store Application has Been Created for You"
-            message = "To Complete your Application and pay your deposit please visit https://finance.drssone.com/application/"+id+"/ You may login with username: "+self.email+" and password: erX613. Remember your application is not complete until it is signed and the deposit is paid."
-            to_address = [self.email]
-            send_mail(subject, message, 'deposits@drssmail.com', to_address, fail_silently=False)
+            send_templated_mail(
+                template_name='new_app',
+                from_email='deposits@drssmail.com',
+                recipient_list=[self.email],
+                context={
+                    'project': self,
+                },
+            )
 
     def __unicode__(self):
         full_name = self.last_name + ", " + self.first_name

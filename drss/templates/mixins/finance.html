@@ -13,6 +13,7 @@
         {%for payment in payments%}
         <a href="https://www.paymentsgateway.net/vt3/login.aspx?ReturnUrl=/vt3/Default.aspx"><p><i class="icon-tag"></i> {{payment.payment_type}} Transaction ID:{{payment.trace_number}}</p></a>
         {%endfor%}
+        <a class="btn btn-small" href="/application/{{project.id}}/print" ><i class="icon-print"></i>Print App</a><a href="/projects/{{project.id}}/refund" class="btn btn-small"><i class="icon-thumbs-down"></i>Process Refund</a>
         {% else %}
         <p class="text-warning">Awaiting Payment of <a href="#" id="deposit_amount" class = "editable">{{project.deposit_amount}}</a></p>
         <a href="deposit" class="btn">Add a Payment</a>
@@ -63,8 +64,10 @@
   </li>
 {%else%}
  <li class="span2">
-    <div class="thumbnail">
+    <div class="thumbnail"> 
+      <button type="button" class="close remove" data-id={{document.id}} data-dismiss="alert">&times;</button>
       <img src="/static/img/unknown.png" alt="">
+
         <h4>{{document.title}}</h4>
         <p>Requested on {{document.request_date}}</p>
         <form method="post" enctype="multipart/form-data" action="/documents/{{document.id}}/">

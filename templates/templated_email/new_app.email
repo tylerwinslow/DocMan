@@ -1,0 +1,11 @@
+{% block subject %}A New Store Application Has Been Created For You{% endblock %}
+{% block plain %}
+  A new application was created for {{project.full_name}},
+
+To Complete your Application and pay your deposit please visit https://finance.drssone.com/application/{{project.id}}/ 
+
+You may login with username:{{project.email}} and password: erX613. 
+
+Remember your application is not complete until it is signed and the deposit is paid.
+
+{% endblock %}

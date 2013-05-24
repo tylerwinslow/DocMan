@@ -2,6 +2,27 @@
  {% load pagination_tags %}
 
 
+
+{%block secondarynav%}
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="/projects">My Pages</a>
+    <ul class="nav">
+      <li {%if  request.get_full_path == "/sdl/"%}class="active"{%endif%}><a href="/sdl/" >Sales Deposit Log</a></li>
+      <li class=""><a href="/refunds/">Refunds</a></li>
+      <li><a href="/assign/finance/">Assign Funding Advisor</a></li>
+      <li> 
+        <form class="form-search navbar-form pull-right" method="get" action="/search">
+<div class="input-append">
+  <input class="span4 search-query" id="appendedInputButton" name ="q" type="text" placeholder="Search Name, Email, Phone Number, or City">
+  <button class="btn" type="submit">Search</button>
+</div>
+</form>
+</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
 {% block content %}
 <!-- <ul class="nav nav-pills">
               <li class="dropdown">

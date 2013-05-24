@@ -7,6 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
 	                   url(r'^search/', include('haystack.urls')),
                        url(r'', include('drss.urls')),
+                       url(r'', include('task_manager.urls')),
                        url(r'', include('drss_reporter.urls')),
                        url(r'', include('social_auth.urls')),
                        url(r'^admin/', include(admin.site.urls)),

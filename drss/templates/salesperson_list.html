@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{%block content%}
+<h1>Sales People</h1>
+
+<ul class="thumbnails">
+	{% for sales_person in sales_persons%}
+  <li class="span2">
+    <div class="thumbnail">
+    	<a href="/salespeople/{{sales_person.id}}" class="thumbnail"><img src="http://placehold.it/200x200" alt="{{sales_person.user.last_name}}"></a>
+      <h4>{{sales_person.user.first_name}}</br>{{sales_person.user.last_name}}</h4>
+    </div>
+  </li>
+{%endfor%}
+</ul>
+
+
+
+{%endblock%}
