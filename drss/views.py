@@ -316,13 +316,16 @@ def salesperson_list(request):
     else:
         return render(request, 'not-authenticated.html')
 
+
 def salesperson_detail(request, user_id):
     if request.user.is_authenticated() and request.user.is_staff:
-        sales_persons = SalesPerson.objects.get(pk=user_id)
-        context = {'sales_person': sales_persons}
+        sales_person = SalesPerson.objects.get(pk=user_id)
+        projects = Project.objects.filter(sales_rep=sales_person)
+        context = {'sales_person': sales_person, 'projects': projects}
         return render(request, 'salesperson_detail.html', context)
     else:
         return render(request, 'not-authenticated.html')
+
 
 def fundingadvisor_list(request):
     if request.user.is_authenticated() and request.user.is_staff:
@@ -331,6 +334,7 @@ def fundingadvisor_list(request):
         return render(request, 'fundingadvisor_list.html', context)
     else:
         return render(request, 'not-authenticated.html')
+
 
 def fundingadvisor_detail(request, user_id):
     if request.user.is_authenticated() and request.user.is_staff:
@@ -413,8 +417,10 @@ def project_detail(request, pk):
         documents = project.document_set.all()
         comments = project.comment_set.all().order_by('-post_date')
         payments = project.payment_set.all()
-        tasks = Task.objects.all().order_by('-scheduled_date')
-        context = {'project': project, 'documents': documents, 'comments': comments, 'payments': payments, 'documenttypes': documenttypes, 'contacts': tasks}
+        tasks = Task.objects.all().filter(project=project).filter(project=project)
+        incomplete_tasks = tasks.filter(completion=False).order_by('-scheduled_date')
+        complete_tasks = tasks.filter(completion=True).order_by('-completion_date')
+        context = {'project': project, 'documents': documents, 'comments': comments, 'payments': payments, 'documenttypes': documenttypes, 'incomplete_tasks': incomplete_tasks, 'complete_tasks': complete_tasks}
         return render(request, 'project_detail.html', context)
     else:
         return render(request, 'not-authenticated.html')
@@ -447,7 +453,8 @@ def deposit_detail(request, pk):
                 form.save()
                 return HttpResponseRedirect(reverse('drss.views.project_detail', args=(pk,)))  # Redirect after POST
         else:
-            form = NewDeposit()  # An unbound form
+            project = Project.objects.get(pk=pk)
+            form = NewDeposit(initial={'project': project})  # An unbound form
         return render(request, 'deposit-detail.html', {
             'form': form,
         })

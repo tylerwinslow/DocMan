@@ -12,15 +12,30 @@
 <h4>From: {{user.email}}</h4>
 <h4>To: {{project.email}}</h4>
 <ul class="nav nav-pills">
-  <li>
-    <a href="#">Template Email</a>
-  </li>
-  <li><a href="#">Template Email 2</a></li>
-  <li><a href="#">Template Email 3</a></li>
-  <li><a href="#">Template Email 3</a></li>
-  <li><a href="#">Template Email 3</a></li>
-  <li><a href="#">Template Email 3</a></li>
-  <li><a href="#">Template Email 3</a></li>
+{% for template in templates %}
+  <li><a href="#" class="email-template" data-template="{{template.body}}">{{template.title}}</a></li>
+{% endfor %}
 </ul>
-   {% crispy form %}
+<form action="#" class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
+  <div id="div_id_subject" class="control-group">
+  <label for="id_subject" class="control-label ">
+        Subject
+      </label>
+      <div class="controls">
+        <input id="id_subject" type="text" class="input-block-level textinput textInput" name="subject" maxlength="200"> 
+      </div>
+      </div>
+      <div id="div_id_body" class="control-group">
+        <label for="id_body" class="control-label ">
+        Body
+      </label>
+      <div class="controls">
+        <textarea id="id_body" rows="10" cols="40" name="body" class="input-block-level textarea">
+          
+        </textarea>
+      </div>
+    </div>
+
+    <input type="submit" name="submit" value="Send" class="btn btn-large btn-primary btn-block" id="submit-id-submit"> 
+</form>
 {% endblock %}

@@ -8,9 +8,15 @@
   <div class="navbar-inner">
     <a class="brand" href="/projects">My Pages</a>
     <ul class="nav">
-      <li {%if  request.get_full_path == "/sdl/"%}class="active"{%endif%}><a href="/sdl/" >Sales Deposit Log</a></li>
-      <li class=""><a href="/refunds/">Refunds</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Reports<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li {%if  request.get_full_path == "/sdl/"%}class="active"{%endif%}><a href="/sdl/" >Sales Deposit Log</a></li>
+          <li class=""><a href="/refunds/">Refunds</a></li>
+        </ul>
+      </li>
       <li><a href="/assign/finance/">Assign Funding Advisor</a></li>
+      <li><a href="/day-planner">Day Planner</a></li>
       <li> 
         <form class="form-search navbar-form pull-right" method="get" action="/search">
 <div class="input-append">

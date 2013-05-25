@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+<h1>My Activities<small> for {{date}}</small></h1>
+</div>
+<table class="table">
+<thead>
+	<tr>
+	<th>Date</th>
+	<th>Type</th>
+    <th>For Client</th>
+	<th>Title</th>
+	<th>Assigned To</th>
+	<th>Result</th>
+</tr>
+</thead>
+<tbody>
+	{% for task in tasks%}
+    <tr {% if task.past_due %}class="error"{% endif %}>
+        <td>{{task.scheduled_date}}</td>
+        <td><img src="/static/img/{{task.task_type}}.png" alt="{{task.task_type}}"></td>
+        <td><a href = "/projects/{{task.project.id}}">{{task.project.full_name}}</a></td>
+        <td><a href = "/projects/{{task.project.id}}/tasks/{{task.id}}">{{task.title}}</a></td>
+        <td>{{task.user}}</td>
+        {%if task.result.title%}
+        <td><span class="label label-{{task.result.quality}}">{{task.result.title}}</span></td>
+        {% else %}
+         <td><span class="label label-important">Not Completed</span></td>
+         {%endif%}
+    </tr>
+	{%endfor%}
+</tbody>
+</table>
+{% endblock %}

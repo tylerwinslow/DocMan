@@ -1,5 +1,9 @@
 <h3>Leave a Completion Note</h3>
 <p>{{task.body}}</p>
-<textarea rows="3" class="input-block-level"></textarea>
-<button class="btn btn-large btn-block btn-primary" type="button">Complete Task</button>
-<button class="btn btn-large btn-block btn-warning" type="button">Complete Task With Exception</button>
+{% if not task.completion %}
+<form method="post">{% csrf_token %}
+<textarea rows="3" class="input-block-level" name="body"></textarea>
+<input type="hidden" name="result" value="6"/>
+<input class="btn btn-large btn-block btn-primary" type="submit" value="Complete Task"/>
+</form>
+{% endif %}

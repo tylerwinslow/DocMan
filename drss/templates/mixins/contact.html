@@ -4,7 +4,7 @@
 	<caption><h3>Client Tasks</h3></caption>
 <thead>
 	<tr>
-	<th>Contact Date</th>
+	<th>Date</th>
 	<th>Type</th>
 	<th>Title</th>
 	<th>Assigned To</th>
@@ -12,21 +12,33 @@
 </tr>
 </thead>
 <tbody>
-	{% for contact in contacts %}
-    <tr>
-        <td>{{contact.scheduled_date}}</td>
-        <td><img src="/static/img/{{contact.task_type}}.png" alt="{{contact.task_type}}"></td>
-        <td><a href = "tasks/{{contact.id}}">{{contact.title}}</a></td>
-        <td>{{contact.user}}</td>
-        {%if contact.result.title%}
-        <td><span class="label label-{{contact.result.quality}}">{{contact.result.title}}</span></td>
+	{% for incomplete_task in incomplete_tasks%}
+    <tr {% if incomplete_task.past_due %}class="error"{% endif %}>
+        <td>{{incomplete_task.scheduled_date}}</td>
+        <td><img src="/static/img/{{incomplete_task.task_type}}.png" alt="{{incomplete_task.task_type}}"></td>
+        <td><a href = "tasks/{{incomplete_task.id}}">{{incomplete_task.title}}</a></td>
+        <td>{{incomplete_task.user}}</td>
+        {%if incomplete_task.result.title%}
+        <td><span class="label label-{{incomplete_task.result.quality}}">{{incomplete_task.result.title}}</span></td>
         {% else %}
          <td><span class="label label-important">Not Completed</span></td>
          {%endif%}
     </tr>
 	{%endfor%}
 
-	
+	   {% for complete_task in complete_tasks%}
+    <tr>
+        <td>{{complete_task.completion_date}}</td>
+        <td><img src="/static/img/{{complete_task.task_type}}.png" alt="{{complete_task.task_type}}"></td>
+        <td><a href = "tasks/{{complete_task.id}}">{{complete_task.title}}</a></td>
+        <td>{{complete_task.user}}</td>
+        {%if complete_task.result.title%}
+        <td><span class="label label-{{complete_task.result.quality}}">{{complete_task.result.title}}</span></td>
+        {% else %}
+         <td><span class="label label-important">Not Completed</span></td>
+         {%endif%}
+    </tr>
+    {%endfor%}
 
 </tbody>
 </table>

@@ -1,0 +1,43 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>
+				Client Name
+			</th>
+			<th>
+				Project Status
+			</th>
+			<th>
+				Most Recent Activity
+			</th>
+			<th>
+				Most Recent Activity Date
+			</th>
+			<th>
+				Past Due Tasks
+			</th>
+			<th>
+				Next Task
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for project in projects%}
+		<tr>
+			<td><a href="/projects/{{project.id}}/">{{project.full_name}}</a></td>
+			<td>{{project.status}}</td>
+			<td>{{project.most_recent_activity}}</td>
+			<td>{% if project.most_recent_activity.post_date%}<span class="label label-info">{{project.most_recent_activity.post_date}}</span>{% endif %}</td>
+			<td>
+				{% if project.past_due_tasks > 0 %}
+				<span class="badge badge-important">{{project.past_due_tasks}}</span>
+				{% else %}
+				<span class="badge badge-success">Up To Date</span>
+				{% endif %}
+
+			</td>
+			<td><a href="/projects/{{project.id}}/tasks/{{project.next_task.id}}">{{project.next_task}}</a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

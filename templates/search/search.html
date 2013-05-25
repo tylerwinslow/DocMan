@@ -22,7 +22,7 @@
                         <td>{{ result.object.status }}</td>
                         <td>{{ result.object.home_phone|phone_number }}</td>
                         <td>{{ result.object.email }}</td>
-                        <td>{{ result.object.contact }}</td>
+                        <td>{% if result.object.most_recent_activity.post_date%}<span class="label label-info">{{result.object.most_recent_activity.post_date}}</span>{% endif %}</td>
                     </tr>
                     {% empty %}
                     <p>No results found.</p>

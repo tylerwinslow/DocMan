@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {%block content%}
 <h1>{{sales_person.user.first_name}} {{sales_person.user.last_name}}</h1>
-
+{%include 'mixins/client-task-list.html'%}
 
 {%endblock%}

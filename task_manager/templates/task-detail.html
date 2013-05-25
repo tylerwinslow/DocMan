@@ -11,12 +11,20 @@
 
 
 {% block content %}
-   <h1>{{task.title}}</h1>
+   <div class="page-header">
+  <h1>{{task.title}} <small>for {{task.project}}</small></h1>
+</div>
         {%if task.result.title%}
-        <td><span class="label label-{{contact.result.quality}}">{{task.result.title}}</span></td>
+        <td><span class="label label-{{task.result.quality}}">{{task.result.title}}</span></td>
         {% else %}
          <td><span class="label label-important">Not Completed</span></td>
          {%endif%}
+{% if task.task_type.title == "task" %}
    {% include "mixins/task.html" %}
+   {% elif task.task_type.title == "email"%}
+   {% include "mixins/email.html" %}
+   {% elif task.task_type.title == "phone"%}
+   {% include "mixins/phone.html" %}
+   {% endif %}
 
 {% endblock %}

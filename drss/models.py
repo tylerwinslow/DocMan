@@ -1,9 +1,10 @@
 import os.path
 from django.db import models
+from datetime import date
 from templated_email import send_templated_mail
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
 from django.contrib.localflavor.us.us_states import STATE_CHOICES
+import task_manager
 # Create your models here.
 
 
@@ -235,6 +236,20 @@ class Project(models.Model):
             if doc.internal is True and bool(doc.document_file) is False:
                 status = 'danger'
         return {'percent': percent, 'status': status}
+
+    def most_recent_activity(self):
+        return self.comment_set.latest('post_date')
+
+    def next_task(self):
+        task = task_manager.models.Task.objects.filter(completion=False).filter(project=self)
+        if task:
+            task = task[0]
+            return task
+        return "No Tasks"
+
+    def past_due_tasks(self):
+        tasks = task_manager.models.Task.objects.filter(completion=False).filter(project=self)
+        return tasks.count()
 
     def full_name(self):
         full_name = self.first_name + " " + self.last_name

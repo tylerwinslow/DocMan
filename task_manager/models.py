@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from drss.models import Project, Department
+from drss.models import Project, Department, Comment
+from datetime import date
 
 
 class TaskType(models.Model):
@@ -44,6 +45,24 @@ class Task(models.Model):
     completion = models.BooleanField()
     result = models.ForeignKey(Result,  related_name='Result', verbose_name="Result", null=True, blank=True)
     recording = models.FileField(upload_to="documents", null=True, blank=True)
+
+    def past_due(self):
+        if date.today() > self.scheduled_date and not self.completion:
+            return True
+        else:
+            return False
+
+    def send_email(self):
+        return False
+
+    def save(self, force_insert=False, force_update=False, *args, **kwargs):
+        super(Task, self).save(*args, **kwargs)
+        if self.body:
+            body = self.body
+            user = self.user
+            project = self.project
+            comment = Comment(body=body, author=user, internal=False, project=project)
+            comment.save()
 
     def __unicode__(self):
         return self.title

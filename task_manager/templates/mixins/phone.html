@@ -1,5 +1,10 @@
-
-<h3>Note</h3>
+ {%load phone_number%}
+<h3>{{project.home_phone|phone_number}}</h3>
 <p>{{task.body}}</p>
-<button class="btn btn-large btn-block btn-success" type="button">Phone Call Complete</button>
-<button class="btn btn-large btn-block btn-warning" type="button">Left Message</button>
+{% if not task.completion %}
+<form method="post">{% csrf_token %}
+<textarea rows="3" class="input-block-level" name="body"></textarea>
+<button class="btn btn-large btn-block btn-primary" type="submit" name="result" value="5">Phone Call Complete</button>
+<button class="btn btn-large btn-block btn-warning" type="submit" name="result" value="2">Left Message</button>
+</form>
+{%endif%}

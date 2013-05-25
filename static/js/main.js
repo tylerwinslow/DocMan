@@ -177,6 +177,13 @@ $('#edit-button').click(function(e) {
     $('.editable').editable('toggleDisabled');
 });
 
+$('.email-template').click(function(e) {
+
+  templateBody= $(this).data('template');
+  console.log(templateBody)
+  $('#id_body').val(templateBody);
+});
+
 $(".pop-over").popover({animation: true,html:true,placement:"bottom"});
 
 $(".collapse").collapse({toggle:true});
