@@ -6,17 +6,16 @@
 {%block secondarynav%}
 <div class="navbar">
   <div class="navbar-inner">
-    <a class="brand" href="/projects">My Pages</a>
     <ul class="nav">
       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Reports<b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-book"></i> My Reports<b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li {%if  request.get_full_path == "/sdl/"%}class="active"{%endif%}><a href="/sdl/" >Sales Deposit Log</a></li>
           <li class=""><a href="/refunds/">Refunds</a></li>
         </ul>
       </li>
-      <li><a href="/assign/finance/">Assign Funding Advisor</a></li>
-      <li><a href="/day-planner">Day Planner</a></li>
+      <li><a href="/projects/create" ><i class="icon-plus-sign"></i> Create Application</a></li>
+      <li><a href="/assign/finance/"><i class="icon-star"></i> Assign Funding Advisor</a></li>
       <li> 
         <form class="form-search navbar-form pull-right" method="get" action="/search">
 <div class="input-append">
@@ -88,7 +87,6 @@
                 <th>Deposit Status</th>
                 <th>Required Documents</th>
                 <th>Progress</th>
-                <th>Admin Edit</th>
             </tr>
             </thead>
             <tbody>
@@ -110,7 +108,6 @@
             <td><div class="progress progress-striped progress-{{project.completion.status}}">
                     <div class="bar" style="width: {{project.completion.percent}}%"></div></div>
                     </td>
-                    <td><a class="btn" href="/admin/drss/project/{{project.id}}">Edit</a></td>
             </tr>
             {% endfor %}
         </tbody>

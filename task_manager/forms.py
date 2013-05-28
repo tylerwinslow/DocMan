@@ -15,7 +15,14 @@ class NewTask(ModelForm):
         self.helper.form_method = 'post'
         self.helper.form_action = '#'
         self.helper.layout = Layout(
-            Fieldset('Create Task', 'title', 'user', 'project', 'task_type', 'scheduled_date',),
+            Fieldset('Create Task', 
+                     'title',
+                     'user',
+                     'project',
+                     'task_type',
+                     'scheduled_date',
+                     'start_time',
+                     'end_time'),
             Hidden('time_specific', False),
             Hidden('completion', False),
             FormActions(

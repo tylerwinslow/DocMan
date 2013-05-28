@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>DRSS Store Application</title>
+        <title>DRSS Easy Trak</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
@@ -43,14 +43,16 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="#">DRSS Store Application</a>
+                    <a class="brand" href="#">DRSS</a>
                     <div class="nav-collapse collapse">
+                        {% if user.is_staff %}
                         <ul class="nav">
-                            <li {%if  request.get_full_path == "/projects/"%}class="active"{%endif%}><a href="/projects">Home</a></li>
-                            <li {%if  request.get_full_path == "/salespeople/"%}class="active"{%endif%}><a href="/salespeople/" >Sales People</a></li>
-                            <li {%if  request.get_full_path == "/funding-advisors/"%}class="active"{%endif%}><a href="/funding-advisors/" >Funding Advisors</a></li>
-                            <li {%if  request.get_full_path == "/projects/create"%}class="active"{%endif%}><a href="/projects/create" >Create Application</a></li>
+                            <li {%if  request.get_full_path == "/projects/"%}class="active"{%endif%}><a href="/projects"><i class="icon-home icon-white"></i> Home</a></li>
+                            <li {%if  request.get_full_path == "/salespeople/"%}class="active"{%endif%}><a href="/salespeople/" ><i class="icon-user icon-white"></i> Sales People</a></li>
+                            <li {%if  request.get_full_path == "/funding-advisors/"%}class="active"{%endif%}><a href="/funding-advisors/" ><i class="icon-user icon-white"></i> Funding Advisors</a></li>
+                            <li {%if  request.get_full_path == "/day-planner/"%}class="active"{%endif%}><a href="/day-planner"> <i class="icon-th icon-white"></i> Day Planner</a></li>
                         </ul>
+                        {%endif%}
                         <ul class="nav pull-right">
 
                         {% if user.is_authenticated %}
@@ -107,6 +109,7 @@
         <script src="/static/js/jquery-ui-1.10.2.custom.min.js"></script>
         <script src="/static/js/bootstrap-editable.js"></script>
         <script src="/static/js/bootstrap-datepicker.js"></script>
+        <script src="/static/js/vendor/audiojs/audio.min.js"></script>
         <script src="/static/js/main.js"></script>
 
         <script>

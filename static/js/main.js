@@ -180,7 +180,7 @@ $('#edit-button').click(function(e) {
 $('.email-template').click(function(e) {
 
   templateBody= $(this).data('template');
-  console.log(templateBody)
+  console.log(templateBody);
   $('#id_body').val(templateBody);
 });
 
@@ -197,7 +197,9 @@ $('.datetimeinput').datepicker({
     format:"yyyy-mm-dd",
     viewMode: 0
 });
-
+  audiojs.events.ready(function() {
+    var as = audiojs.createAll();
+  });
 });
 
 $(function () {

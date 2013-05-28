@@ -20,7 +20,7 @@ from drss.forms import NewApplication, NewDeposit, FileUpload, SalesApplication
 from drss.serializers import CommentSerializer, DocumentSerializer, PaymentSerializer, ProjectSerializer, UserSerializer, StatusSerializer
 
 
-def check_group(user,groupcheck):
+def check_group(user, groupcheck):
     groups = user.groups.values_list('name', flat=True)
     for group in groups:
         if group == groupcheck:
@@ -310,7 +310,7 @@ def project_list(request):
 
 def salesperson_list(request):
     if request.user.is_authenticated() and request.user.is_staff:
-        sales_persons = SalesPerson.objects.all()
+        sales_persons = SalesPerson.objects.all().order_by('user__last_name')
         context = {'sales_persons': sales_persons}
         return render(request, 'salesperson_list.html', context)
     else:
@@ -329,7 +329,7 @@ def salesperson_detail(request, user_id):
 
 def fundingadvisor_list(request):
     if request.user.is_authenticated() and request.user.is_staff:
-        funding_advisors = FinanceAdvisor.objects.all()
+        funding_advisors = FinanceAdvisor.objects.all().order_by('user__last_name')
         context = {'funding_advisors': funding_advisors}
         return render(request, 'fundingadvisor_list.html', context)
     else:
@@ -339,7 +339,8 @@ def fundingadvisor_list(request):
 def fundingadvisor_detail(request, user_id):
     if request.user.is_authenticated() and request.user.is_staff:
         funding_advisor = FinanceAdvisor.objects.get(pk=user_id)
-        context = {'funding_advisor': funding_advisor}
+        projects = Project.objects.filter(funding_advisor=funding_advisor)
+        context = {'funding_advisor': funding_advisor, 'projects': projects}
         return render(request, 'fundingadvisor_detail.html', context)
     else:
         return render(request, 'not-authenticated.html')

@@ -24,6 +24,9 @@ class Status(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+            ordering = ('weight',)
+
 
 class PackageOption(models.Model):
     title = models.CharField(max_length=100)
@@ -328,6 +331,26 @@ class Comment(models.Model):
     post_date = models.DateTimeField('date requested', auto_now_add=True)
     internal = models.BooleanField()
     project = models.ForeignKey(Project)
+
+    def note_label(self):
+        user = self.author
+        groups = user.groups.values_list('name', flat=True)
+        if groups:
+            for group in groups:
+                if group == "Admin":
+                    return "label-inverse"
+                if group == "Manager":
+                    return "manager"
+                if group == "Accounting":
+                    return "accounting"
+                if group == "Build Out":
+                    return "build-out"
+                if group == "Real Estate":
+                    return "real-estate"
+                if group == "Funding Advisor":
+                    return "finance"
+                if group == "Sales Person":
+                    return "sales"
 
     def __unicode__(self):
         return self.body

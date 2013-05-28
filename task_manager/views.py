@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from datetime import date, datetime
+from django.template import Template, Context
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from task_manager import forms, models
@@ -42,11 +43,42 @@ def send_email(request, pk):
                                project=project,
                                user=request.user)
             task.save()
+            task.send_email()
             return HttpResponseRedirect(reverse('drss.views.project_detail', args=(pk,)))  # Redirect after POST
         else:
             project = Project.objects.get(pk=pk)
             templates = models.ContactTemplate.objects.all()
+            context = Context({'employee': request.user.get_full_name(), 'client': project.last_name})
+            for template in templates:
+                t = Template(template.body)
+                template.body = t.render(context)
             return render(request, 'email-create.html', {'project': project, 'templates': templates})
+    else:
+        return render(request, 'not-authenticated.html')
+
+
+def log_phone_call(request, pk):
+    if request.user.is_authenticated():
+        if request.method == 'POST':  # If the form has been submitted...
+            data = request.POST
+            result = models.Result.objects.get(pk=data['result'])
+            project = Project.objects.get(pk=pk)
+            task_type = models.TaskType.objects.get(title="phone")
+            task = models.Task(title=data['subject'],
+                               subject=data['subject'],
+                               body=data['body'],
+                               completion_date=date.today(),
+                               completion=True,
+                               end_time=datetime.now(),
+                               result=result,
+                               task_type=task_type,
+                               project=project,
+                               user=request.user)
+            task.save()
+            return HttpResponseRedirect(reverse('drss.views.project_detail', args=(pk,)))  # Redirect after POST
+        else:
+            project = Project.objects.get(pk=pk)
+            return render(request, 'phonecall-create.html', {'project': project})
     else:
         return render(request, 'not-authenticated.html')
 

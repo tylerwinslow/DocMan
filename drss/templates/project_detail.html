@@ -6,13 +6,15 @@
   <div class="navbar-inner">
     <ul class="nav">
       <li>
-        <li class=""><a href="tasks">Schedule Task</a></li>
-        <li class=""><a href="emails">Send Email</a></li>
+        <li class=""><a href="tasks"><i class="icon-th-list"></i> Schedule Task</a></li>
+        <li class=""><a href="emails"><i class="icon-envelope"></i> Send Email</a></li>
+        <li class=""><a href="phonecalls"><i class="icon-signal"></i> Make Phone Call</a></li>
+        <li class=""><a href="/admin/drss/project/{{project.id}}"><i class="icon-pencil"></i> Admin Edit</a></li>
       </li>
       <li> 
         <form class="form-search navbar-form pull-right" method="get" action="/search">
 <div class="input-append">
-  <input class="span6 search-query" id="appendedInputButton" name ="q" type="text" placeholder="Search Name, Email, Phone Number, or City">
+  <input class="span5 search-query" id="appendedInputButton" name ="q" type="text" placeholder="Search Name, Email, Phone Number, or City">
   <button class="btn" type="submit">Search</button>
 </div>
 </form>
@@ -21,60 +23,81 @@
   </div>
 </div>
 {% endblock %}
-{% block content %}
-<div class="row">
-        <div class='span6'>
-        <h1>{{project.first_name}} {{project.last_name}}</h1></a>
-        <p><strong>Status:</strong> <a href="#" id="status" data-type="select" class="editable">{{project.status}}</a></p>
-        <p><strong>Application Number:</strong>{{project.id}}</p>
-        <p><strong>SalesRep:</strong> {{project.sales_rep}}</p>
-        <p><strong>Funding Advisor:</strong> <a href="#" id="funding_advisor" data-type="select" class="editable" data-original-title="Assign Advisor">{{project.funding_advisor}}</a></p>
-        <p><strong>Concept:</strong> {{project.concept}}</p>
-        <p><strong>SQFT:</strong> <a href="#" id="store_size" class = "editable">{{project.store_size}}</a></p>
-        </div>       
-        
-        <div class ="span6">
-        <h3>Contact Information</h3>
-            <address>
-  <strong>{{project.first_name}} {{project.last_name}}</strong><br>
-  {{project.address}}<br>
-  {{project.city}}, {{project.state}} {{project.zip_code}}<br>
-  <a href="mailto:#">{{project.email}}</a><br>
-  <abbr title="Phone">P:</abbr> {{project.home_phone|phone_number}}
-</address>
- <p><strong>Social Security Number:</strong> {{project.social_security}}</p>
- <p><strong>Date of Birth:</strong> {{project.date_of_birth}}</p>
-        </div>           
-</div>
-<ul class="nav nav-tabs" id="myTab">
-  <li class="active"><a href="#finance" data-toggle="tab">Finance</a></li>
-  <li><a href="#site_location" data-toggle="tab">Site Location</a></li>
-  <li><a href="#lease-negotiation" data-toggle="tab">Lease Negotiation</a></li>
-  <li><a href="#build-out" data-toggle="tab">Build Out</a></li>
-  <li><a href="#profile" data-toggle="tab">Client Profile</a></li>
-  <li><a href="#contact-history" data-toggle="tab">Contact</a></li>
-</ul>
- 
-<div class="tab-content">
-  <div class="tab-pane active" id="finance">
-    {% include "mixins/finance.html" %}  
-  </div>
-  <div class="tab-pane" id="site_location">
-{% include "mixins/site_location.html" %} 
-  </div>
-  <div class="tab-pane" id="lease-negotiation">
-{% include "mixins/lease_negotiation.html" %}
-  </div>
-  <div class="tab-pane" id="build-out">
 
+{% block content %}
+
+<div class="row">
+
+  <div class='span6'>
+    <h1>{{project.first_name}} {{project.last_name}}</h1></a>
+    <p><strong>Status:</strong> <a href="#" id="status" data-type="select" class="editable">{{project.status}}</a></p>
+    <p><strong>Application Number:</strong>{{project.id}}</p>
+    <p><strong>SalesRep:</strong> {{project.sales_rep}}</p>
+    <p><strong>Funding Advisor:</strong> <a href="#" id="funding_advisor" data-type="select" class="editable" data-original-title="Assign Advisor">{{project.funding_advisor}}</a></p>
+    <p><strong>Concept:</strong> {{project.concept}}</p>
+    <p><strong>SQFT:</strong> <a href="#" id="store_size" class = "editable">{{project.store_size}}</a></p>
+  </div>       
+
+  <div class ="span6">
+    <h3>Contact Information</h3>
+    <address>
+      <strong>{{project.first_name}} {{project.last_name}}</strong><br>
+      {{project.address}}<br>
+      {{project.city}}, {{project.state}} {{project.zip_code}}<br>
+      <a href="mailto:#">{{project.email}}</a><br>
+      <abbr title="Phone">P:</abbr> {{project.home_phone|phone_number}}
+    </address>
+    <p><strong>Social Security Number:</strong> {{project.social_security}}</p>
+    <p><strong>Date of Birth:</strong> {{project.date_of_birth}}</p>
+  </div> 
+{% if comments%}
+  <div class ="span12">
+  <h3>Most Recent Note</h3>
+  <div class="well well-small">
+    <span class="label {{comments.0.note_label}}">{{comments.0.author}} {{comments.0.post_date}}</span>
+    <p>{{comments.0.body}}</p>
   </div>
-  <div class="tab-pane" id="profile">
-{% include "mixins/profile.html" %}
   </div>
-  <div class="tab-pane" id="contact-history">
-{% include "mixins/contact.html" %}
+{% endif%}
+<div class="span12">
+  <ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#finance" data-toggle="tab">Finance</a></li>
+    <li><a href="#site_location" data-toggle="tab">Site Location</a></li>
+    <li><a href="#lease-negotiation" data-toggle="tab">Lease Negotiation</a></li>
+    <li><a href="#build-out" data-toggle="tab">Build Out</a></li>
+    <li><a href="#profile" data-toggle="tab">Client Profile</a></li>
+    <li><a href="#contact-history" data-toggle="tab">Contact</a></li>
+  </ul>
+
+  <div class="tab-content">
+
+    <div class="tab-pane active" id="finance">
+      {% include "mixins/finance.html" %}  
+    </div>
+
+    <div class="tab-pane" id="site_location">
+      {% include "mixins/site_location.html" %} 
+    </div>
+
+    <div class="tab-pane" id="lease-negotiation">
+      {% include "mixins/lease_negotiation.html" %}
+    </div>
+
+    <div class="tab-pane" id="build-out">
+
+    </div>
+
+    <div class="tab-pane" id="profile">
+      {% include "mixins/profile.html" %}
+    </div>
+
+    <div class="tab-pane" id="contact-history">
+      {% include "mixins/contact.html" %}
+    </div>
   </div>
 </div>
+       </div> 
+
         <div class='row'>
             <h3>Notes</h3>
 <form id="addNoteForm">
@@ -84,11 +107,19 @@
 <input type="hidden" name="author" value="{{user.id}}">
  <button type="submit" class="btn btn-primary" id="submitComment">Submit</button>
 </form>
+<span class="label sales">Sales</span>
+<span class="label finance">Finance</span>
+<span class="label real-estate">Real Estate</span>
+<span class="label build-out">Build Out</span>
+<span class="label accounting">Accounting</span>
+<span class="label manager">Manager</span>
+<span class="label label-inverse">Admin</span>
+
 <div id="notes">
   {% for comment in comments %}
 
  <div class="well well-small">
-    <span class="label label-info">{{comment.author}} {{comment.post_date}}</span>
+    <span class="label {{comment.note_label}}">{{comment.author}} {{comment.post_date}}</span>
  <p>{{comment.body}}</p>
 </div>
   {% endfor %}

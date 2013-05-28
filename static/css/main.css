@@ -9,18 +9,38 @@
 	overflow:auto;
 }
 .counter{
-text-align:center;
-padding:10px;
+	text-align:center;
+	padding:10px;
 }
 .counter span{
-font-size:48px;
-display:block;
-margin:20px;
+	font-size:48px;
+	display:block;
+	margin:20px;
 }
 
+.sales{
+	background-color: #AEB05D;
+}
 
+.finance{
+	background-color: #2a6194;
+}
 
+.real-estate{
+	background-color: #D3A46E;
+}
 
+.build-out{
+	background-color:#E39871;
+}
+
+.manager{
+	background-color: #BF6263;
+}
+
+.accounting{
+	background-color: #52aec0;
+}
 
 
 

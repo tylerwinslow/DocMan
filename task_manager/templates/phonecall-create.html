@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+ {%load phone_number%}
+{% block breadcrumbs %}
+ <ul class="breadcrumb">
+  <li><a href="/projects">Projects</a> <span class="divider">/</span></li>
+  <li><a href="/projects/{{project.id}}/#contact-history">{{project.full_name}}</a> <span class="divider">/</span></li>
+  <li class="active">Send Email</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<h3>{{project.home_phone|phone_number}}</h3>
+<p>{{task.body}}</p>
+<form method="post">{% csrf_token %}
+<h4>Call Topic</h4>
+<input id="id_subject" type="text" class="input-block-level textinput textInput" name="subject" maxlength="200">
+<h4>Call Note</h4>
+<textarea rows="3" class="input-block-level" name="body"></textarea>
+<button class="btn btn-large btn-block btn-primary" type="submit" name="result" value="5">Phone Call Complete</button>
+<button class="btn btn-large btn-block btn-warning" type="submit" name="result" value="2">Left Message</button>
+</form>
+{% endblock %}

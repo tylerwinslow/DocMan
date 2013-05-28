@@ -1,6 +1,9 @@
  {%load phone_number%}
 <h3>{{project.home_phone|phone_number}}</h3>
 <p>{{task.body}}</p>
+{%if task.recording%}
+<audio src="{{task.recording.url}}" preload="auto" />
+{%endif%}
 {% if not task.completion %}
 <form method="post">{% csrf_token %}
 <textarea rows="3" class="input-block-level" name="body"></textarea>

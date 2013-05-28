@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block breadcrumbs %}
+
+{% endblock %}
+
+
+{% block content %}
+   <div class="page-header">
+  <h1>Management Reports<small>DRSS</small></h1>
+</div>
+<ul class="thumbnails">
+<li class="span4">
+<div class="thumbnail">
+  <img alt="300x200"  src="http://placehold.it/200x200">
+  <div class="caption">
+    <h3>Daily Work Load Report</h3>
+    <p>Scheduled daily work load of employees.</p>
+    <p><a href="#" class="btn btn-primary">View</a> <a href="#" class="btn">Print</a></p>
+  </div>
+</div>
+</li>
+<li class="span4">
+<div class="thumbnail">
+  <img  alt="300x200"  src="http://placehold.it/200x200">
+  <div class="caption">
+    <h3>Past Due Clients</h3>
+    <p>Aged listing of past due tasks grouped by client.</p>
+    <p><a href="#" class="btn btn-primary">View</a> <a href="#" class="btn">Print</a></p>
+  </div>
+</div>
+</li>
+<li class="span4">
+<div class="thumbnail">
+  <img alt="300x200"  src="http://placehold.it/200x200">
+  <div class="caption">
+    <h3>Sales Rep Deposits</h3>
+    <p>Sales rep deposit quality analysis.</p>
+    <p><a href="#" class="btn btn-primary">View</a> <a href="#" class="btn">Print</a></p>
+  </div>
+</div>
+</li>
+</ul>
+{% endblock %}

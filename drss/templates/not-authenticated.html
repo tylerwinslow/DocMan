@@ -1,12 +1,49 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
- {% block heroUnit %}
-<div class="hero-unit">
-                <h1>Please Log In</h1>
-                <p>You must log in to view this application.</p>
-                <a href="/api-auth/login/?next={{request.get_full_path}}" class="btn btn-primary">Log in</a>
-                <a href="/login/google-oauth2/?next={{request.get_full_path}}" class="btn">Connect with Google</a>
-            </div>
-{% endblock %}
+{%block message%}
+{% if user.is_authenticated %}
+<div class="alert alert-error">
+ You are logged in but you do not have access to this page. Please contact an administrator or log in with another account.
+</div>
+{% endif %}
+{%endblock%}
 {% block content %}
+<div class="container-fluid" style="margin-top: 30px">
+        <div class="row-fluid">
+         
+        <div class="well" style="width: 320px; margin-left: auto; margin-right: auto">
+            <div class="row-fluid">
+                <div>
+                    <img src="/static/img/eztraklogo.png"/>
+                </div>
+            </div><!-- /row fluid -->
+
+            <div class="row-fluid">
+                <div>
+                    <form action="/api-auth/login/" class=" form-inline" method="post">
+                       {% csrf_token %}
+                        <div id="div_id_username" class="clearfix control-group">
+                            <div class="controls">
+                                <label class="span4">Username:</label>
+                                <input style="height: 25px" type="text" name="username" maxlength="100" autocapitalize="off" autocorrect="off" class="textinput textInput" id="id_username">
+                            </div>
+                        </div>
+                        <div id="div_id_password" class="clearfix control-group">
+                            <div class="controls">
+                                <label class="span4">Password:</label>
+                                <input style="height: 25px" type="password" name="password" maxlength="100" autocapitalize="off" autocorrect="off" class="textinput textInput" id="id_password">
+                            </div>
+                        </div>
+                        <input type="hidden" name="next" value="{{request.get_full_path}}">
+                        <div class="form-actions-no-box">
+                            <input type="submit" name="submit" value="Log in" class="btn btn-primary" id="submit-id-submit">
+                            <a href="/login/google-oauth2/?next={{request.get_full_path}}" class="btn">Connect with Google</a>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /row fluid -->
+        </div><!--/span-->
+
+        </div><!-- /.row-fluid -->
+    </div>
 {% endblock %}
