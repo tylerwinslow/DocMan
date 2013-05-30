@@ -124,7 +124,8 @@ $('#status').editable({
         source: [
               {value: 1, text: 'New'},
               {value: 2, text: 'Refunded'},
-              {value: 3, text: 'Assigned'}
+              {value: 3, text: 'Assigned'},
+              {value: 6, text: 'TurnOver to Real Estate'}
            ],
     pk: window.project,
     url: '/api/projects/' + window.project +"/",

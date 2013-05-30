@@ -321,6 +321,13 @@ class Payment(models.Model):
         project = self.project
         return {'id': project.id, 'name': project.full_name, 'concept': project.concept, 'high_net_worth': project.high_net_worth, 'sales_rep': project.sales_rep, 'state': project.state, 'store_size': project.store_size, 'lead_source': project.advertising_source}
 
+    def save(self, force_insert=False, force_update=False, *args, **kwargs):
+        is_new = self.id is None
+        super(Payment, self).save(*args, **kwargs)
+        if is_new:
+            project = self.project
+            project.assignment_date = self.payment_date
+
     def __unicode__(self):
         return self.payment_type
 
