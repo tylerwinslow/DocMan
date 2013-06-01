@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+ {%load phone_number%}
+ {% load thumbnail %}
+ {%load humanize%}
+{% block breadcrumbs %}
+ <ul class="breadcrumb">
+  <li><a href="/projects">Projects</a> <span class="divider">/</span></li>
+  <li><a href="/projects/{{site.project.id}}/#contact-history">{{site.project.full_name}}</a> <span class="divider">/</span></li>
+  <li class="active">{{site.name}}</li>
+</ul>
+{% endblock %}
+ {%block content%}
+
+<div class="page-header">
+  <h1>{{site.name}}<small> on 5/5/2013</small></h1>
+  		<span class="label label-info">{{site.project.concept}}</span>
+		<span class="label label-info">{{site.project.store_size}} SQFT</span>
+		<span class="label label-success">Site Rank: A+</span>
+</div>
+
+
+
+<div class = "row">
+
+<div class="span4">
+	<address>
+  <strong>{{site.project}}</strong><br>
+  {{site.project.address}}<br>
+  {{site.project.city}}, {{site.project.state}} {{site.project.zip_code}}<br>
+  <abbr title="Phone">P:</abbr> {{site.project.home_phone|phone_number}}
+</address>
+		<address>
+			<strong>Windsor Commons</strong><br>
+			4765 Hodges Blvd<br>
+			Jacksonville, FL 32224<br>
+			<abbr title="Phone">P:</abbr> {{site.project.home_phone|phone_number}}<br>
+			<abbr title="Fax">F:</abbr> {{site.project.home_phone|phone_number}}
+		</address>
+</div>
+
+
+<div class="span8">
+	<ul class="thumbnails">
+<li class="span2">
+<div class="thumbnail">
+  <img alt="150x150"  src="http://placehold.it/150">
+  <div class="caption">
+    <p>{{site.site_locator}}</p>
+  </div>
+</div>
+</li>
+
+<li class="span2">
+<div class="thumbnail">
+  <img alt="150x150"  src="http://placehold.it/150">
+  <div class="caption">
+    <p>{{site.leasing_manager}}</p>
+  </div>
+</div>
+</li>
+
+<li class="span2">
+<div class="thumbnail">
+  <img alt="150x150"  src="http://placehold.it/150">
+  <div class="caption">
+    <p>John Eibel</p>
+  </div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div class = "row">
+	<div class="span12 well">
+		<h3>Leasing Company</h3>
+		<address>
+			<strong>Nancy Sumner</strong><br>
+			The Shopping Center Group<br>
+			2292 Adriatic Drive<br>
+			Henderson, NV 89074<br>
+			<abbr title="Phone">P:</abbr> {{site.project.home_phone|phone_number}}<br>
+			<abbr title="Fax">F:</abbr> {{site.project.home_phone|phone_number}}
+		</address>
+	</div>
+
+</div>
+
+<div class="row">
+	<div class = "span12">
+        <ul class="thumbnails">
+{% for item in images%}
+  <li class="span3">
+  	<a href={{item.image.url}} class="thumbnail">
+{% thumbnail item.image "300x300" crop="center" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+{% endthumbnail %}
+</a>
+  </li>
+{% endfor %}
+</ul>
+			<button class="btn btn-small btn-block btn-primary" type="button"><i class="icon-white icon-plus"></i> Add a Picture</button>
+<hr>
+	</div>
+	<div class="span12">
+				<h3>Center Information</h3>
+			<table class="table">
+				<tbody>
+					<tr>
+						<td>Windsor Commons</td>
+						<td>15,000</td>
+					</tr>
+										<tr>
+						<td>Publix</td>
+						<td>20,000</td>
+					</tr>
+															<tr>
+						<td>Distance from Client</td>
+						<td>20,000</td>
+					</tr>
+																				<tr>
+						<td>Average Income</td>
+						<td>20,000</td>
+					</tr>
+										</tr>
+																				<tr>
+						<td>Tenant Improvement</td>
+						<td>$0.00</td>
+					</tr>
+				</tbody>
+			</table>
+			<h3>Competitors</h3>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Competitor Name</th>
+						<th>Size</th>
+						<th>Distance</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Walmart</td>
+						<td>10,000 SQFT</td>
+						<td>5 Miles</td>
+					</tr>
+				</tbody>
+			</table>
+			<button class="btn btn-small btn-block btn-primary" type="button"><i class="icon-white icon-plus"></i> Add a Competitor</button>
+<hr>
+		</div>
+</div>
+
+	<div class="row">
+		<h3 class="span12">Spaces Available</h3>
+		<div class="span2">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="Space #-cell">Space #</th>
+						<th class="-cell"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="firstRow">
+						<td class="Space #-cell">Sq Ft Available</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Condition of Space</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Who occupied previously </td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Length of Vacancy</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Date Available</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Asking Rent</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">NNN Charges</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr class="lastRow">
+						<td class="Space #-cell">Asking Rent + NNN</td>
+						<td class="-cell"></td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+		<div class="span2">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="Space #-cell">Space #</th>
+						<th class="-cell"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="firstRow">
+						<td class="Space #-cell">Sq Ft Available</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Condition of Space</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Who occupied previously </td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Length of Vacancy</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Date Available</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Asking Rent</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">NNN Charges</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr class="lastRow">
+						<td class="Space #-cell">Asking Rent + NNN</td>
+						<td class="-cell"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="span2">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="Space #-cell">Space #</th>
+						<th class="-cell"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="firstRow">
+						<td class="Space #-cell">Sq Ft Available</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Condition of Space</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Who occupied previously </td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Length of Vacancy</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Date Available</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Asking Rent</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">NNN Charges</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr class="lastRow">
+						<td class="Space #-cell">Asking Rent + NNN</td>
+						<td class="-cell"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="span2">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="Space #-cell">Space #</th>
+						<th class="-cell"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="firstRow">
+						<td class="Space #-cell">Sq Ft Available</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Condition of Space</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Who occupied previously </td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Length of Vacancy</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Date Available</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">Asking Rent</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr>
+						<td class="Space #-cell">NNN Charges</td>
+						<td class="-cell"></td>
+					</tr>
+					<tr class="lastRow">
+						<td class="Space #-cell">Asking Rent + NNN</td>
+						<td class="-cell"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<button class="btn btn-small btn-primary btn-block span12" type="button"><i class="icon-white icon-plus"></i> Add a Space</button>
+	</div>
+	<div class="row">
+
+	<div class="span12">
+		<h3>Quality</h3>
+		<table class="table">
+			<tbody>
+			<tr>
+				<td>Are there other vacancies in the center?</td>
+				<td>Yes</td>
+			</tr>
+			<tr>
+				<td>Within walking distance to anchor?</td>
+				<td>Yes</td>
+			</tr>
+			<tr>
+				<td>Does the Center Face the Street?</td>
+				<td>Yes</td>
+			</tr>
+			<tr>
+				<td>How Old is the Shopping Center?</td>
+				<td>Yes</td>
+			</tr>
+			<tr>
+				<td>Is there a pylon sign available?</td>
+				<td>Yes</td>
+			</tr>
+			<tr>
+				<td>Can the space be seen from the street?</td>
+				<td>Yes</td>
+			</tr>
+		</table>
+	</tbody>
+		</div>
+	</div>
+ {% endblock %}

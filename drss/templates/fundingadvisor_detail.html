@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {%block content%}
+<div class="page-header">
 <h1>{{funding_advisor.user.first_name}} {{funding_advisor.user.last_name}}</h1>
+</div>
 {%include 'mixins/client-task-list.html'%}
 {%endblock%}

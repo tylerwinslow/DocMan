@@ -8,7 +8,7 @@ Funding Advisor:
 {{project.funding_advisor}}
 
 Leave Note:
-http://finance.drssone.com/projects/{{project.id}}
+http://finance.drssone.com/projects/{{project.id}}/tasks/{{task.id}}/
 
 Call Summary:
   Hello Mr. or Mrs. (Client Name),

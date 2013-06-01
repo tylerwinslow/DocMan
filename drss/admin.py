@@ -30,6 +30,11 @@ class DocumentInline(admin.StackedInline):
     extra = 0
 
 
+class SiteImageInline(admin.StackedInline):
+    model = models.SiteImage
+    extra = 1
+
+
 class ProjectAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
@@ -89,13 +94,21 @@ class ConceptAdmin(admin.ModelAdmin):
     inlines = [PackageInline]
 
 
+class ShoppingCenterAdmin(admin.ModelAdmin):
+    inlines = [SiteImageInline]
+
+
 admin.site.register(models.Project, ProjectAdmin)
 admin.site.register(models.Document, DocumentAdmin)
 admin.site.register(models.DocumentType)
 admin.site.register(models.Department)
 admin.site.register(models.Status)
+admin.site.register(models.ShoppingCenterStatus)
 admin.site.register(models.Concept, ConceptAdmin)
+admin.site.register(models.SiteLocator)
+admin.site.register(models.LeasingManager)
 admin.site.register(models.SalesPerson)
 admin.site.register(models.FinanceAdvisor)
 admin.site.register(models.AdvertisingSource)
 admin.site.register(models.Payment, PaymentAdmin)
+admin.site.register(models.ShoppingCenter, ShoppingCenterAdmin)

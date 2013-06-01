@@ -13,13 +13,16 @@
 
 <div class="row">
     <div class="span12">
-        <span class="label label-inverse counter">Sites Found<span>12</span></span>
-        <span class="label label-inverse counter">Sites LOI<span>12</span></span>
-        <span class="label label-inverse counter">Sites Final LOI<span>12</span></span>
+        <span class="label label-inverse counter">Sites Found<span>{{project.site_progress.found}}</span></span>
+        <span class="label label-inverse counter">Sites LOI<span>{{project.site_progress.approved}}</span></span>
+        <span class="label label-inverse counter">Sites Final LOI<span>{{project.site_progress.loi}}</span></span>
         <h3>Site List</h3>
         <table class="table">                
             <thead>
             <tr>
+                <th>
+                    Grade
+                </th>
                 <th>
                     Shopping Center Name
                 </th>
@@ -40,39 +43,18 @@
                 </th>
             </tr>
         </thead>
-        <tbody class= "sortable">
+        <tbody class= "insortable">
+            {% for site in sites%}
             <tr>
-                <td><a href="#">Northridge Promenade</a></td>
-                <td>Northridge</td>
-                <td>California</td>
-                <td>Rejected by Client</td>
-                <td>Sent LOI to Landlord</td>
-                <td>5/2/2013</td>
-            </tr>
-            <tr>
-                <td><a href="#">Van Nuys Center</a></td>
-                <td>Van Nuys</td>
-                <td>California</td>
-                <td>Questions from RE Director</td>
-                <td>Sent LOI to Landlord</td>
-                <td>5/2/2013</td>
-            </tr>
-            <tr>
-                <td><a href="#">Lemon Creek Village</a></td>
-                <td>Walnut</td>
-                <td>California</td>
-                <td>Approved by RE Director</td>
-                <td>Sales Rep Called Land Lord</td>
+                <td>{{site.grade}}</td>
+                <td><a href="sites/{{site.id}}">{{site.name}}</a></td>
+                <td>{{site.city}}</td>
+                <td>{{site.state}}</td>
+                <td>{{site.status}}</td>
+                <td>Left Message</td>
                 <td>5/5/2013</td>
             </tr>
-            <tr>
-                <td><a href="#">Corbin Parthenia Center</a></td>
-                <td>Northridge</td>
-                <td>California</td>
-                <td>Approved By Re Director</td>
-                <td>Sent LOI to Landlord</td>
-                <td>5/6/2013</td>
-            </tr>
+            {% endfor%}
         </tbody>
     </table>
     <iframe width="100%" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps?ie=UTF8&amp;t=h&amp;ll=36.107924,-115.094147&amp;spn=0.266278,0.439453&amp;z=11&amp;output=embed"></iframe>

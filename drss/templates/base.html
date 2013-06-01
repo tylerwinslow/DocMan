@@ -78,20 +78,16 @@
 {%block secondarynav%}
 {% endblock %}
 
-{% block breadcrumbs %}
-{% endblock %}
-            <!-- Main hero unit for a primary marketing message or call to action -->
-            {% block heroUnit %}{% endblock %}
 
-            {% block message %}{% endblock %}
+            <!-- Main hero unit for a primary marketing message or call to action -->
+
             <!-- Example row of columns -->
             <div class="row">
-                <div class= "span12">
-             {% block search %}
-
-{% endblock %}
-               {% block content %}{% endblock %}
-                </div>
+            {% block heroUnit %}{% endblock %}
+            {% block message %}{% endblock %}
+            {% block breadcrumbs %}{% endblock %}
+             {% block search %}{% endblock %}
+            {% block content %}{% endblock %}
             </div>
 
             <hr>

@@ -14,7 +14,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from rest_framework import generics
 from django_easyfilters import FilterSet
-from drss.models import Project, Comment, Document, Payment, DocumentType, FinanceAdvisor, Status, SalesPerson
+from drss.models import Project, Comment, Document, Payment, DocumentType, FinanceAdvisor, Status, SalesPerson, ShoppingCenter
 from task_manager.models import Task
 from drss.forms import NewApplication, NewDeposit, FileUpload, SalesApplication
 from drss.serializers import CommentSerializer, DocumentSerializer, PaymentSerializer, ProjectSerializer, UserSerializer, StatusSerializer
@@ -416,13 +416,31 @@ def project_detail(request, pk):
         project = Project.objects.get(pk=pk)
         documenttypes = DocumentType.objects.all()
         documents = project.document_set.all()
+        sites = ShoppingCenter.objects.all()
         comments = project.comment_set.all().order_by('-post_date')
         payments = project.payment_set.all()
         tasks = Task.objects.all().filter(project=project).filter(project=project)
         incomplete_tasks = tasks.filter(completion=False).order_by('-scheduled_date')
         complete_tasks = tasks.filter(completion=True).order_by('-completion_date')
-        context = {'project': project, 'documents': documents, 'comments': comments, 'payments': payments, 'documenttypes': documenttypes, 'incomplete_tasks': incomplete_tasks, 'complete_tasks': complete_tasks}
+        context = {'project': project,
+                   'documents': documents,
+                   'comments': comments,
+                   'payments': payments,
+                   'documenttypes': documenttypes,
+                   'incomplete_tasks': incomplete_tasks,
+                   'complete_tasks': complete_tasks,
+                   'sites': sites}
         return render(request, 'project_detail.html', context)
+    else:
+        return render(request, 'not-authenticated.html')
+
+
+def site_detail(request, pk, site_id):
+    if request.user.is_authenticated() and request.user.is_staff:
+        site = ShoppingCenter.objects.get(pk=site_id)
+        images = site.siteimage_set.all()
+        context = {'site': site, 'images': images}
+        return render(request, 'site_detail.html', context)
     else:
         return render(request, 'not-authenticated.html')
 

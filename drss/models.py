@@ -1,5 +1,6 @@
 import os.path
 from django.db import models
+from sorl.thumbnail import ImageField
 from datetime import date
 from templated_email import send_templated_mail
 from django.contrib.auth.models import User
@@ -75,6 +76,14 @@ class SalesPerson(Employee):
 
 class FinanceAdvisor(Employee):
     credit_repair = models.BooleanField()
+
+
+class SiteLocator(Employee):
+    permanent = models.BooleanField()
+
+
+class LeasingManager(Employee):
+    lease_negotiator = models.BooleanField()
 
 
 class AdvertisingSource(models.Model):
@@ -240,6 +249,9 @@ class Project(models.Model):
                 status = 'danger'
         return {'percent': percent, 'status': status}
 
+    def site_progress(self):
+        return {'found': 1, 'approved': 0, 'loi': 0}
+
     def most_recent_activity(self):
         return self.comment_set.latest('post_date')
 
@@ -399,3 +411,83 @@ class Document(models.Model):
 
     class Meta:
         ordering = ('request_date',)
+
+
+class ShoppingCenterStatus(models.Model):
+    title = models.CharField(max_length=100)
+    weight = models.IntegerField()
+
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+            ordering = ('weight',)
+
+
+class ShoppingCenter(models.Model):
+    name = models.CharField(max_length=100)
+    project = models.ForeignKey(Project, verbose_name="Project", null=True)
+    site_locator = models.ForeignKey(SiteLocator, verbose_name="Site Locator", null=True)
+    leasing_manager = models.ForeignKey(LeasingManager, verbose_name="Lease Negotiator", null=True)
+    status = models.ForeignKey(ShoppingCenterStatus, verbose_name="Status", null=True, blank=True)
+    grade = models.IntegerField(null=True, blank=True)
+    age = models.IntegerField(null=True, blank=True)
+    seen_from_street = models.NullBooleanField(null=True)
+    facing_street = models.NullBooleanField(null=True)
+    vacancies = models.NullBooleanField(null=True)
+    pylon_available = models.NullBooleanField(null=True)
+    center_type = models.CharField(null=True, max_length=100, blank=True)
+    anchor = models.CharField(null=True, blank=True, max_length=100)
+    anchor_walking_distance = models.IntegerField(null=True, blank=True)
+    escape_days = models.IntegerField(null=True, blank=True)
+    average_income = models.IntegerField(null=True, blank=True)
+    gross_income_projection = models.IntegerField(null=True, blank=True)
+    population_1m = models.IntegerField(null=True, blank=True)
+    population_3m = models.IntegerField(null=True, blank=True)
+    population_5m = models.IntegerField(null=True, blank=True)
+    address = models.CharField(max_length=64)
+    city = models.CharField(max_length=32)
+    state = models.CharField(max_length=2, choices=STATE_CHOICES)
+    zip_code = models.CharField(max_length=10)
+
+    def __unicode__(self):
+        return self.name
+
+
+class SiteImage(models.Model):
+    title = models.CharField(max_length=100, null=True, blank=True)
+    caption = models.TextField(null=True, blank=True)
+    shopping_center = models.ForeignKey(ShoppingCenter, verbose_name="Shopping Center", null=True)
+    image = ImageField(upload_to='center_pictures')
+
+# class ShoppingCenterUnit:
+#     space_number =
+#     size = models.IntegerField(null=True, blank=True)
+#     condition =
+#     previous_occupant =
+#     time_vacant = models.IntegerField(null=True, blank=True)
+#     date_available =
+#     asking_rent =
+#     tax_rate =
+#     lease_term =
+#     nnn_charges =
+#     additional_rent =
+#     additional_cap =
+#     additional_common =
+#     additional_management =
+#     renewal_option =
+#     renewal_period =
+#     renewal_years = models.IntegerField(null=True, blank=True)
+#     renewal_increase =
+#     rent_due_in_days = models.IntegerField(null=True, blank=True)
+#     unit_improvements =
+#     tenent_allowance =
+#     security_deposit =
+#     marquee =
+#     marquee_how =
+#     days_of_advertising = models.IntegerField(null=True, blank=True)
+#     days_of_mascott = models.IntegerField(null=True, blank=True)
+#     hvac_warranty =
+#     hvac_cost_cap =
+#     relocation_clause =
+#     tenent_days_out = models.IntegerField(null=True, blank=True)

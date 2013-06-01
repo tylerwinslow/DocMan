@@ -29,6 +29,7 @@ class Command(BaseCommand):
                     recipient_list=[project.sales_rep.user.email, 'steve.castle@drssmail.com'],
                     context={
                         'project': project,
+                        'task': task
                     },
                 )
         self.stdout.write('Sent "%s" emails' % number_emails)
