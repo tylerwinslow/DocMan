@@ -28,7 +28,7 @@
 
 <div class="row">
 
-  <div class='span6'>
+  <div class='span4 well'>
     <h1>{{project.first_name}} {{project.last_name}}</h1></a>
     <p><strong>Status:</strong> <a href="#" id="status" data-type="select" class="editable">{{project.status}}</a></p>
     <p><strong>Application Number:</strong>{{project.id}}</p>
@@ -38,7 +38,7 @@
     <p><strong>SQFT:</strong> <a href="#" id="store_size" class = "editable">{{project.store_size}}</a></p>
   </div>       
 
-  <div class ="span6">
+  <div class ="span3 well">
     <h3>Contact Information</h3>
     <address>
       <strong>{{project.first_name}} {{project.last_name}}</strong><br>
@@ -49,7 +49,24 @@
     </address>
     <p><strong>Social Security Number:</strong> {{project.social_security}}</p>
     <p><strong>Date of Birth:</strong> {{project.date_of_birth}}</p>
-  </div> 
+    
+  </div>
+    <div class ="span3 well">
+    <h3>Partner</h3>
+    {% if project.first_name_partner %}
+    <address>
+      <strong>{{project.first_name_partner}} {{project.last_name_partner}}</strong><br>
+      {{project.address_partner}}<br>
+      {{project.city_partner}}, {{project.state_partner}} {{project.zip_code_partner}}<br>
+      <a href="mailto:#">{{project.email_partner}}</a><br>
+      <abbr title="Phone">P:</abbr> {{project.home_phone}}
+    </address>
+    <p><strong>Social Security Number:</strong> {{project.social_security_partner}}</p>
+    <p><strong>Date of Birth:</strong> {{project.date_of_birth_partner}}</p>  
+
+    {%endif%}
+  </div>  
+
 {% if comments%}
   <div class ="span12">
   <h3>Most Recent Note</h3>

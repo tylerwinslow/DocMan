@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from itertools import chain
 import re
 from datetime import datetime
 from django.contrib.auth.models import User, Group
@@ -7,16 +6,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
 from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.units import inch
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from rest_framework import generics
 from django_easyfilters import FilterSet
 from drss.models import Project, Comment, Document, Payment, DocumentType, FinanceAdvisor, Status, SalesPerson, ShoppingCenter
 from task_manager.models import Task
-from drss.forms import NewApplication, NewDeposit, FileUpload, SalesApplication
+from drss.forms import NewApplication, NewDeposit, FileUpload, SalesApplication, CreateSite
 from drss.serializers import CommentSerializer, DocumentSerializer, PaymentSerializer, ProjectSerializer, UserSerializer, StatusSerializer
 
 
@@ -300,7 +298,7 @@ def project_list(request):
                 projects = Project.objects.filter().order_by('-create_date')
         else:
             projects = Project.objects.order_by('-create_date')
-        projects = projects.exclude(status__pk=2)
+        projects = projects.exclude(status__pk=2).exclude(status__pk=7)
         projectsfilter = ProjectFilterSet(projects, request.GET)
         context = {'projects': projectsfilter.qs, 'projectsfilter': projectsfilter, 'salesfilter': the_filter}
         return render(request, 'project_list.html', context)
@@ -320,7 +318,7 @@ def salesperson_list(request):
 def salesperson_detail(request, user_id):
     if request.user.is_authenticated() and request.user.is_staff:
         sales_person = SalesPerson.objects.get(pk=user_id)
-        projects = Project.objects.filter(sales_rep=sales_person)
+        projects = Project.objects.filter(sales_rep=sales_person).exclude(status__pk=2)
         context = {'sales_person': sales_person, 'projects': projects}
         return render(request, 'salesperson_detail.html', context)
     else:
@@ -339,7 +337,7 @@ def fundingadvisor_list(request):
 def fundingadvisor_detail(request, user_id):
     if request.user.is_authenticated() and request.user.is_staff:
         funding_advisor = FinanceAdvisor.objects.get(pk=user_id)
-        projects = Project.objects.filter(funding_advisor=funding_advisor)
+        projects = Project.objects.filter(funding_advisor=funding_advisor).exclude(status__pk=2)
         context = {'funding_advisor': funding_advisor, 'projects': projects}
         return render(request, 'fundingadvisor_detail.html', context)
     else:
@@ -443,6 +441,21 @@ def site_detail(request, pk, site_id):
         return render(request, 'site_detail.html', context)
     else:
         return render(request, 'not-authenticated.html')
+
+
+def site_create(request, pk):
+    if request.method == 'POST':  # If the form has been submitted...
+        form = CreateSite(request.POST)  # A form bound to the POST data
+        if form.is_valid():  # All validation rules pass
+            form.save()
+            return HttpResponseRedirect(reverse('drss.views.project_detail', args=(pk,)))  # Redirect after POST
+    else:
+        project = Project.objects.get(pk=pk)
+        form = CreateSite(initial={project: pk})  # An unbound form
+
+    return render(request, 'create_site.html', {
+        'form': form,
+    })
 
 
 def project_create(request):

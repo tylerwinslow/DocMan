@@ -14,7 +14,8 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ('id', 'create_date', 'last_name', 'first_name', 'email', 'social_security', 'address', 'city', 'state', 'zip_code',
                   'store_size', 'concept', 'sales_rep', 'funding_advisor', 'date_of_birth', 'best_call_time', 'status',
                   'home_phone', 'cell_phone', 'fax_number', 'credit_score', 'place_of_employment', 'years_at_job', 'annual_salary',
-                  'opening_location', 'deposit_amount', 'package_price', 'advertising_source',
+                  'opening_location', 'deposit_amount', 'package_price', 'advertising_source', 'priority', 'personality','funding_path',
+                  'amount_preaproved', 'amount_obtained', 'other_business', 'open_in_one_to_three', 'working_capital', 'total_amount_needed', 'spouse',
                   'financing_cash', 'financing_loc', 'financing_hloc', 'financing_401k', 'financing_pension', 'financing_ira', 'financing_stocksbonds',
                   'financing_cd', 'financing_lifeinsurance', 'financing_credit', 'financing_financing_auto_loan', 'financing_mortgage_primary', 'financing_mortgage_other',
                   'financing_installment', 'financing_debts_other', 'comment_set', 'document_set', 'payment_set')

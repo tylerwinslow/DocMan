@@ -105,7 +105,7 @@ def task_detail(request, pk, taskid):
 
 
 def day_planner(request):
-    tasks = models.Task.objects.filter(user=request.user).filter(completion=False)
+    tasks = models.Task.objects.filter(user=request.user).filter(completion=False).filter(scheduled_date__lte=date.today()).order_by('scheduled_date')
     today = date.today()
     context = {'tasks': tasks, 'date': today}
     return render(request, 'day-planner.html', context)

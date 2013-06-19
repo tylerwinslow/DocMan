@@ -56,7 +56,7 @@ class Task(models.Model):
     def send_email(self):
         send_templated_mail(template_name='drss_sales',
                             from_email=self.user.email,
-                            recipient_list=['steve.castle@drssmail.com'],
+                            recipient_list=[self.project.email, 'steve.castle@drssmail.com'],
                             context={'subject': self.subject, 'body': self.body}
                             )
 

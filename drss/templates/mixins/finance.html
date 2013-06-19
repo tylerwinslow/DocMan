@@ -3,8 +3,11 @@
     <div class= "span12">
     <h3>Deposit Date: {{payments.0.payment_date}}</h3>
         <div class="progress progress-striped active progress-{{project.completion.status}}">
-                    <div class="bar" style="width: {{project.completion.percent}}%"></div></div>
+                    <div class="bar" style="width: {{project.completion.percent}}%"></div>
                 </div>
+                <p><button class="btn btn-small btn-block" type="button">Turn Over to Real Estate</button></p>
+                </div>
+                
 <div class="span6">
         <div class="well">
         <h3>Deposit</h3>
@@ -30,6 +33,36 @@
         </div>
         </div>
    <div class='row'>
+    <div class='span12'>
+        <table class= "table">
+            <tbody>
+                <tr>
+                    <th>Funding Path</th>
+                    <td><a id="funding_path" class = "editable">{{project.funding_path}}</a></td>
+                </tr>
+                <tr>
+                    <th>Amount Pre-Aproved</th>
+                    <td><a id="amount_preaproved" class = "editable">{{project.amount_preaproved}}</a></td>
+                </tr>
+                <tr>
+                    <th>Amount Obtained</th>
+                    <td><a id="amount_obtained" class = "editable">{{project.amount_obtained}}</a></td>
+                </tr>
+                <tr>
+                    <th>Working Capital</th>
+                    <td><a id="working_capital" class = "editable">{{project.working_capital}}</a></td>
+                </tr>
+                <tr>
+                    <th>Total Amount Needed</th>
+                    <td><a id="total_amount_needed" class = "editable">{{project.total_amount_needed}}</a></td>
+                </tr>
+                <tr>
+                    <th>Open in One to Three Months</th>
+                    <td><a id="open_in_one_to_three" class = "editable">{{project.open_in_one_to_three}}</a></td>
+                </tr>
+            </tbody>
+        </table>
+            </div>
             <div class="span12">
             <h3>Documents</h3>
             <div class="btn-group">

@@ -5,7 +5,7 @@
 {% block breadcrumbs %}
  <ul class="breadcrumb">
   <li><a href="/projects">Projects</a> <span class="divider">/</span></li>
-  <li><a href="/projects/{{site.project.id}}/#contact-history">{{site.project.full_name}}</a> <span class="divider">/</span></li>
+  <li><a href="/projects/{{site.project.id}}/#site_location">{{site.project.full_name}}</a> <span class="divider">/</span></li>
   <li class="active">{{site.name}}</li>
 </ul>
 {% endblock %}
@@ -92,7 +92,7 @@
         <ul class="thumbnails">
 {% for item in images%}
   <li class="span3">
-  	<a href={{item.image.url}} class="thumbnail">
+  	<a href={{item.image.url}} class="thumbnail lightbox">
 {% thumbnail item.image "300x300" crop="center" as im %}
     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
 {% endthumbnail %}
