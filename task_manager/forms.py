@@ -3,7 +3,7 @@ from django.contrib.localflavor.us.forms import USSocialSecurityNumberField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, HTML, Fieldset, Hidden, Field
 from crispy_forms.bootstrap import FormActions, AppendedPrependedText, AppendedText
-from task_manager.models import Task
+from task_manager.models import Task, WorkProject
 
 
 class NewTask(ModelForm):
@@ -32,6 +32,32 @@ class NewTask(ModelForm):
 
     class Meta:
         model = Task
+
+
+class NewWorkProject(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(NewWorkProject, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_class = 'form-horizontal'
+        self.helper.form_method = 'post'
+        self.helper.form_action = '#'
+        self.helper.layout = Layout(
+            Fieldset('Create Project',
+                     'title',
+                     'start_date',
+                     'due_date',
+                     'priority',
+                     'project_type',
+                     'copy_link',
+                     'final_link'),
+            FormActions(
+                Submit('submit', 'Submit', css_class='button white')
+            )
+        )
+
+    class Meta:
+        model = WorkProject
 
 
 class NewEmail(ModelForm):

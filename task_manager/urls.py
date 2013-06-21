@@ -7,5 +7,8 @@ urlpatterns = patterns('task_manager.views',
                        url(r'^projects/(?P<pk>\d+)/emails/$', views.send_email, name='email-list'),
                        url(r'^projects/(?P<pk>\d+)/phonecalls/$', views.log_phone_call, name='email-list'),
                        url(r'^projects/(?P<pk>\d+)/tasks/(?P<taskid>\d+)/$', views.task_detail, name='task-detail'),
-
+                       url(r'^creative/$', views.creative, name='creative'),
+                       url(r'^creative/workproject/(?P<pk>\d+)/$', views.work_project_detail, name='workproject-detail'),
+                       url(r'^creative/workproject/(?P<pk>\d+)/check-in/$', views.check_in, name='workproject-checkin'),
+                       url(r'^creative/workproject/(?P<pk>\d+)/check-out/$', views.check_out, name='workproject-checkout'),
                        )

@@ -1,10 +1,18 @@
 from django.shortcuts import render
 from datetime import date, datetime
 from django.template import Template, Context
+from django_easyfilters import FilterSet
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from task_manager import forms, models
 from drss.models import Project
+
+
+class WorkProjectFilterSet(FilterSet):
+    fields = [
+        'project_type',
+
+    ]
 
 
 def create_task(request, pk):
@@ -109,3 +117,57 @@ def day_planner(request):
     today = date.today()
     context = {'tasks': tasks, 'date': today}
     return render(request, 'day-planner.html', context)
+
+
+def creative(request):
+    work_projects = models.WorkProject.objects.all()
+    projectsfilter = WorkProjectFilterSet(work_projects, request.GET)
+    tickets = {'name': "sample ticket"}
+    context = {'work_projects': projectsfilter.qs, 'projectsfilter': projectsfilter, 'tickets': tickets}
+    return render(request, 'creative.html', context)
+
+
+def work_project_detail(request, pk):
+    if request.user.is_authenticated():
+        project = models.WorkProject.objects.get(pk=pk)
+        checkins = project.checkin.all()
+        try:
+            working = not checkins.filter(user__user=request.user)[0].check_type
+        except IndexError:
+            working = False
+        context = {'project': project, 'checkins': checkins, 'working': working}
+        return render(request, 'work-project.html', context)
+    else:
+        return render(request, 'not-authenticated.html')
+
+
+def check_in(request, pk):
+    if request.user.is_authenticated():
+        project = models.WorkProject.objects.get(pk=pk)
+        user = models.ProjectUser.objects.get(user=request.user)
+        new_check = models.CheckIn(work_project=project, user=user, check_type=False)
+        new_check.save()
+        return HttpResponseRedirect(reverse('task_manager.views.work_project_detail', args=(pk,)))
+    else:
+        return render(request, 'not-authenticated.html')
+
+
+def check_out(request, pk):
+    if request.user.is_authenticated():
+        if request.method == 'POST':
+            completion = request.POST['completion']
+            recap = request.POST['recap']
+            project = models.WorkProject.objects.get(pk=pk)
+            project.note = recap
+            project.save()
+            user = models.ProjectUser.objects.get(user=request.user)
+            new_check = models.CheckIn(work_project=project, user=user, check_type=True, note=recap, completion=completion)
+            new_check.save()
+            return HttpResponseRedirect(reverse('task_manager.views.work_project_detail', args=(pk,)))
+        project = models.WorkProject.objects.get(pk=pk)
+        user = models.ProjectUser.objects.get(user=request.user)
+        new_check = models.CheckIn(work_project=project, user=user, check_type=True)
+        new_check.save()
+        return HttpResponseRedirect(reverse('task_manager.views.work_project_detail', args=(pk,)))
+    else:
+        return render(request, 'not-authenticated.html')

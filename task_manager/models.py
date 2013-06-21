@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import timedelta
 from django.contrib.auth.models import User
 from templated_email import send_templated_mail
 from drss.models import Project, Department, Comment
@@ -71,3 +72,78 @@ class Task(models.Model):
 
     def __unicode__(self):
         return self.title
+
+
+class ProjectType(models.Model):
+    title = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.title
+
+
+class WorkProject(models.Model):
+    title = models.CharField(max_length=200)
+    start_date = models.DateField('Start Date', null=True, blank=True)
+    due_date = models.DateField('Due Date', null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    completion = models.IntegerField(null=True, blank=True)
+    priority = models.IntegerField(null=True, blank=True)
+    project_type = models.ForeignKey(ProjectType, null=True, blank=True)
+    copy_link = models.CharField(max_length=300, null=True, blank=True)
+    final_link = models.CharField(max_length=300, null=True, blank=True)
+    note = models.CharField(max_length=300, null=True, blank=True)
+
+    def users_working(self):
+        users = ProjectUser.objects.all()
+        wu = []
+        for user in users:
+            last_check_in = CheckIn.objects.filter(user=user.user).filter(work_project=self).order_by('-pk')
+            if last_check_in and not last_check_in[0].check_type:
+                wu.append(last_check_in[0].user)
+            users_working = wu
+        return users_working
+
+    def project_time(self):
+        checkins = CheckIn.objects.filter(work_project=self).filter(check_type=True)
+        i = 0
+        time = "0:0:0"
+        for checkin in checkins:
+            if i == 0:
+                time = checkin.time_logged()
+                i = i + 1
+            else:
+                time = time + checkin.time_logged()
+        return time
+
+    def __unicode__(self):
+        return self.title
+
+
+class ProjectUser(models.Model):
+    user = models.OneToOneField(User, primary_key=True)
+    on_projects = models.ManyToManyField(WorkProject, null=True, blank=True, related_name='project_user')
+
+    def __unicode__(self):
+        return self.user.get_full_name()
+
+
+class CheckIn(models.Model):
+    work_project = models.ForeignKey(WorkProject,  related_name='checkin', verbose_name="Project")
+    user = models.ForeignKey(ProjectUser)
+    time = models.DateTimeField('Check In Time',  auto_now_add=True)
+    check_type = models.BooleanField()
+    completion = models.IntegerField(null=True, blank=True)
+    note = models.CharField(max_length=300, null=True, blank=True)
+
+    def time_logged(self):
+        current = self.id
+        user = self.user
+        last_check_in = CheckIn.objects.filter(user=user).filter(pk__lt=current).order_by('-pk')[0:1]
+        if last_check_in:
+            elapsed = self.time - last_check_in[0].time
+        else:
+            elapsed = "Check In"
+        return elapsed
+
+    def __unicode__(self):
+        return self.user.user.get_full_name()
