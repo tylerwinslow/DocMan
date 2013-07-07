@@ -11,6 +11,7 @@ from drss.models import Project
 class WorkProjectFilterSet(FilterSet):
     fields = [
         'project_type',
+        'status'
 
     ]
 
@@ -120,23 +121,75 @@ def day_planner(request):
 
 
 def creative(request):
-    work_projects = models.WorkProject.objects.all()
+    work_projects = models.WorkProject.objects.all().order_by('-status__rank')
     projectsfilter = WorkProjectFilterSet(work_projects, request.GET)
-    tickets = {'name': "sample ticket"}
-    context = {'work_projects': projectsfilter.qs, 'projectsfilter': projectsfilter, 'tickets': tickets}
+    tickets = models.Ticket.objects.filter(complete_time__isnull=True)
+    complete_tickets = models.Ticket.objects.filter(complete_time__isnull=False)
+    context = {'work_projects': projectsfilter.qs, 'projectsfilter': projectsfilter, 'tickets': tickets, 'complete_tickets': complete_tickets}
     return render(request, 'creative.html', context)
+
+
+def create_work_project(request):
+    if request.user.is_authenticated():
+        if request.method == 'POST':  # If the form has been submitted...
+            form = forms.NewWorkProject(request.POST)  # A form bound to the POST data
+            if form.is_valid():  # All validation rules pass
+                form.save()
+                return HttpResponseRedirect(reverse('task_manager.views.creative', args=()))  # Redirect after POST
+        else:
+            form = forms.NewWorkProject()  # An unbound form
+        return render(request, 'workproject-create.html', {
+            'form': form,
+        })
+    else:
+        return render(request, 'not-authenticated.html')
+
+
+def create_ticket(request):
+    if request.user.is_authenticated():
+        if request.method == 'POST':  # If the form has been submitted...
+            form = forms.NewTicket(request.POST)  # A form bound to the POST data
+            if form.is_valid():  # All validation rules pass
+                form.save()
+                return HttpResponseRedirect(reverse('task_manager.views.creative', args=()))  # Redirect after POST
+        else:
+            form = forms.NewTicket()  # An unbound form
+        return render(request, 'workproject-create.html', {
+            'form': form,
+        })
+    else:
+        return render(request, 'not-authenticated.html')
 
 
 def work_project_detail(request, pk):
     if request.user.is_authenticated():
         project = models.WorkProject.objects.get(pk=pk)
-        checkins = project.checkin.all()
+        checkins = project.checkin.all().order_by("-pk")
         try:
             working = not checkins.filter(user__user=request.user)[0].check_type
         except IndexError:
             working = False
         context = {'project': project, 'checkins': checkins, 'working': working}
         return render(request, 'work-project.html', context)
+    else:
+        return render(request, 'not-authenticated.html')
+
+
+def ticket_detail(request, pk):
+    if request.user.is_authenticated():
+        ticket = models.Ticket.objects.get(pk=pk)
+        context = {'ticket': ticket}
+        return render(request, 'ticket.html', context)
+    else:
+        return render(request, 'not-authenticated.html')
+
+
+def complete_ticket(request, pk):
+    if request.user.is_authenticated():
+        ticket = models.Ticket.objects.get(pk=pk)
+        ticket.complete_time = datetime.now()
+        ticket.save()
+        return HttpResponseRedirect(reverse('task_manager.views.creative', args=()))
     else:
         return render(request, 'not-authenticated.html')
 
@@ -158,6 +211,7 @@ def check_out(request, pk):
             completion = request.POST['completion']
             recap = request.POST['recap']
             project = models.WorkProject.objects.get(pk=pk)
+            project.completion = completion
             project.note = recap
             project.save()
             user = models.ProjectUser.objects.get(user=request.user)

@@ -82,6 +82,10 @@ class SiteLocator(Employee):
     permanent = models.BooleanField()
 
 
+class CSM(Employee):
+    lease_negotiator = models.BooleanField()
+
+
 class LeasingManager(Employee):
     lease_negotiator = models.BooleanField()
 
@@ -107,6 +111,9 @@ class Project(models.Model):
     )
     create_date = models.DateTimeField('Date Created', auto_now_add=True)
     assignment_date = models.DateTimeField('Assignment Date', null=True, blank=True)
+    site_locator = models.ForeignKey(SiteLocator, verbose_name="Site Locator", null=True, blank=True)
+    csm = models.ForeignKey(CSM, verbose_name="CSM", null=True, blank=True)
+    leasing_manager = models.ForeignKey(LeasingManager, verbose_name="Lease Negotiator", null=True, blank=True)
     fi_turnover_date = models.DateTimeField('Finance Turn Over Date', null=True, blank=True)
     concept = models.ForeignKey(Concept, verbose_name="Store Concept",  help_text="Your preferred retail concept.")
     status = models.ForeignKey(Status, verbose_name="Status", null=True, blank=True)

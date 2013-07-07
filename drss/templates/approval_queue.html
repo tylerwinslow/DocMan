@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content%}
+<table class="table">                
+            <thead>
+            <tr>
+                <th>
+                    Shopping Center Name
+                </th>
+                <th>
+                    Client
+                </th>
+                <th>
+                    CSM
+                </th>
+                <th>
+                    Approval Status
+                </th>
+                <th>
+                    Status Date
+                </th>
+                <th>
+                    City
+                </th>
+                                <th>
+                    Most Recent Note
+                </th>
+                                <th>
+                    Note Date
+                </th>
+            </tr>
+        </thead>
+        <tbody class= "insortable">
+            {% for site in sites%}
+            <tr>
+                <td><a href="/projects/{{site.project.id}}/sites/{{site.id}}">{{site.name}}</a></td>
+                <td><a href="/projects/{{site.project.id}}">{{site.project}}</a></td>
+                <td>{{site.csm}}</td>
+                <td>{{site.status}}</td>
+                <td>5/5/2013</td>
+                <td>{{site.city}}</td>
+                <td>Left Message</td>
+                <td>5/5/2013</td>
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+    {% endblock %}

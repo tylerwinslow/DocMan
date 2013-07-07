@@ -80,15 +80,27 @@ class ProjectType(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        ordering = ['title']
+
+
+class ProjectStatus(models.Model):
+    title = models.CharField(max_length=200)
+    rank = models.IntegerField(null=True, blank=True)
+
+    def __unicode__(self):
+        return self.title
+
 
 class WorkProject(models.Model):
     title = models.CharField(max_length=200)
-    start_date = models.DateField('Start Date', null=True, blank=True)
-    due_date = models.DateField('Due Date', null=True, blank=True)
+    start_date = models.DateField('Start Date', null=True)
+    due_date = models.DateField('Due Date', null=True)
     description = models.TextField(null=True, blank=True)
     completion = models.IntegerField(null=True, blank=True)
     priority = models.IntegerField(null=True, blank=True)
-    project_type = models.ForeignKey(ProjectType, null=True, blank=True)
+    status = models.ForeignKey(ProjectStatus, null=True, blank=True)
+    project_type = models.ForeignKey(ProjectType, null=True)
     copy_link = models.CharField(max_length=300, null=True, blank=True)
     final_link = models.CharField(max_length=300, null=True, blank=True)
     note = models.CharField(max_length=300, null=True, blank=True)
@@ -127,6 +139,21 @@ class ProjectUser(models.Model):
         return self.user.get_full_name()
 
 
+class Ticket(models.Model):
+    title = models.CharField(max_length=200)
+    assigned_to = models.ForeignKey(ProjectUser, null=True, blank=True)
+    belongs_to = models.ForeignKey(User, null=True, blank=True)
+    start_time = models.DateTimeField('Start Date', null=True, auto_now_add=True)
+    complete_time = models.DateTimeField('Completion Date', null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    status = models.ForeignKey(ProjectStatus, null=True, blank=True)
+    project_type = models.ForeignKey(ProjectType, null=True)
+    note = models.CharField(max_length=300, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.title
+
+
 class CheckIn(models.Model):
     work_project = models.ForeignKey(WorkProject,  related_name='checkin', verbose_name="Project")
     user = models.ForeignKey(ProjectUser)
@@ -138,7 +165,7 @@ class CheckIn(models.Model):
     def time_logged(self):
         current = self.id
         user = self.user
-        last_check_in = CheckIn.objects.filter(user=user).filter(pk__lt=current).order_by('-pk')[0:1]
+        last_check_in = CheckIn.objects.filter(user=user).filter(pk__lt=current).filter(check_type=False).order_by('-pk')[0:1]
         if last_check_in:
             elapsed = self.time - last_check_in[0].time
         else:

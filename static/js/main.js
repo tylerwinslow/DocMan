@@ -146,7 +146,8 @@ $('#funding_advisor').editable({
               {value: 3, text: 'Judith Schoenfeldt'},
               {value: 2, text: 'Leonid Vekslin'},
               {value: 29, text: 'Dave Maxey'},
-              {value: 41, text: 'Steven Grammer'}
+              {value: 41, text: 'Steven Grammer'},
+              {value: 43, text: 'Sam Croce'}
            ],
     pk: window.project,
     url: '/api/projects/' + window.project +"/",
@@ -205,6 +206,8 @@ $('.lightbox').colorbox({
   scalePhotos: true,
   maxHeight: "70%"
 });
+
+$("#projectTable").stupidtable();
 
   audiojs.events.ready(function() {
     var as = audiojs.createAll();

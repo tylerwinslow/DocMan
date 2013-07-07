@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% load humanize%}
+{% block secondarynav %}
+<div class="span12">
+             <div class="navbar">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li>
+        <li class=""><a href="/admin/task_manager/workproject/{{project.id}}"><i class="icon-pencil"></i> Admin Edit</a></li>
+      </li>
+
+    </ul>
+  </div>
+</div>
+</div>
+{% endblock %}
 {% block breadcrumbs %}
 <div class="span12">
 <ul class="breadcrumb">
@@ -26,7 +40,7 @@
 </div>
 {% endif %}
   <div class="progress progress-striped active">
-  <div class="bar" style="width: 40%;"></div>
+  <div class="bar" style="width: {{project.completion}}%;"></div>
 </div>
 
 </div>
@@ -35,23 +49,24 @@
   <li class="span4">
     <div class="thumbnail">
       <img src="/static/img/unknown.png" alt="">
-      <a href="http://10.1.0.61/MediaWiki/index.php/Yogurt_Store_Brochure" class="btn btn-block">Review Copy</a>
+      <a href="{{project.copy_link}}" class="btn btn-block">Review Copy</a>
     </div>
   </li>
   <li class="span4">
     <div class="thumbnail">
       <img src="/static/img/unknown.png" alt="">
-      <a href="#" class="btn btn-block">Review Design</a>
+      <a href="{{project.copy_link}}" class="btn btn-block">Review Design</a>
     </div>
     <li class="span4">
     <div class="thumbnail">
       <img src="/static/img/unknown.png" alt="">
-      <a href="#" class="btn btn-block">View Final Product</a>
+      <a href="{{project.final_link}}" class="btn btn-block">View Final Product</a>
     </div>
   </li>
   </li>
 </ul>
-{%if working%}
+{{working}}
+{% if working %}
 <form class="for form-inline" action='check-out/' method="POST">{% csrf_token %}
   <div class="input-append">
   <input class="span2" id="appendedInput" type="text" name="completion" placeholder="Current Completion">

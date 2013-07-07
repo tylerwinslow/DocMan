@@ -46,6 +46,17 @@ class ProjectFilterSet(FilterSet):
     ]
 
 
+class RealEstateFilterSet(FilterSet):
+    fields = [
+        'fi_turnover_date',
+        'concept',
+        'status',
+        'csm',
+        'site_locator',
+        'leasing_manager'
+    ]
+
+
 class PaymentFilterSet(FilterSet):
     fields = [
         'payment_date',
@@ -298,10 +309,42 @@ def project_list(request):
                 projects = Project.objects.filter().order_by('-create_date')
         else:
             projects = Project.objects.order_by('-create_date')
-        projects = projects.exclude(status__pk=2).exclude(status__pk=7)
+        projects = projects.exclude(status__pk=2).exclude(status__pk=7).exclude(status__pk=6)
         projectsfilter = ProjectFilterSet(projects, request.GET)
         context = {'projects': projectsfilter.qs, 'projectsfilter': projectsfilter, 'salesfilter': the_filter}
         return render(request, 'project_list.html', context)
+    else:
+        return render(request, 'not-authenticated.html')
+
+
+def real_estate_list(request):
+    if request.user.is_authenticated() and request.user.is_staff:
+        group = request.user.groups.values_list('name', flat=True)
+        the_filter = request.user.username
+        if group:
+            if group[0] == "Sales Person":
+                sales_filter = request.user.username
+                projects = Project.objects.filter(sales_rep__user__username__startswith=sales_filter).order_by('-create_date')
+            elif group[0] == "Funding Advisor":
+                funding_filter = request.user.username
+                projects = Project.objects.filter(funding_advisor__user__username__startswith=funding_filter).exclude(assignment_date__isnull=True).order_by('-assignment_date')
+            else:
+                projects = Project.objects.filter().order_by('-create_date')
+        else:
+            projects = Project.objects.order_by('-create_date')
+        projects = projects.filter(status__pk=6)
+        projectsfilter = RealEstateFilterSet(projects, request.GET)
+        context = {'projects': projectsfilter.qs, 'projectsfilter': projectsfilter, 'salesfilter': the_filter}
+        return render(request, 'real-estate-list.html', context)
+    else:
+        return render(request, 'not-authenticated.html')
+
+
+def site_approval_list(request):
+    if request.user.is_authenticated() and request.user.is_staff:
+        sites = ShoppingCenter.objects.all()
+        context = {'sites': sites}
+        return render(request, 'approval_queue.html', context)
     else:
         return render(request, 'not-authenticated.html')
 
@@ -376,21 +419,19 @@ def process_refund(request, pk):
     return HttpResponseRedirect(reverse('drss.views.project_detail', args=(pk,)))
 
 
+def turnover_to_re(request, pk):
+    project = Project.objects.get(pk=pk)
+    status = Status.objects.get(title__iexact='TurnOver to Real Estate')
+    project.fi_turnover_date = datetime.now()
+    project.status = status
+    project.save()
+    return HttpResponseRedirect(reverse('drss.views.project_detail', args=(pk,)))
+
+
 def assign_finance(request):
     if request.user.is_authenticated() and request.user.is_staff:
-        group = request.user.groups.values_list('name', flat=True)
         the_filter = request.user.username
-        if group:
-            if group[0] == "Sales Person":
-                sales_filter = request.user.username
-                projects = Project.objects.filter(sales_rep__user__username__startswith=sales_filter).order_by('-create_date')
-            elif group[0] == "Funding Advisor":
-                funding_filter = request.user.username
-                projects = Project.objects.filter(funding_advisor__user__username__startswith=funding_filter).order_by('-create_date')
-            else:
-                projects = Project.objects.all().order_by('-create_date')
-        else:
-            projects = Project.objects.all().order_by('-create_date')
+        projects = Project.objects.all().order_by('-create_date')
         projects = projects.filter(funding_advisor=None)
         projectsfilter = ProjectFilterSet(projects, request.GET)
         context = {'projects': projectsfilter.qs, 'projectsfilter': projectsfilter, 'salesfilter': the_filter}
