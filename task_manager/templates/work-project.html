@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize%}
+{% block secondarynav %}
+<div class="span12">
+             <div class="navbar">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li>
+        <li class=""><a href="/admin/task_manager/workproject/{{project.id}}"><i class="icon-pencil"></i> Admin Edit</a></li>
+      </li>
+
+    </ul>
+  </div>
+</div>
+</div>
+{% endblock %}
+{% block breadcrumbs %}
+<div class="span12">
+<ul class="breadcrumb">
+  <li><a href="/creative">Creative Department</a> <span class="divider">/</span></li>
+  <li class="active">{{project.title}}</li>
+</ul>
+</div>
+{% endblock %}
+{% block message %}
+
+{% endblock %}
+
+{% block content %}
+
+   <div class="page-header span12">
+  <h1>{{project.title}}</h1>
+</div>
+
+<div class="span12">
+  {% if project.users_working %}
+<div class="alert alert-success">
+  {%for user in project.users_working%}{{user}} {%endfor%}Currently Working on this Project.
+</div>
+{% endif %}
+  <div class="progress progress-striped active">
+  <div class="bar" style="width: {{project.completion}}%;"></div>
+</div>
+
+</div>
+<div class="span12">
+  <ul class="thumbnails">
+  <li class="span4">
+    <div class="thumbnail">
+      <img src="/static/img/unknown.png" alt="">
+      <a href="{{project.copy_link}}" class="btn btn-block">Review Copy</a>
+    </div>
+  </li>
+  <li class="span4">
+    <div class="thumbnail">
+      <img src="/static/img/unknown.png" alt="">
+      <a href="{{project.copy_link}}" class="btn btn-block">Review Design</a>
+    </div>
+    <li class="span4">
+    <div class="thumbnail">
+      <img src="/static/img/unknown.png" alt="">
+      <a href="{{project.final_link}}" class="btn btn-block">View Final Product</a>
+    </div>
+  </li>
+  </li>
+</ul>
+{{working}}
+{% if working %}
+<form class="for form-inline" action='check-out/' method="POST">{% csrf_token %}
+  <div class="input-append">
+  <input class="span2" id="appendedInput" type="text" name="completion" placeholder="Current Completion">
+  <span class="add-on">%</span>
+</div>
+  <input type="text" class="input" name="recap" placeholder="Recap">
+<input type="submit" class="btn btn-primary" value="Check Out"/>
+</form>
+  
+  {% else %}
+  <a href="check-in" class="btn btn-primary btn-block">Check In</a>
+  {% endif %}
+  <table class="table table-striped">
+    <thead>
+    <tr>
+    <th><i class="icon-calendar"></i>Date</th>
+    <th><i class="icon-time"></i> Time Logged</th>
+    <th><i class="icon-user"></i> Employee</th>
+    <th><i class="icon-time"></i> Completion</th>
+    <th><i class="icon-flag"></i> Recap</th>
+</tr>
+
+</thead>
+<tbody>
+  {% for checkin in checkins %}
+  {% if checkin.check_type%}
+  <tr>
+    <td>{{checkin.time}}</td>
+    <td>{{checkin.time_logged|naturaltime}}</td>
+    <td>{{checkin.user}}</td>
+    <td>
+      <div class="progress progress-striped">
+        <div class="bar" style="width: {{checkin.completion}}%"></div></div>
+      </td>
+    <td>{{checkin.note}}</td>
+  </tr>
+  {% endif %}
+{% endfor %}
+</tbody>
+  </table>
+<h2>Total Time: {{project.project_time}}</h2>
+</div>
+{% endblock %}

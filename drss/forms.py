@@ -3,7 +3,7 @@ from django.contrib.localflavor.us.forms import USSocialSecurityNumberField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, HTML, Fieldset, Hidden, Field
 from crispy_forms.bootstrap import FormActions, AppendedPrependedText, AppendedText
-from drss.models import Project, Payment, Comment, Document
+from drss.models import Project, Payment, Comment, Document, ShoppingCenter
 
 
 class NewApplication(ModelForm):
@@ -127,6 +127,25 @@ class FileUpload(Form):
         label='Select a file',
         help_text='max. 42 megabytes'
     )
+
+
+class CreateSite(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CreateSite, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_class = 'form-horizontal'
+        self.helper.form_method = 'post'
+        self.helper.form_action = '#'
+        # self.helper.layout = Layout(
+        #     Fieldset('Receive Deposit', 'payment_amount', 'payment_type', 'trace_number', 'last_four_num', 'project', 'hold'),
+        #     FormActions(
+        #         Submit('submit', 'Submit', css_class='button white')
+        #     )
+        # )
+
+    class Meta:
+        model = ShoppingCenter
 
 
 class SalesApplication(ModelForm):

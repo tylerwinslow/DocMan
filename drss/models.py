@@ -82,6 +82,10 @@ class SiteLocator(Employee):
     permanent = models.BooleanField()
 
 
+class CSM(Employee):
+    lease_negotiator = models.BooleanField()
+
+
 class LeasingManager(Employee):
     lease_negotiator = models.BooleanField()
 
@@ -107,6 +111,9 @@ class Project(models.Model):
     )
     create_date = models.DateTimeField('Date Created', auto_now_add=True)
     assignment_date = models.DateTimeField('Assignment Date', null=True, blank=True)
+    site_locator = models.ForeignKey(SiteLocator, verbose_name="Site Locator", null=True, blank=True)
+    csm = models.ForeignKey(CSM, verbose_name="CSM", null=True, blank=True)
+    leasing_manager = models.ForeignKey(LeasingManager, verbose_name="Lease Negotiator", null=True, blank=True)
     fi_turnover_date = models.DateTimeField('Finance Turn Over Date', null=True, blank=True)
     concept = models.ForeignKey(Concept, verbose_name="Store Concept",  help_text="Your preferred retail concept.")
     status = models.ForeignKey(Status, verbose_name="Status", null=True, blank=True)
@@ -172,6 +179,20 @@ class Project(models.Model):
     annual_salary_partner = models.IntegerField("Partner's Salary", null=True, blank=True)
     signature = models.CharField("Signature", max_length=100, default="", null=True, blank=True)
     submission_ip = models.IPAddressField(null=True, blank=True, default='0.0.0.0')
+    act_id = models.CharField(max_length=36, null=True, blank=True)
+    priority = models.IntegerField("Priority", null=True, blank=True)
+    personality = models.CharField(max_length=100, null=True, blank=True)
+    funding_path = models.CharField(max_length=100, null=True, blank=True)
+    amount_preaproved = models.IntegerField("Amount Pre-Approved", null=True, blank=True)
+    amount_obtained = models.CharField(max_length=100, null=True, blank=True)
+    other_business = models.CharField(max_length=100, null=True, blank=True)
+    open_in_one_to_three = models.NullBooleanField(null=True, blank=True)
+    working_capital = models.IntegerField("Working Capital", null=True, blank=True)
+    total_amount_needed = models.IntegerField("Total Amount Needed", null=True, blank=True)
+    spouse = models.CharField(max_length=100, null=True, blank=True)
+    summary = models.TextField(null=True, blank=True)
+    summary_date = models.DateField('Summary Date', null=True, blank=True, auto_now=True)
+    troubled = models.NullBooleanField(null=True, blank=True)
 
     def is_paid(self):
         if self.deposit_amount == 0:
@@ -378,6 +399,7 @@ class Comment(models.Model):
 class DocumentType(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    department = models.ForeignKey(Department, null=True, blank=True, default=5)
 
     def __unicode__(self):
         return self.title

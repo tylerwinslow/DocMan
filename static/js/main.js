@@ -115,7 +115,7 @@ $('.remove').on('click',function(e){
 
 
 $('.uploadButton').on('click',function(e){
-    event.stopPropagation();
+    e.stopPropagation();
     docId = $(this).data('id');
 $("#finance .fileField[data-id='" + docId + "']").click();
 });
@@ -125,7 +125,8 @@ $('#status').editable({
               {value: 1, text: 'New'},
               {value: 2, text: 'Refunded'},
               {value: 3, text: 'Assigned'},
-              {value: 6, text: 'TurnOver to Real Estate'}
+              {value: 6, text: 'TurnOver to Real Estate'},
+              {value: 7, text: 'No Deposit'}
            ],
     pk: window.project,
     url: '/api/projects/' + window.project +"/",
@@ -141,11 +142,12 @@ params: function(params) {
 
 $('#funding_advisor').editable({
         source: [
-              {value: 4, text: 'jessica.penalosa'},
-              {value: 5, text: 'Audwin.Whitmore'},
+              {value: 4, text: 'Jessica Penalosa'},
               {value: 3, text: 'Judith Schoenfeldt'},
-              {value: 2, text: 'Leonid.Vekslin'},
-              {value: 29, text: 'Dave.Maxey'}
+              {value: 2, text: 'Leonid Vekslin'},
+              {value: 29, text: 'Dave Maxey'},
+              {value: 41, text: 'Steven Grammer'},
+              {value: 43, text: 'Sam Croce'}
            ],
     pk: window.project,
     url: '/api/projects/' + window.project +"/",
@@ -198,6 +200,15 @@ $('.datetimeinput').datepicker({
     format:"yyyy-mm-dd",
     viewMode: 0
 });
+
+$('.lightbox').colorbox({
+  rel:'gal',
+  scalePhotos: true,
+  maxHeight: "70%"
+});
+
+$("#projectTable").stupidtable();
+
   audiojs.events.ready(function() {
     var as = audiojs.createAll();
   });

@@ -1,0 +1,329 @@
+{% extends 'base.html' %}
+ {%load humanize%}
+{%block secondarynav%}
+<div class="navbar">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><a href="ticket" ><i class="icon-question-sign"></i>Request Ticket</a> </li>
+      <li><a href="workproject"><i class="icon-plus"></i>Add a Project</a> </li>
+      <li><a href="http://10.1.0.61/MediaWiki/index.php/Main_Page" target="_blank"><i class="icon-book"></i>Creative Library</a></li>
+    </ul>
+  </div>
+</div>
+{%endblock%}
+{% block content %}
+    <div class="span12">
+<div class="page-header">
+<h1>Creative Department Dash Board</h1>
+</div>
+<ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#projects" data-toggle="tab">Projects</a></li>
+    <li><a href="#tickets" data-toggle="tab">Tickets</a></li>
+    <li><a href="#recurring" data-toggle="tab">Recurring</a></li>
+<li><a href="#reports" data-toggle="tab">Reports</a></li>
+  </ul>
+
+  <div class="tab-content">
+
+    <div class="tab-pane active" id="projects">
+        <div class="well">
+        {{ projectsfilter }}
+    </div>
+<table class="table" id="projectTable">
+<thead>
+    <tr>
+    <th data-sort="string">Project</th>
+    <th data-sort="string">Priority</th>
+    <th><i class="icon-calendar"></i> Assigned Date</th>
+    <th><i class="icon-time"></i> Due Date</th>
+    <th data-sort="string"><i class="icon-user"></i> People</th>
+    <th><i class="icon-time"></i> Completion</th>
+    <th><i class="icon-flag"></i> Recap</th>
+</tr>
+</thead>
+<tbody>
+    {% for work_project in work_projects%}
+    <tr {% if work_projects.past_due %}class="error"{% endif %}>
+<td><a href="/creative/workproject/{{work_project.id}}/">{{work_project.title}}</a></td>
+<td>{{work_project.status}}</td>
+<td>{{work_project.start_date}}</td>
+<td>{{work_project.due_date}}</td>
+<td>{% for person in work_project.project_user.all%}{{person}} {% endfor %}</td>
+<td><div class="progress progress-striped">
+                    <div class="bar" style="width: {{work_project.completion}}%"></div></div></td>
+<td>{{work_project.note}}</td>
+    </tr>
+    {%endfor%}
+</tbody>
+</table>
+    </div>
+
+    <div class="tab-pane" id="tickets">
+<table class="table">
+<thead>
+    <tr>
+    <th>Ticket</th>
+    <th><i class="icon-time"></i>Requested</th>
+    <th><i class="icon-user"></i>Assigned To</th>
+    <th><i class="icon-user"></i>For</th>
+    <th><i class="icon-flag"></i>Recap</th>
+</tr>
+</thead>
+<tbody>
+    {% for ticket in tickets%}
+    <tr {% if ticket.past_due %}class="error"{% endif %}>
+<td><a href="/creative/ticket/{{ticket.id}}/">{{ticket.title}}</a></td>
+<td>{{ticket.start_time}}</td>
+<td>{{ticket.assigned_to}}</td>
+<td>{{ticket.belongs_to}}</td>
+<td>{{ticket.note}}</td>
+
+    </tr>
+    {%endfor%}
+    <tr>
+            <th>Ticket</th>
+    <th><i class="icon-time"></i>Completed</th>
+    <th><i class="icon-user"></i>Assigned To</th>
+    <th><i class="icon-user"></i>For</th>
+    <th><i class="icon-flag"></i>Recap</th>
+    </tr>
+        {% for ticket in complete_tickets%}
+    <tr>
+<td><a href="/creative/ticket/{{ticket.id}}/">{{ticket.title}}</a></td>
+<td>{{ticket.complete_time}}</td>
+<td>{{ticket.assigned_to}}</td>
+<td>{{ticket.belongs_to}}</td>
+<td>{{ticket.note}}</td>
+
+    </tr>
+    {%endfor%}
+</tbody>
+</table>
+
+    </div>
+
+    <div class="tab-pane" id="recurring">
+        
+        <h2>Week 6/17/2013 to 6/21/2013</h2>
+        <div class="row">
+        <div class="span2">
+            <h3>Monday</h3>
+            <table class="table table-striped">
+                <tbody>
+                    <tr class="success">
+                        <td>Finance Migration</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Process Web Leads</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Distribute E-Mail Responses</td>
+                    </tr>
+                    <tr class="error">
+                        <td>Send an NSO</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span2">
+            <h3>Tuesday</h3>
+            <table class="table table-striped">
+                <tbody>
+                    <tr class="success">
+                        <td>Finance Migration</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Process Web Leads</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Distribute E-Mail Responses</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Send TemeSeminar Reminder</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span2">
+            <h3>Wednesday</h3>
+            <table class="table table-striped">
+                <tbody>
+                    <tr class="success">
+                        <td>Finance Migration</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Process Web Leads</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Distribute E-Mail Responses</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Create Web Leads Report</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Create Phone Report</td>
+                    </tr>
+                    <tr class="error">
+                        <td>Create Chat Report</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span2">
+            <h3>Thursday</h3>
+            <table class="table table-striped">
+                <tbody>
+                    <tr class="success">
+                        <td>Finance Migration</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Process Web Leads</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Distribute E-Mail Responses</td>
+                    </tr>
+                                        <tr class="warning">
+                        <td >Add New Leads to Drip</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span2">
+            <h3>Friday</h3>
+            <table class="table table-striped">
+                <tbody>
+                    <tr class="success">
+                        <td>Finance Migration</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Process Web Leads</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Distribute E-Mail Responses</td>
+                    </tr>
+                    <tr class="error">
+                        <td>Send an NSO</td>
+                    </tr>
+                    <tr class="warning">
+                        <td>Generate Teleseminar Report</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+        <h2>Week 6/24/2013 to 6/28/2013</h2>
+        <div class="row">
+        <div class="span2">
+            <h3>Monday</h3>
+            <table class="table table-striped">
+                <tbody>
+                    <tr class="success">
+                        <td>Finance Migration</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Process Web Leads</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Distribute E-Mail Responses</td>
+                    </tr>
+                    <tr>
+                        <td>Send an NSO</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span2">
+            <h3>Tuesday</h3>
+            <table class="table table-striped">
+                <tbody>
+                    <tr class="success">
+                        <td>Finance Migration</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Process Web Leads</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Distribute E-Mail Responses</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Send TemeSeminar Reminder</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span2">
+            <h3>Wednesday</h3>
+            <table class="table table-striped">
+                <tbody>
+                    <tr class="success">
+                        <td>Finance Migration</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Process Web Leads</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Distribute E-Mail Responses</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Create Web Leads Report</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Create Phone Report</td>
+                    </tr>
+                    <tr class="warning">
+                        <td>Create Chat Report</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span2">
+            <h3>Thursday</h3>
+            <table class="table table-striped">
+                <tbody>
+                    <tr class="success">
+                        <td>Finance Migration</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Process Web Leads</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Distribute E-Mail Responses</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Add New Leads to Drip</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span2">
+            <h3>Friday</h3>
+            <table class="table table-striped">
+                <tbody>
+                    <tr class="success">
+                        <td>Finance Migration</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Process Web Leads</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Distribute E-Mail Responses</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Send an NSO</td>
+                    </tr>
+                    <tr class="success">
+                        <td>Generate Teleseminar Report</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <div class="tab-pane" id="reports">
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}

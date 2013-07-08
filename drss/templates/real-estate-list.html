@@ -79,16 +79,11 @@
             <tr>
                 <th>Full Name</th>
                 <th>Project Status</th>
-                <th>Over 50K Liquid Assets</th>
-                <th>Concept</th>
-                <th>Sales Rep</th>
-                <th>Funding Advisor</th>
-                <th>App Date</th>
-                <th>App Number</th>
-                <th>Signature</th>
-                <th>Deposit Status</th>
-                <th>Required Documents</th>
-                <th>Progress</th>
+                <th>Site Locator</th>
+                <th>CSM</th>
+                <th>Lease Negotiator</th>
+                <th>Last Action</th>
+                <th>Past Due Tasks</th>
             </tr>
             </thead>
             <tbody>
@@ -96,20 +91,17 @@
             <tr>
             <td><a href="/projects/{{ project.id }}/"> {{project.full_name}}</a></td>
             <td>{{project.status}}</td>
-            <td>{{project.high_net_worth}}</td>
-            <td>{{project.concept}}</td>
-            <td>{{project.sales_rep}}</td>
-            <td>{{project.funding_advisor}}</td>
-            <td>{{project.create_date}}</td>
-            <td>{{project.id}}</td>
-            <td>{%if project.signature%}{{project.signature}}{%else%}<a href="/application/{{project.id}}">Send to Customer</a>{%endif%}</td>
-            <td><a href="/application/{{project.id}}/deposit"><img src="https://finance.drssone.com/static/img/{% if project.is_paid == 1%}checkmark_32.png{%elif project.is_paid == 2%}error_32.png{%else%}warning_32.png{%endif%}"/></a></td>
-            <td>{% if project.doc_list %}<a href="#" class="pop-over" data-toggle="popover" title="" data-content="<a target='_blank' href='/application/{{project.id}}/documents'>{{project.doc_list}}</a>" data-original-title="Documents Needed">
-                    <i class="icon-info-sign"></i>
-                </a>{% endif%}</td>
-            <td><div class="progress progress-striped progress-{{project.completion.status}}">
-                    <div class="bar" style="width: {{project.completion.percent}}%"></div></div>
-                    </td>
+            <td>{{project.site_locator}}</td>
+            <td>{{project.csm}}</td>
+            <td>{{project.leasing_manager }}</td>
+            <td>{{project.most_recent_activity}}</td>
+            <td>
+                      {% if project.past_due_tasks > 0 %}
+        <span class="badge badge-important">{{project.past_due_tasks}}</span>
+        {% else %}
+        <span class="badge badge-success">Up To Date</span>
+        {% endif %}
+            </td>
             </tr>
             {% endfor %}
         </tbody>
