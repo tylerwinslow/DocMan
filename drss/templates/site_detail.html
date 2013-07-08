@@ -151,186 +151,56 @@
 <hr>
 		</div>
 </div>
-
+	{% for space in spaces %}
 	<div class="row">
 		<h3 class="span12">Spaces Available</h3>
 		<div class="span2">
 			<table class="table">
 				<thead>
 					<tr>
-						<th class="Space #-cell">Space #</th>
+						<th class="Space #-cell">Space #: {{space.space_number}}</th>
 						<th class="-cell"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="firstRow">
-						<td class="Space #-cell">Sq Ft Available</td>
+						<td class="Space #-cell">Sq Ft Available: {{space.size}}</td>
 						<td class="-cell"></td>
 					</tr>
 					<tr>
-						<td class="Space #-cell">Condition of Space</td>
+						<td class="Space #-cell">Condition of Space: {{space.condition}}</td>
 						<td class="-cell"></td>
 					</tr>
 					<tr>
-						<td class="Space #-cell">Who occupied previously </td>
+						<td class="Space #-cell">Who occupied previously: {{space.previous_occupant}}</td>
 						<td class="-cell"></td>
 					</tr>
 					<tr>
-						<td class="Space #-cell">Length of Vacancy</td>
+						<td class="Space #-cell">Length of Vacancy: {{space.time_vacant}}</td>
 						<td class="-cell"></td>
 					</tr>
 					<tr>
-						<td class="Space #-cell">Date Available</td>
+						<td class="Space #-cell">Date Available: {{space.date_available}}</td>
 						<td class="-cell"></td>
 					</tr>
 					<tr>
-						<td class="Space #-cell">Asking Rent</td>
+						<td class="Space #-cell">Asking Rent: {{space.asking_rent}}</td>
 						<td class="-cell"></td>
 					</tr>
 					<tr>
-						<td class="Space #-cell">NNN Charges</td>
+						<td class="Space #-cell">NNN Charges: {{space.nnn_charges}}</td>
 						<td class="-cell"></td>
 					</tr>
 					<tr class="lastRow">
-						<td class="Space #-cell">Asking Rent + NNN</td>
+						<td class="Space #-cell">Asking Rent + NNN: </td>
 						<td class="-cell"></td>
 					</tr>
 				</tbody>
 			</table>
 
+		
 		</div>
-		<div class="span2">
-			<table class="table">
-				<thead>
-					<tr>
-						<th class="Space #-cell">Space #</th>
-						<th class="-cell"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="firstRow">
-						<td class="Space #-cell">Sq Ft Available</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Condition of Space</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Who occupied previously </td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Length of Vacancy</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Date Available</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Asking Rent</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">NNN Charges</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr class="lastRow">
-						<td class="Space #-cell">Asking Rent + NNN</td>
-						<td class="-cell"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="span2">
-			<table class="table">
-				<thead>
-					<tr>
-						<th class="Space #-cell">Space #</th>
-						<th class="-cell"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="firstRow">
-						<td class="Space #-cell">Sq Ft Available</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Condition of Space</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Who occupied previously </td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Length of Vacancy</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Date Available</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Asking Rent</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">NNN Charges</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr class="lastRow">
-						<td class="Space #-cell">Asking Rent + NNN</td>
-						<td class="-cell"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="span2">
-			<table class="table">
-				<thead>
-					<tr>
-						<th class="Space #-cell">Space #</th>
-						<th class="-cell"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="firstRow">
-						<td class="Space #-cell">Sq Ft Available</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Condition of Space</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Who occupied previously </td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Length of Vacancy</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Date Available</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">Asking Rent</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr>
-						<td class="Space #-cell">NNN Charges</td>
-						<td class="-cell"></td>
-					</tr>
-					<tr class="lastRow">
-						<td class="Space #-cell">Asking Rent + NNN</td>
-						<td class="-cell"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+	{%endfor%}
 		<button class="btn btn-small btn-primary btn-block span12" type="button"><i class="icon-white icon-plus"></i> Add a Space</button>
 	</div>
 	<div class="row">

@@ -482,34 +482,34 @@ class SiteImage(models.Model):
     shopping_center = models.ForeignKey(ShoppingCenter, verbose_name="Shopping Center", null=True)
     image = ImageField(upload_to='center_pictures')
 
-# class ShoppingCenterUnit:
-#     space_number =
-#     size = models.IntegerField(null=True, blank=True)
-#     condition =
-#     previous_occupant =
-#     time_vacant = models.IntegerField(null=True, blank=True)
-#     date_available =
-#     asking_rent =
-#     tax_rate =
+class ShoppingCenterUnit(models.Model):
+     space_number = models.CharField(max_length=100)
+     size = models.IntegerField(null=True, blank=True)
+     condition = models.CharField(max_length=100)
+     previous_occupant = models.CharField(max_length=100)
+     time_vacant = models.IntegerField(null=True, blank=True)
+     date_available = models.DateField("Date Available",  null=True, blank=True)
+     asking_rent = models.IntegerField(null=True, blank=True)
+     tax_rate = models.IntegerField(null=True, blank=True)
 #     lease_term =
-#     nnn_charges =
-#     additional_rent =
-#     additional_cap =
+     nnn_charges = models.IntegerField(null=True, blank=True)
+     additional_rent = models.IntegerField(null=True, blank=True)
+     additional_cap = models.IntegerField(null=True, blank=True)
 #     additional_common =
 #     additional_management =
 #     renewal_option =
 #     renewal_period =
-#     renewal_years = models.IntegerField(null=True, blank=True)
+     renewal_years = models.IntegerField(null=True, blank=True)
 #     renewal_increase =
-#     rent_due_in_days = models.IntegerField(null=True, blank=True)
+     rent_due_in_days = models.IntegerField(null=True, blank=True)
 #     unit_improvements =
-#     tenent_allowance =
-#     security_deposit =
+     tenent_allowance = models.IntegerField(null=True, blank=True)
+     security_deposit = models.IntegerField(null=True, blank=True)
 #     marquee =
 #     marquee_how =
-#     days_of_advertising = models.IntegerField(null=True, blank=True)
-#     days_of_mascott = models.IntegerField(null=True, blank=True)
-#     hvac_warranty =
-#     hvac_cost_cap =
+     days_of_advertising = models.IntegerField(null=True, blank=True)
+     days_of_mascott = models.IntegerField(null=True, blank=True)
+     hvac_warranty = models.IntegerField(null=True, blank=True)
+     hvac_cost_cap = models.IntegerField(null=True, blank=True)
 #     relocation_clause =
-#     tenent_days_out = models.IntegerField(null=True, blank=True)
+     tenent_days_out = models.IntegerField(null=True, blank=True)

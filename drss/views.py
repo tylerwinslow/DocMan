@@ -477,8 +477,9 @@ def project_detail(request, pk):
 def site_detail(request, pk, site_id):
     if request.user.is_authenticated() and request.user.is_staff:
         site = ShoppingCenter.objects.get(pk=site_id)
+        space = site.ShoppingCenterUnit_set.all()
         images = site.siteimage_set.all()
-        context = {'site': site, 'images': images}
+        context = {'site': site, 'space': space, 'images': images}
         return render(request, 'site_detail.html', context)
     else:
         return render(request, 'not-authenticated.html')
